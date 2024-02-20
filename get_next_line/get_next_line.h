@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:59:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/20 19:11:16 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:34:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ char	*gnl_strjoin(char *s1, char const *s2);
 size_t	gnl_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*gnl_strchr(const char *s);
 size_t	gnl_strlen(const char *s);
-void	gnl_bzero(void *s, size_t n);
 
 #endif
