@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:58:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/22 12:12:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:24:26 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,4 @@ int	free_all(char **buf, char **line, ssize_t return_value)
 	if (return_value == -1 && *line)
 		free (*line);
 	return ((int)return_value);
-}
-
-void	*gnl_calloc(size_t count, size_t size)
-{
-	void	*dst;
-	size_t	zero_count;
-
-	if (count && size && count > SIZE_MAX / size)
-		return (NULL);
-	dst = (void *)malloc (count * size);
-	if (!dst)
-		return (NULL);
-	zero_count = 0;
-	while (zero_count < count * size)
-		((unsigned char *)dst)[zero_count++] = '\0';
-	return (dst);
 }

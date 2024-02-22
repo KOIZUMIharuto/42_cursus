@@ -13,3 +13,5 @@ https://github.com/Tripouille/gnlTester/tree/master
 https://github.com/Mazoise/42TESTERS-GNL
 
 ## Born2beRoot
+https://l.github.io/debian-handbook/html/ja-JP/index.html
+ß
