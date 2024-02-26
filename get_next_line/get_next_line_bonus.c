@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:58:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/22 16:20:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:14:55 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,91 +16,89 @@ char	*get_next_line(int fd)
 {
 	static t_fbs	*fbs_list = NULL;
 	t_fbs			*fbs;
-	ssize_t			can_continue_read;
+	ssize_t			r_len;
 	char			*line;
 
-	fbs = check_set(fd, &fbs_list);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	fbs = find_fd_or_malloc(fd, &fbs_list, fbs_list);
 	if (!fbs)
 		return (NULL);
-	can_continue_read = (size_t)BUFFER_SIZE;
+	r_len = (ssize_t)BUFFER_SIZE;
 	line = NULL;
-	while (can_continue_read == (size_t)BUFFER_SIZE)
-		can_continue_read = buf_to_line(fbs, &line, &fbs_list);
-	if (can_continue_read == -1)
+	while (r_len == (ssize_t)BUFFER_SIZE)
+		r_len = read_and_join(fbs, &line, &fbs_list, r_len);
+	if (r_len == -1)
 		return (NULL);
 	return (line);
 }
 
-int	buf_to_line(t_fbs *fbs, char **line, t_fbs **fbs_list)
+ssize_t	read_and_join(t_fbs *fbs, char **line, t_fbs **fbs_list, ssize_t r_len)
 {
-	int		index;
+	ssize_t	index;
 	char	*cut_point;
-	ssize_t	is_success;
 
-	is_success = (size_t)BUFFER_SIZE;
 	if ((fbs->buf)[0] == '\0')
 	{
-		is_success = read (fbs->fd, fbs->buf, (size_t)BUFFER_SIZE);
-		if (is_success <= 0)
-			return (free_all(fbs, fbs_list, line, is_success));
-		(fbs->buf)[is_success] = '\0';
+		r_len = read (fbs->fd, fbs->buf, (size_t)BUFFER_SIZE);
+		if (r_len <= 0)
+			return (free_all(fbs, fbs_list, line, r_len));
+		(fbs->buf)[r_len] = '\0';
 	}
-	cut_point = gnl_strchr(fbs->buf);
-	if (*cut_point == '\n')
-		cut_point++;
-	*line = gnl_strjoin(*line, fbs->buf);
+	cut_point = &(fbs->buf)[count_up_to_0_or_after_nl(fbs->buf)];
+	if (*(cut_point - 1) == '\n')
+		r_len--;
+	*line = join_buf_to_line_up_to_0_or_after_nl(*line, fbs->buf);
 	if (!*line)
 		return (free_all(fbs, fbs_list, line, -1));
 	index = -1;
 	while (cut_point[++index])
 		(fbs->buf)[index] = cut_point[index];
-	(fbs->buf)[index] = cut_point[index];
-	if (*gnl_strchr(*line) == '\n')
-		index++;
-	return ((int)is_success - index);
+	(fbs->buf)[index] = '\0';
+	return (r_len - index);
 }
 
-int	free_all(t_fbs *fbs, t_fbs **fbs_list, char **line, ssize_t rv)
-{	
+ssize_t	free_all(t_fbs *fbs, t_fbs **fbs_list, char **line, ssize_t rv)
+{
 	if (rv != 0 || !*line)
 	{
 		if (fbs->pre_set)
-			fbs->pre_set->post_set = fbs->post_set;
+			fbs->pre_set->after_set = fbs->after_set;
 		else
-			*fbs_list = fbs->post_set;
-		if (fbs->post_set)
-			fbs->post_set->pre_set = fbs->pre_set;
+			*fbs_list = fbs->after_set;
+		if (fbs->after_set)
+			fbs->after_set->pre_set = fbs->pre_set;
 		free (fbs->buf);
+		fbs->buf = NULL;
 		free (fbs);
+		fbs = NULL;
 	}
 	if (rv == -1 && *line)
 		free (*line);
-	return ((int)rv);
+	return (rv);
 }
 
-t_fbs	*check_set(int fd, t_fbs **fbs_list)
+t_fbs	*find_fd_or_malloc(int fd, t_fbs **fbs_list, t_fbs *fbs_tmp)
 {
-	t_fbs	*fbs_tmp;
-
-	fbs_tmp = *fbs_list;
 	while (fbs_tmp)
 	{
 		if (fbs_tmp->fd == fd)
 			return (fbs_tmp);
-		fbs_tmp = fbs_tmp->post_set;
+		fbs_tmp = fbs_tmp->after_set;
 	}
 	fbs_tmp = (t_fbs *)malloc (sizeof(t_fbs));
 	if (!fbs_tmp)
 		return (NULL);
 	fbs_tmp->fd = fd;
-	fbs_tmp->buf = (char *)gnl_calloc ((size_t)BUFFER_SIZE + 1, sizeof(char));
+	fbs_tmp->buf = (char *)malloc ((size_t)BUFFER_SIZE + 1);
 	if (!fbs_tmp->buf)
 	{
 		free (fbs_tmp);
 		return (NULL);
 	}
+	(fbs_tmp->buf)[0] = '\0';
 	fbs_tmp->pre_set = NULL;
-	fbs_tmp->post_set = *fbs_list;
+	fbs_tmp->after_set = *fbs_list;
 	if (*fbs_list)
 		(*fbs_list)->pre_set = fbs_tmp;
 	*fbs_list = fbs_tmp;

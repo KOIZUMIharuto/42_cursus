@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:59:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/22 17:06:31 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:14:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@
 # endif
 
 char	*get_next_line(int fd);
-int		add_buf_to_line(int fd, char **buf, char **line);
-int		free_all(char **buf, char **line, ssize_t return_value);
-void	*gnl_calloc(size_t count, size_t size);
-char	*gnl_strjoin(char *s1, char const *s2);
-size_t	gnl_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*gnl_strchr(const char *s);
-size_t	gnl_strlen(const char *s);
+ssize_t	read_and_join(int fd, char **buf, char **line, ssize_t read_len);
+ssize_t	free_all(char **buf, char **line, ssize_t return_value);
+char	*join_buf_to_line_up_to_0_or_after_nl(char *line, char const *buf);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t	count_up_to_0_or_after_nl(const char *s);
 
 #endif
