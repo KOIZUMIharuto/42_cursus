@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 12:03:59 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/16 16:36:41 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:16:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char	*ft_uitoa(unsigned int ui)
 	a = ft_strjoin(a_1, a_2);
 	free(a_1);
 	free(a_2);
-	if (!a)
-		return (NULL);
 	return (a);
 }
 
@@ -73,11 +71,11 @@ char	*arg_to_hex(va_list *arg, char sign)
 
 	if (sign == 'p')
 		ul = (unsigned long)va_arg(*arg, void *);
-	if (sign == 'x' || sign == 'X')
+	else
 		ul = (unsigned long)((unsigned int)va_arg(*arg, int));
 	if (sign == 'p' || sign == 'x')
 		hex = ul_to_hex(ul, "0123456789abcdef");
-	if (sign == 'X')
+	else
 		hex = ul_to_hex(ul, "0123456789ABCDEF");
 	if (!hex)
 		return (NULL);
@@ -86,8 +84,6 @@ char	*arg_to_hex(va_list *arg, char sign)
 	address = ft_strjoin("0x", hex);
 	if (hex)
 		free(hex);
-	if (!address)
-		return (NULL);
 	return (address);
 }
 
@@ -105,29 +101,17 @@ char	*arg_to_str(va_list *arg)
 	return (output_str);
 }
 
-void	print_arg(char str, va_list *arg, size_t *len)
+char	*c_to_str(va_list *arg, char sign)
 {
-	char	*str_for_write;
+	char	*str;
 
-	str_for_write = NULL;
-	if (str == 'c' || str == '%')
-	{
-		if (str == 'c')
-			ft_putchar_fd(va_arg(*arg, int), 1);
-		else
-			ft_putchar_fd('%', 1);
-	}
-	if (str == 's')
-		str_for_write = arg_to_str(arg);
-	if (str == 'p' || str == 'x' || str == 'X')
-		str_for_write = arg_to_hex(arg, str);
-	if (str == 'd' || str == 'i')
-		str_for_write = ft_itoa(va_arg(*arg, int));
-	if (str == 'u')
-		str_for_write = ft_uitoa(va_arg(*arg, unsigned int));
-	if (!str_for_write)
-		return ;
-	*len += ft_strlen(str_for_write) - 1;
-	write (1, str_for_write, ft_strlen(str_for_write));
-	free(str_for_write);
+	str = (char *)malloc (2 * sizeof(char));
+	if (!str)
+		return (NULL);
+	if (sign == 'c')
+		str[0] = va_arg(*arg, int);
+	else if (sign == '%')
+		str[0] = '%';
+	str[1] = '\0';
+	return (str);
 }

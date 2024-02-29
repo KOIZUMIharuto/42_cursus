@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 12:41:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/15 19:33:39 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:45:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 
 	dst_count = 0;
 	src_count = 0;
-	if (dst)
+	if (dst || dstsize != 0)
 		dst_count = ft_strlen(dst);
 	while (dst_count + src_count + 1 < dstsize && src[src_count])
 	{
@@ -49,9 +49,9 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 // 	dst = (char *)malloc (sizeof(char) * atoi(argv[2]));
 // 	if (dst)
 // 	{
-// 		strcpy(dst, NULL);
-// 		printf("%s(\"%s\", \"%s\", %d) -> ", Fn_name, dst, NULL, atoi(argv[4]));
-// 		len = strlcatFn(dst, NULL, atoi(argv[4]));
+// 		strcpy(dst, argv[1]);
+// 		printf("%s(\"%s\", \"%s\", %d) -> ", Fn_name, dst, argv[3], atoi(argv[4]));
+// 		len = strlcatFn(dst, argv[3], atoi(argv[4]));
 // 		printf("\"%s\" [%zu]\n", dst, len);
 // 		free(dst);
 // 	}
@@ -68,6 +68,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 // 		test(argv, strlcat, "strlcat");
 // 		test(argv, ft_strlcat, "ft_strlcat");
 // 	}
-// 	strlcat(NULL, NULL, 0);
 // 	return (0);
 // }

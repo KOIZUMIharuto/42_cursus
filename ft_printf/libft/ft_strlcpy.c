@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:56:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/15 15:18:22 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:47:50 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 // 	if (dst)
 // 	{
 // 		printf("%s(\"%s\", \"%s\", %d) ", Fn_name, dst, argv[2], atoi(argv[3]));
-// 		len = strlcpyFn(NULL, argv[2], atoi(argv[3]));
+// 		len = strlcpyFn(dst, argv[2], atoi(argv[3]));
 // 		printf("-> \"%s\" [%zu]\n", dst, len);
 // 		free(dst);
 // 	}
@@ -59,7 +59,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 // {
 // 	if (argc >= 4)
 // 	{
-// 		// test(argv, strlcpy, "strlcpy   ");
+// 		test(argv, strlcpy, "strlcpy   ");
 // 		test(argv, ft_strlcpy, "ft_strlcpy");
 // 	}
 // 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:32:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:37:32 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:53:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*dst;
 
 	len = 0;
+	if (!s1 && !s2)
+		return (NULL);
 	if (s1)
 		len += ft_strlen(s1);
 	if (s2)
