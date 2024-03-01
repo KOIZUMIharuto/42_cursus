@@ -7,10 +7,9 @@ SRC_DIR = srcs
 SRCS =\
 check_argv_create_stack.c\
 check_str_create_stack.c\
-create_stack_utils.c\
 free_stack_exit.c\
+join_and_check.c\
 main.c\
-push_swap.c\
 push.c\
 reverse_rotate.c\
 rotate.c\

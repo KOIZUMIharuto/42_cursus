@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/01 19:40:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:54:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_node
 	struct s_node	*next;
 }	t_node;
 
+void	push_swap(t_node *stack_a, t_node *stack_b, int node_count);
 void	free_stack_exit(t_node *stack, t_node *stack_b, int status);
 void	join_list_and_node(t_node **prev_node, t_node *next_node);
 void	check_dup_find_index(t_node *stack, t_node *new_node);

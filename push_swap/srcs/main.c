@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/01 19:48:03 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:47:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	printer(t_node *stack, char stack_name) // delete !
 	if (!stack)
 		return (void)printf("stack_%c\n\tempty!\n\n", stack_name);
 	printf("stack_%c\n", stack_name);
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		printf("\t%d: %d[%d]\n", i, stack->num, stack->index);
 		stack = stack->next;

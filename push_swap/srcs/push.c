@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/01 19:16:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:37:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	push(t_node **stack_from, t_node **stack_to)
 {
 	t_node	*node_tmp;
 
-	if (!*stack_from)
+	if (!stack_from || !*stack_from)
 		return ;
 	node_tmp = *stack_from;
 	pop(stack_from);
