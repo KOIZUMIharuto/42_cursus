@@ -10,6 +10,7 @@ check_str_create_stack.c\
 free_stack_exit.c\
 join_and_check.c\
 main.c\
+push_swap.c\
 push.c\
 reverse_rotate.c\
 rotate.c\
