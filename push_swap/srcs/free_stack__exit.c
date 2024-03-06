@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:09:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 11:58:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:56:50 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ static void	free_stack(t_node *stack);
 
 void	free_stack__exit(t_node *stack_a, t_node *stack_b, int status)
 {
-	free_stack(stack_a);
-	free_stack(stack_b);
+	if (stack_a)
+		free_stack(stack_a);
+	if (stack_b)
+		free_stack(stack_b);
 	if (status != 0)
 		write (2, "Error\n", 6);
 	exit (status);

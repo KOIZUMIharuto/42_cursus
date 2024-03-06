@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 17:26:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:00:03 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ int	main(int argc, char *argv[])
 	if (argc == 1)
 		return (0);
 	else if (argc == 2)
+	{
+		if (argv[1][0] == '\0')
+			return (0);
 		node_num = check_str__create_stack(&stack_a, argv[1]);
+	}
 	else
 		node_num = check_argv__create_stack(&stack_a, argc, argv);
 	if (!stack_a)
@@ -36,6 +40,12 @@ int	main(int argc, char *argv[])
 	if (!is_sorted(stack_a, stack_b, node_num))
 		push_swap(&stack_a, &stack_b, node_num);
 	stack_printer(stack_a, stack_b, node_num); // delete !
+	// push(&stack_a, &stack_b);
+	// stack_printer(stack_a, stack_b, node_num); // delete !
+	// push(&stack_b, &stack_a);
+	// stack_printer(stack_a, stack_b, node_num); // delete !
+	// push(&stack_b, &stack_a);
+	// stack_printer(stack_a, stack_b, node_num); // delete !
 	free_stack__exit(stack_a, stack_b, 0);
 	return (0);
 }
@@ -62,10 +72,10 @@ static void	printer(t_node *stack, char stack_name) // delete !
 	printf("\n");
 }
 
-__attribute__((destructor))  // delete !
-static void destructor() {
-	system("leaks -q push_swap");
-}
+// __attribute__((destructor))  // delete !
+// static void destructor() {
+// 	system("leaks -q push_swap");
+// }
 
 // (sa && sb)    -> (ss)
 // (ra && rb)    -> (rr)
