@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   check_dup__set_index.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 17:27:07 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/03/01 16:48:09 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/06 12:02:08 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	push_swap(t_node **stack_a, t_node **stack_b, int node_num)
+void	check_dup__set_index(t_node *stack, t_node *new_node)
 {
-	t_ope	*operartion_list;
+	int		new_index;
 
-	printf("do push_swap !\n"); // delete
-	(void)stack_a;
-	(void)stack_b;
-	(void)node_num;
-	if (node_num <= 6)
-		operartion_list = under_six_sort(stack_a, stack_b, node_num);
+	new_index = 0;
+	stack = stack->next;
+	while (stack->index != -1 && stack->next->index != -1)
+	{
+		if (stack->num == new_node->num)
+			free_stack__exit(stack, NULL, 1);
+		else if (stack->num > new_node->num)
+			stack->index++;
+		else if (stack->num < new_node->num)
+			new_index++;
+		stack = stack->next;
+	}
+	new_node->index = new_index;
 }

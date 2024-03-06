@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   init_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 17:27:07 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/03/06 12:02:59 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/06 12:25:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	push_swap(t_node **stack_a, t_node **stack_b, int node_num)
+t_node	*init_stack(void)
 {
-	t_ope	*operartion_list;
+	t_node	*stack;
 
-	printf("do push_swap !\n"); // delete
-	(void)stack_a;
-	(void)stack_b;
-	(void)node_num;
-	if (node_num <= 6)
-		operartion_list = under_six_sort(stack_a, stack_b, node_num);
+	stack = (t_node *)malloc (sizeof(t_node));
+	if (!stack)
+		return (NULL);
+	stack->next = stack;
+	stack->prev = stack;
+	stack->num = 0;
+	stack->index = -1;
+	return (stack);
 }

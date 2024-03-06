@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/01 20:37:52 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:20:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,14 @@ void	push(t_node **stack_from, t_node **stack_to)
 {
 	t_node	*node_tmp;
 
-	if (!stack_from || !*stack_from)
+	if (!stack_from || !*stack_from || (*stack_from)->index == -1)
 		return ;
 	node_tmp = *stack_from;
 	pop(stack_from);
-	if (!*stack_to)
-	{
-		node_tmp->next = node_tmp;
-		node_tmp->prev = node_tmp;
-	}
-	else
-	{
-		(*stack_to)->prev->next = node_tmp;
-		node_tmp->prev = (*stack_to)->prev;
-		(*stack_to)->prev = node_tmp;
-		node_tmp->next = *stack_to;
-	}
+	(*stack_to)->prev->next = node_tmp;
+	node_tmp->prev = (*stack_to)->prev;
+	(*stack_to)->prev = node_tmp;
+	node_tmp->next = *stack_to;
 	*stack_to = node_tmp;
 }
 

@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   free_stack__exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 17:26:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:26 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/03/06 11:09:51 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/06 11:58:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	sub_reverse_rotate_func(t_node **stack);
+static void	free_stack(t_node *stack);
 
-void	reverse_rotate(t_node **stack_a, t_node **stack_b)
+void	free_stack__exit(t_node *stack_a, t_node *stack_b, int status)
 {
-	if (stack_a && *stack_a && (*stack_a)->index != -1)
-		sub_reverse_rotate_func(stack_a);
-	if (stack_b && *stack_b && (*stack_b)->index != -1)
-		sub_reverse_rotate_func(stack_b);
+	free_stack(stack_a);
+	free_stack(stack_b);
+	if (status != 0)
+		write (2, "Error\n", 6);
+	exit (status);
 }
 
-static void	sub_reverse_rotate_func(t_node **stack)
+static void	free_stack(t_node *stack)
 {
-	t_node	*node_tmp;
+	t_node	*stack_tmp;
 
-	node_tmp = (*stack)->prev->prev;
-	*stack = (*stack)->prev->prev;
-	swap(&node_tmp, NULL);
+	while (stack->index != -1)
+	{
+		stack_tmp = stack->next;
+		free (stack);
+		stack = stack_tmp;
+	}
+	free (stack);
 }
