@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_stack__exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:09:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 18:56:50 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:33:46 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-static void	free_stack(t_node *stack);
 
 void	free_stack__exit(t_node *stack_a, t_node *stack_b, int status)
 {
@@ -20,12 +18,14 @@ void	free_stack__exit(t_node *stack_a, t_node *stack_b, int status)
 		free_stack(stack_a);
 	if (stack_b)
 		free_stack(stack_b);
-	if (status != 0)
-		write (2, "Error\n", 6);
-	exit (status);
+	if (status > 0)
+		printf("Error\n");
+		// write (2, "Error\n", 6);
+	if (status != -1)
+		exit (status);
 }
 
-static void	free_stack(t_node *stack)
+void	free_stack(t_node *stack)
 {
 	t_node	*stack_tmp;
 

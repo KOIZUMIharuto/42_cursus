@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:26 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:55:00 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ static void	sub_reverse_rotate_func(t_node **stack)
 
 	node_tmp = (*stack)->prev->prev;
 	*stack = (*stack)->prev->prev;
-	swap(&node_tmp, NULL);
+	sub_swap_func(&node_tmp);
 }

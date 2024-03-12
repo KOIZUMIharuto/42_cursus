@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:42 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/06 18:11:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:54:14 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ static void	sub_rotate_func(t_node **stack)
 
 	node_tmp = (*stack)->prev;
 	*stack = (*stack)->next;
-	swap(&node_tmp, NULL);
+	sub_swap_func(&node_tmp);
 }
