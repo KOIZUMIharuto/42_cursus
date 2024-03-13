@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:59:02 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/12 22:45:10 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/13 14:43:26 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static t_ope	*sort_stack_for_compare(
 	t_node **stack_a, t_node **stack_b, int num, t_all_ope_d *ope_dict);
-static t_ope	*push_b_smaller_ones_r(
+static t_ope	*push_b_smaller_ones_rotate(
 	t_node **stack_a, t_node **stack_b, int num, t_ope_d *ope_dict);
-static t_ope	*push_b_smaller_ones_rr(
+static t_ope	*push_b_smaller_ones_revese_rotate(
 	t_node **stack_a, t_node **stack_b, int num, t_ope_d *ope_dict);
 
 t_ope	*under_6_sort(
@@ -30,7 +30,8 @@ t_ope	*under_6_sort(
 	stack_a_copy = duplicate_stack(*stack_a);
 	stack_b_copy = duplicate_stack(*stack_b);
 	ope_list_1 = sort_stack_for_compare(stack_a, stack_b, num, ope_dict);
-	ope_list_2 = sort_stack_for_compare(&stack_a_copy, &stack_b_copy, num, ope_dict);
+	ope_list_2 = sort_stack_for_compare(
+		&stack_a_copy, &stack_b_copy, num, ope_dict);
 	if (!ope_list_1 || !ope_list_2)
 	{
 		free_stack__exit(stack_a_copy, stack_b_copy, -1);
@@ -57,9 +58,11 @@ static t_ope	*sort_stack_for_compare(
 	t_ope		*ope_list_tmp;
 
 	if (is_first)
-		ope_list = push_b_smaller_ones_r(stack_a, stack_b, num, ope_dict->a);
+		ope_list = push_b_smaller_ones_rotate(
+			stack_a, stack_b, num, ope_dict->a);
 	else
-		ope_list = push_b_smaller_ones_rr(stack_a, stack_b, num, ope_dict->a);
+		ope_list = push_b_smaller_ones_revese_rotate(
+			stack_a, stack_b, num, ope_dict->a);
 	if (!ope_list)
 		return (NULL);
 	ope_list_tmp = sort__get_back(stack_a, stack_b, num, ope_dict);
@@ -70,7 +73,7 @@ static t_ope	*sort_stack_for_compare(
 	return (ope_list);
 }
 
-static t_ope	*push_b_smaller_ones_r(
+static t_ope	*push_b_smaller_ones_rotate(
 	t_node **stack_a, t_node **stack_b, int num, t_ope_d *ope_dict)
 {
 	t_ope	*ope_list;
@@ -97,7 +100,7 @@ static t_ope	*push_b_smaller_ones_r(
 	return (ope_list);
 }
 
-static t_ope	*push_b_smaller_ones_rr(
+static t_ope	*push_b_smaller_ones_revese_rotate(
 	t_node **stack_a, t_node **stack_b, int num, t_ope_d *ope_dict)
 {
 	t_ope	*ope_list;
@@ -123,14 +126,3 @@ static t_ope	*push_b_smaller_ones_rr(
 	}
 	return (ope_list);
 }
-
-// reverse sort
-// 2 1 ->
-// 1 2 -> sa
-
-// 3 2 1 -> 
-// 2 3 1 -> sa
-// 2 1 3 -> rra
-// 3 1 2 -> rra sa
-// 1 3 2 -> ra
-// 1 2 3 -> ra sa

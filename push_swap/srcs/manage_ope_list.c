@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:45:57 by xxxx              #+#    #+#             */
-/*   Updated: 2024/03/12 22:44:02 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/13 14:19:07 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	add_ope_list(t_ope **ope_list, char *ope)
 		return (0);
 	}
 	new_ope->ope = ope;
+	new_ope->prev = NULL;
 	new_ope->next = NULL;
 	if (!*ope_list)
 	{
@@ -36,6 +37,7 @@ int	add_ope_list(t_ope **ope_list, char *ope)
 	while (ope_tmp->next)
 		ope_tmp = ope_tmp->next;
 	ope_tmp->next = new_ope;
+	new_ope->prev = ope_tmp;
 	return (1);
 }
 
@@ -43,6 +45,8 @@ void	join_ope_list(t_ope **ope_list, t_ope *new_ope)
 {
 	t_ope	*ope_tmp;
 
+	if (!ope_list || !new_ope)
+		return ;
 	if (!*ope_list)
 	{
 		*ope_list = new_ope;
@@ -52,6 +56,7 @@ void	join_ope_list(t_ope **ope_list, t_ope *new_ope)
 	while (ope_tmp->next)
 		ope_tmp = ope_tmp->next;
 	ope_tmp->next = new_ope;
+	new_ope->prev = ope_tmp;
 }
 
 t_all_ope_d *init_ope_dict(void)

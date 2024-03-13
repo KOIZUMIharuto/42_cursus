@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/12 22:43:57 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/13 14:42:41 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <stdio.h> // delete
 
 typedef struct s_node
 {
@@ -30,6 +29,7 @@ typedef struct s_node
 typedef struct s_ope
 {
 	char			*ope;
+	struct s_ope	*prev;
 	struct s_ope	*next;
 }	t_ope;
 
@@ -49,6 +49,14 @@ typedef struct s_all_ope_d
 } t_all_ope_d;
 
 void		push_swap(t_node **stack_a, t_node **stack_b, int node_num);
+t_ope		*under_3_sort(t_node **stack, t_ope_d *ope_d);
+t_ope		*under_3_reverse_sort(t_node **stack, t_ope_d *ope_dict);
+t_ope		*under_6_sort(
+	t_node **stack_a, t_node **stack_b, int num, t_all_ope_d *ope_dict);
+t_ope		*algorithm_sort(
+	t_node **stack_a, t_node **stack_b, t_all_ope_d *ope_dict);
+bool		format_ope_list(t_ope **ope_list, t_all_ope_d *ope_d);
+bool		ft_strcmp(const char *s1, const char *s2);
 t_node		*init_stack(void);
 int			node_counter(t_node *stack);
 int			ope_counter(t_ope *ope_list);
@@ -57,12 +65,18 @@ void		free_ope_dict(t_all_ope_d *ope_d);
 int			add_ope_list(t_ope **ope_list, char *ope);
 void		join_ope_list(t_ope **ope_list, t_ope *new_ope);
 t_ope		*free_ope_list(t_ope *ope_list, t_ope *ope_list_tmp);
-t_ope		*under_3_sort(t_node **stack, int num, t_ope_d *ope_d);
-t_ope		*under_6_sort(
-	t_node **stack_a, t_node **stack_b, int num, t_all_ope_d *ope_dict);
+int			find_min_index(t_node *stack);
+int			find_min_num_index(t_node *stack);
+int			find_max_num_index(t_node *stack);
 t_node		*duplicate_stack(t_node *stack);
 t_ope		*sort__get_back(
 	t_node **stack_a, t_node **stack_b, int num, t_all_ope_d *ope_dict);
+t_ope		*push_smaller_half_to_b(
+	t_node **stack_a, t_node **stack_b, t_ope_d *ope_dict);
+t_ope		*push_bigger_half_to_a(
+	t_node **stack_a, t_node **stack_b, t_ope_d *ope_dict);
+t_ope		*sort_pa_ra(
+	t_node **stack_a, t_node **stack_b, t_all_ope_d *ope_dict);
 void		free_stack(t_node *stack);
 void		free_stack__exit(t_node *stack, t_node *stack_b, int status);
 bool		join_node_and_list(t_node **prev_node, t_node *next_node);
