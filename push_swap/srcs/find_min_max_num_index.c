@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_min_max_num_index.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:50:03 by xxxx              #+#    #+#             */
-/*   Updated: 2024/03/13 11:53:23 by xxxx             ###   ########.fr       */
+/*   Created: 2024/03/14 14:57:39 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/14 19:42:50 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	find_min_num_index(t_node *stack)
 	while (stack->index != -1)
 	{
 		if (stack->index == min_index)
-			break;
+			break ;
 		min_num_index++;
 		stack = stack->next;
 	}

@@ -5,12 +5,11 @@ NAME = push_swap
 
 SRC_DIR = srcs
 SRCS =\
-algorithm_sort.c\
 check_argv__create_stack.c\
 check_dup__set_index.c\
 check_str__create_stack.c\
 counter.c\
-duplicate_stack.c\
+dup_stack.c\
 find_min_max_num_index.c\
 format_ope_list.c\
 free_ope.c\
@@ -20,6 +19,7 @@ is_sorted.c\
 join_node_and_list.c\
 main.c\
 manage_ope_list.c\
+over_6_sort.c\
 push_half.c\
 push_swap.c\
 push.c\

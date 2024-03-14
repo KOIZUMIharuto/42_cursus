@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   duplicate_stack.c                                  :+:      :+:    :+:   */
+/*   dup_stack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 20:25:31 by xxxx              #+#    #+#             */
-/*   Updated: 2024/03/14 12:47:31 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/03/14 14:57:43 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/14 16:56:40 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
+static t_node	*sub_dup_stack_func(t_node *stack);
 static t_node	*free_stack_node(t_node *new_stack, t_node *new_node);
 
-t_node	*duplicate_stack(t_node *stack)
+bool	dup_stack(t_node *s_a, t_node *s_b, t_node **s_a_c, t_node **s_b_c)
+{
+	*s_a_c = sub_dup_stack_func(s_a);
+	*s_b_c = sub_dup_stack_func(s_b);
+	if (!*s_a_c || !*s_b_c)
+	{
+		free_stack__exit(*s_a_c, *s_b_c, -1);
+		return (false);
+	}
+	return (true);
+}
+
+static t_node	*sub_dup_stack_func(t_node *stack)
 {
 	t_node	*new_stack;
 	t_node	*new_node;

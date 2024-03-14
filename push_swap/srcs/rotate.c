@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:42 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/12 12:54:14 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:02:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	sub_rotate_func(t_node **stack);
 
-void	rotate(t_node **stack_a, t_node **stack_b)
+void	rotate(t_node **s_a, t_node **s_b)
 {
-	if (stack_a && *stack_a && (*stack_a)->index != -1)
-		sub_rotate_func(stack_a);
-	if (stack_b && *stack_b && (*stack_b)->index != -1)
-		sub_rotate_func(stack_b);
+	if (s_a && *s_a && (*s_a)->index != -1)
+		sub_rotate_func(s_a);
+	if (s_b && *s_b && (*s_b)->index != -1)
+		sub_rotate_func(s_b);
 }
 
 static void	sub_rotate_func(t_node **stack)

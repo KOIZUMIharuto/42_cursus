@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:44 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/12 13:03:01 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:02:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	swap(t_node **stack_a, t_node **stack_b)
+void	swap(t_node **s_a, t_node **s_b)
 {
-	if (stack_a && *stack_a && (*stack_a)->next->index != -1)
-		sub_swap_func(stack_a);
-	if (stack_b && *stack_b && (*stack_b)->next->index != -1)
-		sub_swap_func(stack_b);
+	if (s_a && *s_a && (*s_a)->next->index != -1)
+		sub_swap_func(s_a);
+	if (s_b && *s_b && (*s_b)->next->index != -1)
+		sub_swap_func(s_b);
 }
 
 void	sub_swap_func(t_node **stack)

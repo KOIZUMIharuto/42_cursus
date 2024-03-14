@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   free_stack__exit.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:09:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/13 14:44:13 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/14 13:02:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	free_stack__exit(t_node *stack_a, t_node *stack_b, int status)
+void	free_stack__exit(t_node *s_a, t_node *s_b, int status)
 {
-	if (stack_a)
-		free_stack(stack_a);
-	if (stack_b)
-		free_stack(stack_b);
+	if (s_a)
+		free_stack(s_a);
+	if (s_b)
+		free_stack(s_b);
 	if (status > 0)
 		write (2, "Error\n", 6);
 	if (status != -1)

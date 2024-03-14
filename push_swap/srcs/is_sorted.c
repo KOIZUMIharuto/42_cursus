@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   is_sorted.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:24:20 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/12 20:18:33 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/14 14:36:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-bool	is_all_sorted(t_node *stack_a, t_node *stack_b, int node_num)
+bool	is_all_sorted(t_node *s_a, t_node *s_b)
 {
-	if (!stack_a || !stack_b || node_counter(stack_a) + node_counter(stack_b) != node_num)
-		free_stack__exit(stack_a, stack_b, 1);
-	if (node_counter(stack_b) != 0 || !is_sorted(stack_a))
+	if (!s_a || !s_b)
 		return (false);
-	if (node_counter(stack_a) != node_num)
-		free_stack__exit(stack_a, stack_b, 1);
+	if (node_counter(s_b) != 0 || !is_sorted(s_a))
+		return (false);
 	return (true);
 }
 
@@ -27,6 +25,8 @@ bool	is_sorted(t_node *stack)
 {
 	int		index_count;
 
+	if (!stack)
+		return (false);
 	index_count = -1;
 	while (stack->index != -1)
 	{

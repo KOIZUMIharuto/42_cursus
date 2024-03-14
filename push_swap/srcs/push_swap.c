@@ -3,50 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/13 14:45:27 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/03/14 20:00:47 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	ope_list_printer(t_ope *ope_list);
+static void		ope_l_printer(t_ope *ope_l);
 static size_t	ft_strlen(const char *s);
 
-void	push_swap(t_node **stack_a, t_node **stack_b, int node_num)
+void	push_swap(t_node **s_a, t_node **s_b, int num)
 {
-	t_ope		*ope_list;
-	t_all_ope_d	*ope_dict;
+	t_ope		*ope_l;
+	t_ope_ds	*ope_ds;
 
-	ope_dict = init_ope_dict();
-	if (!ope_dict)
-		free_stack__exit(*stack_a, *stack_b, 1);
-	if (node_num <= 3)
-		ope_list = under_3_sort(stack_a, ope_dict->a);
-	else if (node_num <= 6)
-		ope_list = under_6_sort(stack_a, stack_b, node_num, ope_dict);
+	ope_l = NULL;
+	ope_ds = init_ope_dict();
+	if (!ope_ds)
+		free_stack__exit(*s_a, *s_b, 1);
+	if (num <= 3)
+		ope_l = under_3(s_a, ope_ds->a);
+	else if (num <= 6)
+		ope_l = under_6(s_a, s_b, ope_ds);
 	else
-		ope_list = algorithm_sort(stack_a, stack_b, ope_dict);
-	if (!is_all_sorted(*stack_a, *stack_b, node_num)
-		|| !format_ope_list(&ope_list, ope_dict))
+		ope_l = over_6(s_a, s_b, ope_ds, ope_l);
+	if (!is_all_sorted(*s_a, *s_b)
+		|| !format_ope_list(&ope_l, ope_ds))
 	{
-		(void)free_ope_list(ope_list, NULL);
-		free_stack__exit(*stack_a, *stack_b, 1);
+		free_ope_dict(ope_ds);
+		free_ope_list(ope_l, NULL);
+		free_stack__exit(*s_a, *s_b, 1);
 	}
-	free_ope_dict(ope_dict);
-	ope_list_printer(ope_list);
-	(void)free_ope_list(ope_list, NULL);
+	free_ope_dict(ope_ds);
+	ope_l_printer(ope_l);
+	(void)free_ope_list(ope_l, NULL);
 }
 
-static void	ope_list_printer(t_ope *ope_list)
+static void	ope_l_printer(t_ope *ope_l)
 {
-	while (ope_list)
+	while (ope_l)
 	{
-		write(1, ope_list->ope, ft_strlen(ope_list->ope));
+		write(1, ope_l->ope, ft_strlen(ope_l->ope));
 		write(1, "\n", 1);
-		ope_list = ope_list->next;
+		ope_l = ope_l->next;
 	}
 }
 
