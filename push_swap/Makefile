@@ -1,5 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+SANITIZEFRAG = -fsanitize=address
 
 NAME = push_swap
 
@@ -37,7 +38,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -fsanitize=address
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(SANITIZEFRAG)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $<
