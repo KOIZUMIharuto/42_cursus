@@ -6,17 +6,16 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:57:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 18:57:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:57:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static bool	ope_set_checker(
-	t_ope *ope_1, t_ope *ope_2, char *name_1, char *name_2)
+bool	ope_set_checker(t_ope *ope_1, t_ope *ope_2, char *s_1, char *s_2)
 {
-	if ((ft_strcmp(ope_1->ope, name_1) && ft_strcmp(ope_2->ope, name_2))
-		|| (ft_strcmp(ope_1->ope, name_2) && ft_strcmp(ope_2->ope, name_1)))
+	if ((ft_strcmp(ope_1->ope, s_1) && ft_strcmp(ope_2->ope, s_2))
+		|| (ft_strcmp(ope_1->ope, s_2) && ft_strcmp(ope_2->ope, s_1)))
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 19:42:50 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:22:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <stdio.h> // delete
 
 typedef struct s_node
 {
@@ -55,6 +54,7 @@ t_ope		*under_3_reverse(t_node **stack, t_ope_d *ope_d);
 t_ope		*under_6(t_node **s_a, t_node **s_b, t_ope_ds *ope_ds);
 t_ope		*over_6(t_node **s_a, t_node **s_b, t_ope_ds *ope_ds, t_ope *ope_l);
 bool		format_ope_list(t_ope **ope_l, t_ope_ds *ope_ds);
+bool		ope_set_checker(t_ope *ope_1, t_ope *ope_2, char *s_1, char *s_2);
 bool		ft_strcmp(const char *s1, const char *s2);
 t_node		*init_stack(void);
 int			node_counter(t_node *stack);
@@ -63,6 +63,7 @@ t_ope_ds	*init_ope_dict(void);
 void		free_ope_dict(t_ope_ds *ope_ds);
 int			add_ope_list(t_ope **ope_l, char *ope);
 void		join_ope_list(t_ope **ope_l, t_ope *new_ope);
+void		merge_ope_list(t_ope **ope_l, t_ope *new_ope_l);
 t_ope		*free_ope_list(t_ope *ope_l, t_ope *ope_l_tmp);
 t_ope		*free_s_ope(t_node *s_a, t_node *s_b, t_ope *ope_1, t_ope *ope_2);
 int			find_min_index(t_node *stack);

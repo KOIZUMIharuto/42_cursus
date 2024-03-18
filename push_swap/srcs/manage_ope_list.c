@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:57:15 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 19:10:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:20:18 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,30 @@ void	join_ope_list(t_ope **ope_l, t_ope *new_ope)
 		ope_tmp = ope_tmp->next;
 	ope_tmp->next = new_ope;
 	new_ope->prev = ope_tmp;
+}
+
+void	merge_ope_list(t_ope **ope_l_1, t_ope *ope_l_2)
+{
+	t_ope	*ope_tmp_1;
+	t_ope	*ope_tmp_2;
+
+	if (!ope_l_1 || !ope_l_2)
+		return ;
+	ope_tmp_1 = *ope_l_1;
+	ope_tmp_2 = ope_l_2;
+	while (*ope_l_1 && ope_tmp_1->next && ope_tmp_2)
+	{
+		ope_l_2 = ope_tmp_2->next;
+		if (ope_tmp_1->next)
+			ope_tmp_1->next->prev = ope_tmp_2;
+		ope_tmp_2->next = ope_tmp_1->next;
+		ope_tmp_1->next = ope_tmp_2;
+		ope_tmp_2->prev = ope_tmp_1;
+		ope_tmp_1 = ope_tmp_2->next;
+		ope_tmp_2 = ope_l_2;
+	}
+	if (ope_tmp_2)
+		join_ope_list(ope_l_1, ope_tmp_2);
 }
 
 t_ope_ds	*init_ope_dict(void)

@@ -28,9 +28,9 @@ reverse_rotate.c\
 rotate.c\
 sort_pa_ra.c\
 swap.c\
-under_six_sort_utils.c\
-under_six_sort.c\
-under_three_sort.c
+under_3_sort.c\
+under_6_sort_utils.c\
+under_6_sort.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)

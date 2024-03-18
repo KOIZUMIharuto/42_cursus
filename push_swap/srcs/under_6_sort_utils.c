@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   under_six_sort_utils.c                             :+:      :+:    :+:   */
+/*   under_6_sort_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:56:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 18:58:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:10:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_ope	*sort__pa(t_node **s_a, t_node **s_b, t_ope_ds *ope_ds)
 
 	ope_l = under_3(s_a, ope_ds->a);
 	ope_l_tmp = under_3_reverse(s_b, ope_ds->b);
-	join_ope_list(&ope_l, ope_l_tmp);
+	merge_ope_list(&ope_l, ope_l_tmp);
 	ope_l_tmp = get_back_from_s_b(s_a, s_b, ope_ds->b);
 	join_ope_list(&ope_l, ope_l_tmp);
 	if (!is_all_sorted(*s_a, *s_b))
