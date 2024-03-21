@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:59:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/26 16:19:25 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:13:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,16 @@
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct s_fbs
+typedef struct s_fd_buf
 {
 	int				fd;
 	char			*buf;
-	struct s_fbs	*pre_set;
-	struct s_fbs	*after_set;
-}	t_fbs;
+	struct s_fd_buf	*pre_set;
+	struct s_fd_buf	*post_set;
+}	t_f_b;
 
 char	*get_next_line(int fd);
-ssize_t	read_and_join(t_fbs *fbs, char **line, t_fbs **fbs_list, ssize_t r_len);
-ssize_t	free_all(t_fbs *fbs, t_fbs **fbs_list, char **line, ssize_t rv);
-char	*join_buf_to_line_up_to_0_or_after_nl(char *line, char const *buf);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-size_t	count_up_to_0_or_after_nl(const char *s);
-t_fbs	*find_fd_or_malloc(int fd, t_fbs **fbs_list, t_fbs *fbs_tmp);
+char	*join_up_to_c_or_0(char *line, char *buf, char c);
+size_t	strlen_up_to_c_or_0(char *s, char c);
 
 #endif
