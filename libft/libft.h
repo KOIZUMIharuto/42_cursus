@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:19:13 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 13:48:15 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:27:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,23 @@
 # include <stdbool.h>
 # include <stdarg.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_fd_buf
+{
+	int				fd;
+	char			*buf;
+	struct s_fd_buf	*pre_set;
+	struct s_fd_buf	*post_set;
+}	t_f_b;
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -76,5 +88,9 @@ char	*c_to_str(va_list *arg, char sign);
 char	*arg_to_str(va_list *arg);
 char	*arg_to_hex(va_list *arg, char sign);
 char	*ft_uitoa(unsigned int ui);
+
+char	*get_next_line(int fd);
+char	*join_up_to_c_or_0(char *line, char *buf, char c);
+size_t	strlen_up_to_c_or_0(char *s, char c);
 
 #endif
