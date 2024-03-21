@@ -6,33 +6,14 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:34:58 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:46:31 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:32:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	digit_counter(int n)
-{
-	int	digit_count;
-
-	digit_count = 0;
-	if (n <= 0)
-		digit_count++;
-	while (n <= -1 || 1 <= n)
-	{
-		digit_count++;
-		n /= 10;
-	}
-	return (digit_count);
-}
-
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
+static int	digit_counter(int n);
+static int	ft_abs(int n);
 
 char	*ft_itoa(int n)
 {
@@ -56,6 +37,28 @@ char	*ft_itoa(int n)
 	if (sign == -1)
 		result[0] = '-';
 	return (result);
+}
+
+static int	digit_counter(int n)
+{
+	int	digit_count;
+
+	digit_count = 0;
+	if (n <= 0)
+		digit_count++;
+	while (n <= -1 || 1 <= n)
+	{
+		digit_count++;
+		n /= 10;
+	}
+	return (digit_count);
+}
+
+static int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }
 
 // #include <string.h>

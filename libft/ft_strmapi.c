@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:11:17 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:45:41 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:46:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	size_t			len;
-	unsigned int	index;
-	char			*result;
+	size_t	len;
+	long	index;
+	char	*result;
 
 	if (!s || !f)
 		return (NULL);
@@ -26,7 +26,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		return (NULL);
 	index = -1;
 	while (++index < (unsigned int)len)
-		result[index] = f(index, s[index]);
+		result[index] = f((unsigned int)index, s[index]);
 	result[index] = '\0';
 	return (result);
 }

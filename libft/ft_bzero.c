@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:16:11 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:46:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:24:14 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_bzero(void *s, size_t n)
 	size_t	zero_count;
 
 	zero_count = 0;
-	while (zero_count < n)
-		((unsigned char *)s)[zero_count++] = 0;
+	if (s)
+		while (zero_count < n)
+			((unsigned char *)s)[zero_count++] = 0;
 }
 
 // #include <string.h>

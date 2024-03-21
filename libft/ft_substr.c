@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:09:43 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:45:32 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:34:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	while (start_count++ < start && *s)
 		s++;
 	len_count = 0;
-	if (*s)
-		while (len_count < len && s[len_count])
-			len_count++;
+	while (len_count < len && s[len_count])
+		len_count++;
 	dst = (char *)malloc ((len_count + 1) * sizeof(char));
 	if (!dst)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:49:36 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:19 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:27:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 int	ft_isprint(int c)
 {
-	if (' ' <= c && c <= '~')
-		return (1);
-	else
-		return (0);
+	return (' ' <= c && c <= '~');
 }
 
 // #include <ctype.h>

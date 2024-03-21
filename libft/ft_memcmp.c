@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:35:16 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:52:15 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	size_t	cmp_count;
-
-	cmp_count = 0;
-	while (cmp_count < n)
+	while (s1 && s2 && n-- > 0)
 	{
 		if (*(unsigned char *)s1 != *(unsigned char *)s2)
 			return (*(unsigned char *)s1 - *(unsigned char *)s2);
 		s1++;
 		s2++;
-		cmp_count++;
 	}
 	return (0);
 }

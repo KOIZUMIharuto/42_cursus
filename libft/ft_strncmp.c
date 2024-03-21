@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:35:16 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 21:14:11 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:50:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t	cmp_count;
 
 	cmp_count = 0;
+	if (!s1 || !s2)
+		return ((int)(s1 - s2));
 	while (cmp_count < n && (s1[cmp_count] || s2[cmp_count]))
 	{
 		if (s1[cmp_count] != s2[cmp_count])

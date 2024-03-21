@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:24:26 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 13:47:18 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:50:16 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	print_arg(char sign, va_list *arg, int len);
 

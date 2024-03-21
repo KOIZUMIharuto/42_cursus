@@ -6,13 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:57:10 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/18 11:24:40 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:44:37 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static bool		is_sort_by_rra(t_ope **ope_l, t_node **s_a, t_ope_d *ope_d);
+static bool		can_sort_by_rra(t_ope **ope_l, t_node **s_a, t_ope_d *ope_d);
 static t_ope	*recursive_s(t_node **s_a, t_node **s_b, t_ope_ds *ope_ds);
 static int		push_ope_counter(t_ope *ope_l);
 
@@ -38,7 +38,7 @@ t_ope	*over_6(
 	t_node	*s_b_copy;
 	t_ope	*ope_l_tmp;
 
-	if (is_sort_by_rra(&ope_l, s_a, ope_ds->a))
+	if (can_sort_by_rra(&ope_l, s_a, ope_ds->a))
 		return (ope_l);
 	if (!dup_stack(*s_a, *s_b, &s_a_copy, &s_b_copy))
 		return (NULL);
@@ -60,7 +60,7 @@ t_ope	*over_6(
 	return (start_recursive_s(ope_l, s_a, s_b, ope_ds));
 }
 
-static bool	is_sort_by_rra(t_ope **ope_l, t_node **s_a, t_ope_d *ope_d)
+static bool	can_sort_by_rra(t_ope **ope_l, t_node **s_a, t_ope_d *ope_d)
 {
 	int	num;
 	int	rr_count;

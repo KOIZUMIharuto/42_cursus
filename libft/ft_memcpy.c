@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:53:20 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 12:05:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:01:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
 	size_t	index;
 
 	index = 0;
-	if (!dst && !src && n > 0)
+	if (!dst || !src)
 		return (NULL);
 	while (index < n)
 	{

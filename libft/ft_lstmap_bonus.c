@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 12:52:50 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/13 19:23:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:46:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,21 @@
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*return_lst;
-	t_list	*return_lst_tmp;
-	t_list	*lst_tmp;
+	t_list	*new_node;
 
 	if (!lst || !f || !del)
 		return (NULL);
-	lst_tmp = lst;
 	return_lst = NULL;
-	while (lst_tmp)
+	while (lst)
 	{
-		return_lst_tmp = ft_lstnew(f(lst_tmp->content));
-		if (!return_lst_tmp)
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
 		{
 			ft_lstclear (&return_lst, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&return_lst, return_lst_tmp);
-		lst_tmp = lst_tmp->next;
+		ft_lstadd_back(&return_lst, new_node);
+		lst = lst->next;
 	}
 	return (return_lst);
 }

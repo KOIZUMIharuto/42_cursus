@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:49:50 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/15 14:33:55 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:25:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	h_count;
-	int		n_count;
+	size_t	n_count;
 
+	if (!haystack || !needle)
+		return (NULL);
 	if (!*needle)
 		return ((char *)haystack);
 	h_count = 0;

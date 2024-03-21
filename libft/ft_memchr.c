@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:35:54 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:52:00 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	s_count;
-
-	s_count = 0;
-	while (s_count < n)
+	while (s && n-- > 0)
 	{
 		if (*(char *)s == (char)c)
 			return ((void *)s);
-		s_count++;
 		s++;
 	}
 	return (NULL);

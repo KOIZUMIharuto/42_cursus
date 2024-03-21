@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 11:56:03 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/12 12:51:26 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:47:45 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int		content_count;
-	t_list	*lst_tmp;
+	int		node_count;
 
-	content_count = 0;
-	lst_tmp = lst;
-	while (lst_tmp)
+	node_count = 0;
+	while (lst)
 	{
-		content_count++;
-		lst_tmp = lst_tmp->next;
+		node_count++;
+		lst = lst->next;
 	}
-	return (content_count);
+	return (node_count);
 }

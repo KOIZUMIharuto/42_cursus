@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:10:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:38:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char	*result;
 
+	if (!s)
+		return (NULL);
 	result = NULL;
 	while (*s)
 	{

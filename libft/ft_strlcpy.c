@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 13:56:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/15 15:18:22 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:29:19 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	cpy_count;
 
-	cpy_count = 0;
+	if (!dst || !src)
+		return (0);
 	if (dstsize != 0)
 	{
+		cpy_count = 0;
 		while (src[cpy_count] && cpy_count + 1 < dstsize)
 		{
 			dst[cpy_count] = src[cpy_count];
@@ -26,8 +28,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		}
 		dst[cpy_count] = '\0';
 	}
-	cpy_count = ft_strlen(src);
-	return (cpy_count);
+	return (ft_strlen(src));
 }
 
 // #include <string.h>

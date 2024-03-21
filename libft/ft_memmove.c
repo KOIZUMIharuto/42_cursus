@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 18:02:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 12:05:42 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:01:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	size_t	index;
 	int		sign;
 
-	if (!dst && !src && len > 0)
+	if (!dst || !src)
 		return (NULL);
 	if (dst <= src)
 	{
@@ -29,11 +29,10 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		index = len - 1;
 		sign = -1;
 	}
-	while (len > 0)
+	while (len-- > 0)
 	{
 		((unsigned char *)dst)[index] = ((unsigned char *)src)[index];
 		index += sign;
-		len--;
 	}
 	return (dst);
 }

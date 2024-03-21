@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:41:10 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/07 16:11:57 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:25:47 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ int	ft_atoi(const char *str)
 	long	result;
 	int		sign;
 
-	while (('\t' <= *str && *str <= '\r') || *str == ' ')
+	while (str && (('\t' <= *str && *str <= '\r') || *str == ' '))
 		str++;
 	sign = 1;
-	if (*str == '-' || *str == '+')
+	if (str && (*str == '-' || *str == '+'))
 	{
 		if (*str == '-')
 			sign = -1;
 		str++;
 	}
 	result = 0;
-	while ('0' <= *str && *str <= '9')
+	while (str && ('0' <= *str && *str <= '9'))
 	{
 		if (result < LONG_MIN / 10 || LONG_MAX / 10 < result)
 			return (-(sign + 1) / 2);

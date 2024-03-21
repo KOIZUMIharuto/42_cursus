@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:36:44 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/15 19:18:06 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:37:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ char	*ft_strdup(const char *s1)
 	char	*dst;
 	size_t	char_count;
 
+	if (!s1)
+		return (NULL);
 	char_count = ft_strlen(s1);
 	dst = (char *)malloc ((char_count + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	(void)ft_strlcpy(dst, s1, (char_count + 1) * sizeof(char));
+	if (dst)
+		(void)ft_strlcpy(dst, s1, (char_count + 1) * sizeof(char));
 	return (dst);
 }
 

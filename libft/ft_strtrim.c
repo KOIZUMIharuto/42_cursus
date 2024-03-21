@@ -6,20 +6,20 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:05:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/02/14 14:45:37 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:29:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	set_checker(char const c, char const *set)
+bool	set_checker(char const c, char const *set)
 {
 	if (!set)
-		return (1);
+		return (false);
 	while (*set)
 		if (c == *(set++))
-			return (0);
-	return (1);
+			return (true);
+	return (false);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
@@ -30,17 +30,17 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (!s1)
 		return (NULL);
-	while (!set_checker(*s1, set) && *s1)
+	while (set_checker(*s1, set) && *s1)
 		s1++;
 	len = 0;
 	safe_count = 0;
 	while (s1[len + safe_count])
 	{
 		len += safe_count;
-		while (set_checker(s1[len], set) && s1[len])
+		while (!set_checker(s1[len], set) && s1[len])
 			len++;
 		safe_count = 0;
-		while (!set_checker(s1[len + safe_count], set) && s1[len + safe_count])
+		while (set_checker(s1[len + safe_count], set) && s1[len + safe_count])
 			safe_count++;
 	}
 	dst = (char *)malloc ((len + 1) * sizeof(char));

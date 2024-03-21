@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 12:03:59 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 13:47:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:50:14 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static char	*ul_to_hex(unsigned long ul, char *num_list);
 
