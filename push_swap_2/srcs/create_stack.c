@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:05:13 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/28 19:11:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:27:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ static long	check_str__create_stack(t_node **stack, char *str)
 		new_node = (t_node *)malloc (sizeof(t_node));
 		if (!new_node)
 			free_stack__exit(*stack, NULL, 1);
-		if (!join_node_and_list(stack, new_node))
-			free_stack__exit(*stack, new_node, 1);
+		join_node_and_list(stack, new_node);
 		check_str_atoi(&str, new_node);
 		check_dup__set_index(new_node);
 		node_count++;

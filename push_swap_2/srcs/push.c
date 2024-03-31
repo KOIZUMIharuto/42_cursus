@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 12:27:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:30:28 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ bool	push(t_node **s_from, t_node **s_to, t_ope **ope_l, char *ope)
 
 static void	pop(t_node **stack)
 {
-	if ((*stack)->next == *stack)
-		*stack = NULL;
-	else
-	{
-		(*stack)->prev->next = (*stack)->next;
-		(*stack)->next->prev = (*stack)->prev;
-		*stack = (*stack)->next;
-	}
+	(*stack)->prev->next = (*stack)->next;
+	(*stack)->next->prev = (*stack)->prev;
+	*stack = (*stack)->next;
 }
