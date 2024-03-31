@@ -1,40 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   create_stack_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:32:41 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/03/01 16:48:09 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/31 13:23:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	push_swap(t_node **s_a, t_node **s_b, long num)
+bool	join_node_and_list(t_node **stack_list, t_node *next_node)
 {
-	t_ope		*ope_l;
-
-	ope_l = NULL;
-	(void)s_a;
-	(void)s_b;
-	if (num <= 3)
-		ope_l = NULL;
-	else if (num <= 6)
-		ope_l = NULL;
-	else
-		ope_l = NULL;
-}
-
-bool	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s1 || !s2)
+	if (!stack_list || !*stack_list || !next_node)
 		return (false);
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] == s2[i]);
+	next_node->prev = (*stack_list)->prev;
+	(*stack_list)->prev->next = next_node;
+	next_node->next = *stack_list;
+	(*stack_list)->prev = next_node;
+	return (true);
 }

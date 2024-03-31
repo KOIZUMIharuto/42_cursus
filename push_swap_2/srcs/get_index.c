@@ -6,38 +6,24 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:06:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 17:44:00 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 12:56:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-long	get_min_num_index(t_node *stack)
+long	get_min_max_index(t_node *stack, int sign)
 {
-	long	min_num_index;
+	long	num_index;
 
-	min_num_index = LONG_MAX;
+	num_index = ((1 - sign) / 2) * LONG_MAX;
 	while (stack->index != -1)
 	{
-		if (min_num_index > stack->index)
-			min_num_index = stack->index;
+		if (sign * num_index > sign * stack->index)
+			num_index = stack->index;
 		stack = stack->next;
 	}
-	return (min_num_index);
-}
-
-long	get_max_num_index(t_node *stack)
-{
-	long	max_num_index;
-
-	max_num_index = 0;
-	while (stack->index != -1)
-	{
-		if (max_num_index < stack->index)
-			max_num_index = stack->index;
-		stack = stack->next;
-	}
-	return (max_num_index);
+	return (num_index);
 }
 
 long	get_index_index(t_node *stack, long index)
@@ -48,8 +34,9 @@ long	get_index_index(t_node *stack, long index)
 	while (stack->index != -1)
 	{
 		if (stack->index == index)
-			return (index);
+			return (index_index);
 		stack = stack->next;
+		index++;
 	}
 	return (-1);
 }

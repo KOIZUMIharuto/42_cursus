@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   under_3_sort.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 15:57:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 13:27:30 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/02/12 11:56:03 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../includes/libft.h"
 
-t_ope	*under_3_sort(t_node *s_a, t_node *s_b)
+int	ft_lstsize(t_list *lst)
 {
-}
+	int		node_count;
 
-// 1,2,3 -> 
-// 2,1,3 -> sa
-// 2,3,1 -> rra
-// 1,3,2 -> rra sa
-// 3,1,2 -> ra
-// 3,2,1 -> ra sa
+	node_count = 0;
+	while (lst)
+	{
+		node_count++;
+		lst = lst->next;
+	}
+	return (node_count);
+}

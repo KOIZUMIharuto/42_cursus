@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   under_3_sort.c                                     :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 15:57:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 13:27:30 by hkoizumi         ###   ########.fr       */
+/*   Created: 2023/09/21 16:40:22 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../includes/libft.h"
 
-t_ope	*under_3_sort(t_node *s_a, t_node *s_b)
+int	ft_isalpha(int c)
 {
+	return (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z'));
 }
 
-// 1,2,3 -> 
-// 2,1,3 -> sa
-// 2,3,1 -> rra
-// 1,3,2 -> rra sa
-// 3,1,2 -> ra
-// 3,2,1 -> ra sa
+// #include <ctype.h>
+// #include <stdio.h>
+
+// int	main(int argc, char **argv)
+// {
+// 	if(argc >= 2)
+// 	{
+// 		printf("isalpha    : %c -> %d\n", argv[1][0], isalpha(argv[1][0]));
+// 		printf("ft_isalpha : %c -> %d\n", argv[1][0], ft_isalpha(argv[1][0]));
+// 	}
+// 	return (0);
+// }

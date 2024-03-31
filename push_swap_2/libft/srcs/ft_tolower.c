@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:32:41 by hkoizumi         ###   ########.fr       */
+/*   Created: 2023/09/21 16:59:03 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../includes/libft.h"
 
-void	push_swap(t_node **s_a, t_node **s_b, long num)
+int	ft_tolower(int c)
 {
-	t_ope		*ope_l;
-
-	ope_l = NULL;
-	(void)s_a;
-	(void)s_b;
-	if (num <= 3)
-		ope_l = NULL;
-	else if (num <= 6)
-		ope_l = NULL;
+	if ('A' <= c && c <= 'Z')
+		return (c + ('a' - 'A'));
 	else
-		ope_l = NULL;
+		return (c);
 }
 
-bool	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
+// #include <ctype.h>
+// #include <stdio.h>
 
-	i = 0;
-	if (!s1 || !s2)
-		return (false);
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] == s2[i]);
-}
+// int	main(int argc, char **argv)
+// {
+// 	if(argc >= 2)
+// 	{
+// 		printf("tolower    : %c -> %d\n", argv[1][0], tolower(argv[1][0]));
+// 		printf("ft_tolower : %c -> %d\n", argv[1][0], ft_tolower(argv[1][0]));
+// 	}
+// 	return (0);
+// }

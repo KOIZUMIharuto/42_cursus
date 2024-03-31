@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:57:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 15:46:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 12:22:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	ope_set_checker(t_ope *ope_1, t_ope *ope_2, char *s_1, char *s_2)
 }
 
 static bool	compress_ope_list(
-	t_ope *ope_l, char *ope_a, char *ope_b, char *ope_ab)
+	t_ope **ope_l, char *ope_a, char *ope_b, char *ope_ab)
 {
 	t_ope	*ope_1;
 	t_ope	*ope_2;
@@ -49,7 +49,7 @@ static bool	compress_ope_list(
 	return (is_formatted);
 }
 
-static bool	ofset_ope_list(t_ope *ope_l, bool is_formatted)
+static bool	ofset_ope_list(t_ope **ope_l, bool is_formatted)
 {
 	t_ope	*ope_1;
 	t_ope	*ope_2;
@@ -77,23 +77,23 @@ static bool	ofset_ope_list(t_ope *ope_l, bool is_formatted)
 	return (is_formatted);
 }
 
-bool	format_ope_list(t_ope **ope_l, t_ope_ds *ope_ds)
+bool	format_ope_list(t_ope **ope_l)
 {
 	bool	is_formatted;
 
-	if (!ope_l || !*ope_l || !ope_ds)
+	if (!ope_l || !*ope_l)
 		return (false);
 	is_formatted = false;
 	while (!is_formatted)
 	{
-		if (ofset_ope_list(*ope_l, true)
-			&& compress_ope_list(
-				*ope_l, ope_ds->a->r, ope_ds->b->r, ope_ds->ab->r)
-			&& compress_ope_list(
-				*ope_l, ope_ds->a->rr, ope_ds->b->rr, ope_ds->ab->rr)
-			&& compress_ope_list(
-				*ope_l, ope_ds->a->s, ope_ds->b->s, ope_ds->ab->s))
-			is_formatted = true;
+		// if (ofset_ope_list(*ope_l, true)
+		// 	&& compress_ope_list(
+		// 		*ope_l, ope_ds->a->r, ope_ds->b->r, ope_ds->ab->r)
+		// 	&& compress_ope_list(
+		// 		*ope_l, ope_ds->a->rr, ope_ds->b->rr, ope_ds->ab->rr)
+		// 	&& compress_ope_list(
+		// 		*ope_l, ope_ds->a->s, ope_ds->b->s, ope_ds->ab->s))
+		// 	is_formatted = true;
 	}
 	return (true);
 }

@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   under_3_sort.c                                     :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 15:57:51 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 13:27:30 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/02/12 11:32:10 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../includes/libft.h"
 
-t_ope	*under_3_sort(t_node *s_a, t_node *s_b)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-}
+	t_list	*new_last;
 
-// 1,2,3 -> 
-// 2,1,3 -> sa
-// 2,3,1 -> rra
-// 1,3,2 -> rra sa
-// 3,1,2 -> ra
-// 3,2,1 -> ra sa
+	if (new && lst)
+	{
+		new_last = ft_lstlast(new);
+		new_last->next = *lst;
+		*lst = new;
+	}
+}
