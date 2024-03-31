@@ -37,7 +37,7 @@ $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
 
 $(LIBFT_DIR)/$(LIBFT_NAME):
-	@make -C $(LIBFT_DIR) BUFFER_SIZE="$(BUFFER_SIZE)"
+	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
 
 clean:
 	@rm -f $(OBJ)

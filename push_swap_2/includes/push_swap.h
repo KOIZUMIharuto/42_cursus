@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 12:56:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:27:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		free_stack__exit(t_node *stack, t_node *s_b, int status);
 bool		add_ope_list(t_ope **ope_l, char *ope);
 bool		format_ope_list(t_ope **ope_l);
 
-bool		join_node_and_list(t_node **prev_node, t_node *next_node);
+void		join_node_and_list(t_node **prev_node, t_node *next_node);
 long		get_min_max_index(t_node *stack, int sign);
 
 bool		is_all_sorted(t_node *s_a, t_node *s_b);

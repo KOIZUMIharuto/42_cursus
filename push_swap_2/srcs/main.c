@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 16:23:13 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/03/31 18:32:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	stack_printer(t_node *s_a, t_node *s_b) // delete
 	s_tmp = s_a;
 	for(int i = 0; i < node_counter(s_a) + 1; i++)
 	{
-		ft_printf ("%d : %d[%ld]\n", i, s_tmp->num, s_tmp->index);
+		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
 		s_tmp = s_tmp->next;
 	}
 	ft_printf("\nstack b\n");
 	s_tmp = s_b;
 	for(int i = 0; i < node_counter(s_b) + 1; i++)
 	{
-		ft_printf ("%d : %d[%ld]\n", i, s_tmp->num, s_tmp->index);
+		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
 		s_tmp = s_tmp->next;
 	}
 }
