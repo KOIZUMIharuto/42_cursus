@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 00:58:56 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 02:51:52 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[])
 		create_stack(&s_a, &s_b, argc, argv);
 	if (!is_sorted(s_a))
 		push_swap(&s_a, &s_b);
-	stack_printer(s_a, s_b);
+	// stack_printer(s_a, s_b);
 	free_stack__exit(s_a, s_b, 0);
 	return (0);
 }
@@ -41,13 +41,14 @@ void	stack_printer(t_node *s_a, t_node *s_b) // delete
 		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
 		s_tmp = s_tmp->next;
 	}
-	ft_printf("\nstack b\n");
+	ft_printf("stack b\n");
 	s_tmp = s_b;
 	for(int i = 0; i < node_counter(s_b) + 1; i++)
 	{
 		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
 		s_tmp = s_tmp->next;
 	}
+	write(1, "\n", 1);
 }
 
 // __attribute__ ((destructor))

@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:42 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 00:35:28 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 02:40:01 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ bool	rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope)
 {
 	if (!ope_l || !ope || !add_new_ope(ope_l, ope))
 		return (false);
-	if (s_a && *s_a && (*s_a)->index != -1 && (ope[1] == 'a' || ope[1] == 'r'))
+	if (s_a && *s_a && (*s_a)->index != -1)
 		rotate_util_func(s_a);
-	if (s_b && *s_b && (*s_b)->index != -1 && (ope[1] == 'b' || ope[1] == 'r'))
+	if (s_b && *s_b && (*s_b)->index != -1)
 		rotate_util_func(s_b);
 	return (true);
 }

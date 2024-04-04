@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 01:01:27 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 02:32:56 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ bool	format_ope_list(t_ope_l **ope_l);
 void	free_stack(t_node *stack);
 void	free_stack__exit(t_node *stack, t_node *s_b, int status);
 
-long	get_max_num_index(t_node *stack);
-long	get_min_num_index(t_node *stack);
+long	get_max_index(t_node *stack);
+long	get_min_index(t_node *stack);
 long	get_index_index(t_node *stack, long index);
 
 bool	is_sorted(t_node *stack);

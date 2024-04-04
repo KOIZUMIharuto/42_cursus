@@ -6,13 +6,13 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 16:06:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 00:49:50 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 02:25:07 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-long	get_max_num_index(t_node *stack)
+long	get_max_index(t_node *stack)
 {
 	long	max_num_index;
 
@@ -26,7 +26,7 @@ long	get_max_num_index(t_node *stack)
 	return (max_num_index);
 }
 
-long	get_min_num_index(t_node *stack)
+long	get_min_index(t_node *stack)
 {
 	long	min_num_index;
 
