@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 03:25:22 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 08:32:39 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	r_rotate_util_func(t_node **stack);
 
 bool	r_rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope)
 {
-	if (!ope_l || !ope || !add_new_ope(ope_l, ope))
+	if (!ope || !add_new_ope(ope_l, ope))
 		return (false);
 	if (s_a && *s_a && (*s_a)->index != -1 && (ope[2] == 'a' || ope[2] == 'r'))
 		r_rotate_util_func(s_a);

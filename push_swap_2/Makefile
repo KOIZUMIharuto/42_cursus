@@ -2,14 +2,16 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SANITIZEFRAG = -fsanitize=address
 
-BUFFER_SIZE = 4
+BUFFER_SIZE = 5
 
-NAME = push_swap
 LIBFT_NAME = libft.a
+MANDATORY_NAME = push_swap
+BONUS_NAME = checker
 
 LIBFT_DIR = libft
 
 SRC_DIR = srcs
+
 SRCS =\
 counter.c\
 create_stack_utils.c\
@@ -18,7 +20,6 @@ free_stack__exit.c\
 get_index.c\
 insert_sort.c\
 is_sorted.c\
-main.c\
 manage_ope_list.c\
 push_swap.c\
 push.c\
@@ -27,13 +28,28 @@ rotate.c\
 swap.c\
 under_3_sort.c
 
+MANDATORY_MAIN =\
+main.c
+
+BONUS_MAIN =\
+checker.c
+
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
+MANDATORY_MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MANDATORY_MAIN))
+MANDATORY_MAIN_OBJ = $(MANDATORY_MAIN_SRC:.c=.o)
+BONUS_MAIN_SRC = $(addprefix $(SRC_DIR)/, $(BONUS_MAIN))
+BONUS_MAIN_OBJ = $(BONUS_MAIN_SRC:.c=.o)
 
-all: $(NAME)
+all: $(MANDATORY_NAME)
 
-$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
+$(MANDATORY_NAME): $(MANDATORY_MAIN_OBJ) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
+	@$(CC) $(CFLAGS) $(MANDATORY_MAIN_OBJ) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(MANDATORY_NAME)
+
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(BONUS_MAIN_OBJ) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
+	@$(CC) $(CFLAGS) $(BONUS_MAIN_OBJ) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(BONUS_NAME)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
@@ -43,10 +59,13 @@ $(LIBFT_DIR)/$(LIBFT_NAME):
 
 clean:
 	@rm -f $(OBJ)
+	@rm -f $(MANDATORY_MAIN_OBJ)
+	@rm -f $(BONUS_MAIN_OBJ)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean 
-	@rm -f $(NAME)
+	@rm -f $(MANDATORY_NAME)
+	@rm -f $(BONUS_NAME)
 	@rm -f $(LIBFT_DIR)/$(LIBFT_NAME)
 
 re: fclean all

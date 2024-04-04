@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/04 18:01:39 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 07:16:46 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	push(t_node **s_from, t_node **s_to, t_ope_l **ope_l, char *ope)
 {
 	t_node	*node_tmp;
 
-	if (!s_from || !*s_from || !ope_l || !add_new_ope(ope_l, ope))
+	if (!s_from || !*s_from || !add_new_ope(ope_l, ope))
 		return (false);
 	if ((*s_from)->index != -1)
 	{

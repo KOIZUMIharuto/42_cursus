@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 05:50:23 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 07:36:18 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ bool	swap(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	r_rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 
-// void	stack_printer(t_node *s_a, t_node *s_b); // for debug
+void	stack_printer(t_node *s_a, t_node *s_b); // for debug
 
 #endif
