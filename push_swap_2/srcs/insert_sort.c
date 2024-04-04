@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 11:57:33 by xxxx              #+#    #+#             */
-/*   Updated: 2024/04/05 03:00:38 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 05:50:06 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	insert_sort(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 		if (!push(s_a, s_b, ope_l, "pb"))
 			return (false);
 	if (!is_almost_sorted(*s_a))
-		if (!swap(s_a, NULL, ope_l, "sa"))
+		if (!swap(s_a, s_b, ope_l, "sa"))
 			return (false);
 	while (node_counter(*s_b))
 		if (!insert_sort_util(s_a, s_b, ope_l))
@@ -34,13 +34,13 @@ bool	insert_sort(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 		- get_index_index(*s_a, min_index))
 	{
 		while (get_index_index(*s_a, min_index) != 0)
-			if (!rotate(s_a, NULL, ope_l, "ra"))
+			if (!rotate(s_a, s_b, ope_l, "ra"))
 				return (false);
 	}
 	else
 	{
 		while (get_index_index(*s_a, min_index) != 0)
-			if (!r_rotate(s_a, NULL, ope_l, "rra"))
+			if (!r_rotate(s_a, s_b, ope_l, "rra"))
 				return (false);
 	}
 	return (true);
@@ -52,7 +52,7 @@ static bool	insert_sort_util(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 	t_ope_c	least_ope_count;
 	t_ope_c	ope_count;
 	long	rb_count;
-	
+
 	s_b_tmp = *s_b;
 	rb_count = 0;
 	least_ope_count = count_ra_rra(*s_a, *s_b, rb_count, s_b_tmp->index);
@@ -60,7 +60,7 @@ static bool	insert_sort_util(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 	{
 		rb_count++;
 		s_b_tmp = s_b_tmp->next;
-		ope_count = count_ra_rra(*s_a, *s_b, rb_count, get_min_index(*s_b));
+		ope_count = count_ra_rra(*s_a, *s_b, rb_count, s_b_tmp->index);
 		if (compress_and_sum(&ope_count) < compress_and_sum(&least_ope_count))
 			least_ope_count = ope_count;
 	}
@@ -83,19 +83,13 @@ static t_ope_c	count_ra_rra(t_node *s_a, t_node *s_b, long rb_c, long index)
 		ope_count = (t_ope_c){0, 0, 0, 0, node_counter(s_b) - rb_c, 0};
 	ra_count = 0;
 	s_a_tmp = s_a;
-	if (index < s_a_tmp->index)
-	{
-		while (s_a_tmp->index != get_min_index(s_a))
-		{
-			ra_count++;
+	if ((index < s_a_tmp->index && index < s_a_tmp->prev->prev->index)
+		|| index < get_min_index(s_a) || get_max_index(s_a) < index)
+		while (s_a_tmp->index != get_min_index(s_a) && ra_count++ > -1)
 			s_a_tmp = s_a_tmp->next;
-		}
-	}
-	while (s_a_tmp->index < index && s_a_tmp->next->index != -1)
-	{
-		ra_count++;
-		s_a_tmp = s_a_tmp->next;
-	}
+	if (get_min_index(s_a) < index && index < get_max_index(s_a))
+		while (s_a_tmp->index < index && s_a_tmp->next->index != -1 && ra_count++ > -1)
+			s_a_tmp = s_a_tmp->next;
 	if (ra_count < node_counter(s_a) - ra_count)
 		ope_count.ra = ra_count;
 	else
@@ -131,19 +125,19 @@ static long	compress_and_sum(t_ope_c *ope_c)
 static bool	do_ope(t_ope_c o_c, t_node **s_a, t_node **s_b, t_ope_l **o_l)
 {
 	while (o_c.ra--)
-		if (!rotate(s_a, NULL, o_l, "ra"))
+		if (!rotate(s_a, s_b, o_l, "ra"))
 			return (false);
 	while (o_c.rb--)
-		if (!rotate(NULL, s_b, o_l, "rb"))
+		if (!rotate(s_a, s_b, o_l, "rb"))
 			return (false);
 	while (o_c.rr--)
 		if (!rotate(s_a, s_b, o_l, "rr"))
 			return (false);
 	while (o_c.rra--)
-		if (!r_rotate(s_a, NULL, o_l, "rra"))
+		if (!r_rotate(s_a, s_b, o_l, "rra"))
 			return (false);
 	while (o_c.rrb--)
-		if (!r_rotate(NULL, s_b, o_l, "rrb"))
+		if (!r_rotate(s_a, s_b, o_l, "rrb"))
 			return (false);
 	while (o_c.rrr--)
 		if (!r_rotate(s_a, s_b, o_l, "rrr"))

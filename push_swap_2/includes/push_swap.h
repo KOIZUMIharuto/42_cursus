@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 02:32:56 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 05:50:23 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,12 @@ bool	under_3_sort(t_node **s_a, t_ope_l **ope_l);
 bool	insert_sort(t_node **s_a, t_node **s_b, t_ope_l **ope_l);
 
 void	swap_util_func(t_node **stack);
-void	rotate_util_func(t_node **stack);
 
 bool	push(t_node **s_from, t_node **s_to, t_ope_l **ope_l, char *ope);
 bool	swap(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	r_rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 
-void	stack_printer(t_node *s_a, t_node *s_b); // delete !
+// void	stack_printer(t_node *s_a, t_node *s_b); // for debug
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 02:04:35 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 04:07:34 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	print_ope_l(t_ope_l *ope_l);
+static bool	print_ope_l(t_ope_l *ope_l);
 static bool free_ope_l(t_ope_l *ope_l, bool ret);
 
 bool	push_swap(t_node **s_a, t_node **s_b)
@@ -31,17 +31,20 @@ bool	push_swap(t_node **s_a, t_node **s_b)
 		if (!insert_sort(s_a, s_b, &ope_l))
 			return (free_ope_l(ope_l, false));
 	}
-	print_ope_l(ope_l);
+	if (!print_ope_l(ope_l))
+		return (free_ope_l(ope_l, false));
 	return (free_ope_l(ope_l, true));
 }
 
-static void	print_ope_l(t_ope_l *ope_l)
+static bool	print_ope_l(t_ope_l *ope_l)
 {
 	while (ope_l)
 	{
-		ft_putendl_fd(ope_l->ope, 1);
+		if (ft_printf("%s\n", ope_l->ope) == -1)
+			return (false);
 		ope_l = ope_l->next;
 	}
+	return (true);
 }
 
 static bool free_ope_l(t_ope_l *ope_l, bool ret)

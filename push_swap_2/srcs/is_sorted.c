@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:24:20 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 00:45:14 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/05 03:45:19 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,29 @@ bool	is_sorted(t_node *stack)
 bool	is_almost_sorted(t_node *stack)
 {
 	long	node_count;
+	t_node	*s_tmp;
 
 	if (!stack)
 		return (false);
 	node_count = node_counter(stack);
-	while (node_count > 0)
+	s_tmp = stack;
+	while (s_tmp->index < s_tmp->next->index)
+		s_tmp = s_tmp->next;
+	s_tmp = s_tmp->next;
+	while (node_count-- > 1)
 	{
-		if (is_sorted(stack))
-			return (true);
-		rotate_util_func(&stack);
-		node_count--;
+		if (s_tmp->next->index == -1)
+		{
+			if (s_tmp->index > s_tmp->next->next->index)
+				return (false);
+			s_tmp = s_tmp->next;
+		}
+		else
+		{
+			if (s_tmp->index > s_tmp->next->index)
+				return (false);
+		}
+		s_tmp = s_tmp->next;
 	}
-	return (false);
+	return (true);
 }
