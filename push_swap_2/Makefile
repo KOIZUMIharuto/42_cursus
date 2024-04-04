@@ -16,6 +16,7 @@ create_stack_utils.c\
 create_stack.c\
 free_stack__exit.c\
 get_index.c\
+insert_sort.c\
 is_sorted.c\
 main.c\
 manage_ope_list.c\
@@ -24,6 +25,7 @@ push.c\
 r_rotate.c\
 rotate.c\
 swap.c\
+under_3_sort.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)

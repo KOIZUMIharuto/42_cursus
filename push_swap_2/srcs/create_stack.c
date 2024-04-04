@@ -3,43 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   create_stack.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:05:13 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 17:27:09 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 01:01:20 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 static t_node	*init_stack(void);
-static long		check_str__create_stack(t_node **stack, char *str);
+static bool		check_str__create_stack(t_node **stack, char *str);
 static void		check_str_atoi(char **str, t_node *node);
 static void		check_dup__set_index(t_node *new_node);
 
-long	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[])
+void	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[])
 {
 	int		arg_index;
-	long	node_count;
-	long	node_count_tmp;
 
 	*s_a = init_stack();
 	if (!*s_a)
 		free_stack__exit(*s_a, NULL, 1);
 	arg_index = 0;
-	node_count = 0;
 	while (++arg_index < argc)
-	{
-		node_count_tmp = check_str__create_stack(s_a, argv[arg_index]);
-		if (node_count_tmp == 0)
+		if (!check_str__create_stack(s_a, argv[arg_index]))
 			free_stack__exit(*s_a, NULL, 1);
-		node_count += node_count_tmp;
-	}
 	*s_a = (*s_a)->next;
 	*s_b = init_stack();
 	if (!*s_b)
 		free_stack__exit(*s_a, NULL, 1);
-	return (node_count);
 }
 
 static t_node	*init_stack(void)
@@ -56,14 +48,14 @@ static t_node	*init_stack(void)
 	return (stack);
 }
 
-static long	check_str__create_stack(t_node **stack, char *str)
+static bool	check_str__create_stack(t_node **stack, char *str)
 {
 	t_node	*new_node;
-	long	node_count;
 
-	node_count = 0;
 	while (('\t' <= *str && *str <= '\r') || *str == ' ')
 		str++;
+	if (!*str)
+		return (false);
 	while (*str)
 	{
 		new_node = (t_node *)malloc (sizeof(t_node));
@@ -72,9 +64,8 @@ static long	check_str__create_stack(t_node **stack, char *str)
 		join_node_and_list(stack, new_node);
 		check_str_atoi(&str, new_node);
 		check_dup__set_index(new_node);
-		node_count++;
 	}
-	return (node_count);
+	return (true);
 }
 
 static void	check_str_atoi(char **str, t_node *node)

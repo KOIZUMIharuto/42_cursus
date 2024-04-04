@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:44 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 12:28:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:35:44 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-bool	swap(t_node **s_a, t_node **s_b, t_ope **ope_l, char *ope)
+bool	swap(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope)
 {
-	if (!ope_l || !ope || !add_ope_list(ope_l, ope))
+	if (!ope_l || !ope || !add_new_ope(ope_l, ope))
 		return (false);
-	if (s_a && *s_a && (*s_a)->next->index != -1)
+	if (s_a && *s_a && (*s_a)->next->index != -1 && (ope[1] == 'a' || ope[1] == 's'))
 		swap_util_func(s_a);
-	if (s_b && *s_b && (*s_b)->next->index != -1)
+	if (s_b && *s_b && (*s_b)->next->index != -1 && (ope[1] == 'b' || ope[1] == 's'))
 		swap_util_func(s_b);
 	return (true);
 }

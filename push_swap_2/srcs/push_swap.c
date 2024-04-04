@@ -3,38 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:32:41 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:58:36 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	push_swap(t_node **s_a, t_node **s_b, long num)
+static void	print_ope_l(t_ope_l *ope_l);
+static bool free_ope_l(t_ope_l *ope_l, bool ret);
+
+bool	push_swap(t_node **s_a, t_node **s_b)
 {
-	t_ope		*ope_l;
+	t_ope_l		*ope_l;
 
 	ope_l = NULL;
-	(void)s_a;
 	(void)s_b;
-	if (num <= 3)
-		ope_l = NULL;
-	else if (num <= 6)
-		ope_l = NULL;
+	if (node_counter(*s_a) <= 3)
+	{
+		if (!under_3_sort(s_a, &ope_l))
+			return (free_ope_l(ope_l, false));
+	}
 	else
-		ope_l = NULL;
+	{
+		if (!insert_sort(s_a, s_b, &ope_l))
+			return (free_ope_l(ope_l, false));
+	}
+	print_ope_l(ope_l);
+	return (free_ope_l(ope_l, true));
 }
 
-bool	ft_strcmp(const char *s1, const char *s2)
+static void	print_ope_l(t_ope_l *ope_l)
 {
-	size_t	i;
+	while (ope_l)
+	{
+		ft_putendl_fd(ope_l->ope, 1);
+		ope_l = ope_l->next;
+	}
+}
 
-	i = 0;
-	if (!s1 || !s2)
-		return (false);
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] == s2[i]);
+static bool free_ope_l(t_ope_l *ope_l, bool ret)
+{
+	t_ope_l	*tmp;
+
+	while (ope_l)
+	{
+		tmp = ope_l->next;
+		free(ope_l);
+		ope_l = tmp;
+	}
+	return (ret);
 }

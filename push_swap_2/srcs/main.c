@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 18:32:30 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:58:56 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ int	main(int argc, char *argv[])
 {
 	t_node	*s_a;
 	t_node	*s_b;
-	long	num;
 
 	s_a = NULL;
 	s_b = NULL;
 	if (argc == 1)
 		return (0);
 	else
-		num = create_stack(&s_a, &s_b, argc, argv);
-	if (!is_all_sorted(s_a, s_b))
-		push_swap(&s_a, &s_b, num);
+		create_stack(&s_a, &s_b, argc, argv);
+	if (!is_sorted(s_a))
+		push_swap(&s_a, &s_b);
 	stack_printer(s_a, s_b);
 	free_stack__exit(s_a, s_b, 0);
 	return (0);

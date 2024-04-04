@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:24:26 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 18:30:50 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:48:42 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static int	print_arg(char sign, va_list *arg, int len);
 int	ft_printf(const	char *str, ...)
 {
 	va_list	arguments;
-	ssize_t	arg_count;
 	int		len;
 	int		is_print_success;
 
 	va_start(arguments, str);
-	arg_count = 0;
 	len = 0;
 	while (*str)
 	{

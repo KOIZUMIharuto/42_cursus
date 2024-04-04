@@ -3,37 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   is_sorted.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 11:24:20 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/21 17:40:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 00:45:14 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-bool	is_all_sorted(t_node *s_a, t_node *s_b)
-{
-	if (!s_a || !s_b)
-		return (false);
-	if (node_counter(s_b) != 0 || !is_sorted(s_a))
-		return (false);
-	return (true);
-}
-
 bool	is_sorted(t_node *stack)
 {
-	long	index_tmp;
-
 	if (!stack)
 		return (false);
-	index_tmp = -1;
 	while (stack->index != -1)
 	{
-		if (stack->index <= index_tmp)
+		if (stack->next->index == -1)
+			break ;
+		if (stack->index > stack->next->index)
 			return (false);
-		index_tmp = stack->index;
 		stack = stack->next;
 	}
 	return (true);
+}
+
+bool	is_almost_sorted(t_node *stack)
+{
+	long	node_count;
+
+	if (!stack)
+		return (false);
+	node_count = node_counter(stack);
+	while (node_count > 0)
+	{
+		if (is_sorted(stack))
+			return (true);
+		rotate_util_func(&stack);
+		node_count--;
+	}
+	return (false);
 }

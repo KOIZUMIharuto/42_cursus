@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   format_ope_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:57:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 12:22:30 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:26:13 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static bool	ope_set_checker(t_ope *ope_1, t_ope *ope_2, char *s_1, char *s_2)
+static bool	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (false);
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] == s2[i]);
+}
+
+static bool	ope_set_checker(t_ope_l *ope_1, t_ope_l *ope_2, char *s_1, char *s_2)
 {
 	if ((ft_strcmp(ope_1->ope, s_1) && ft_strcmp(ope_2->ope, s_2))
 		|| (ft_strcmp(ope_1->ope, s_2) && ft_strcmp(ope_2->ope, s_1)))
@@ -21,10 +33,10 @@ static bool	ope_set_checker(t_ope *ope_1, t_ope *ope_2, char *s_1, char *s_2)
 }
 
 static bool	compress_ope_list(
-	t_ope **ope_l, char *ope_a, char *ope_b, char *ope_ab)
+	t_ope_l **ope_l, char *ope_a, char *ope_b, char *ope_ab)
 {
-	t_ope	*ope_1;
-	t_ope	*ope_2;
+	t_ope_l	*ope_1;
+	t_ope_l	*ope_2;
 	bool	is_formatted;
 
 	ope_1 = ope_l;
@@ -49,10 +61,10 @@ static bool	compress_ope_list(
 	return (is_formatted);
 }
 
-static bool	ofset_ope_list(t_ope **ope_l, bool is_formatted)
+static bool	ofset_ope_list(t_ope_l **ope_l, bool is_formatted)
 {
-	t_ope	*ope_1;
-	t_ope	*ope_2;
+	t_ope_l	*ope_1;
+	t_ope_l	*ope_2;
 
 	ope_1 = ope_l;
 	while (ope_1 && ope_1->next)
@@ -77,7 +89,7 @@ static bool	ofset_ope_list(t_ope **ope_l, bool is_formatted)
 	return (is_formatted);
 }
 
-bool	format_ope_list(t_ope **ope_l)
+bool	format_ope_list(t_ope_l **ope_l)
 {
 	bool	is_formatted;
 
