@@ -21,14 +21,13 @@ get_index.c\
 insert_sort.c\
 is_sorted.c\
 manage_ope_list.c\
-push_swap.c\
 push.c\
 r_rotate.c\
 rotate.c\
 swap.c
 
 MANDATORY_MAIN =\
-main.c
+push_swap.c
 
 BONUS_MAIN =\
 checker.c

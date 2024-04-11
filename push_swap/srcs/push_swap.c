@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/11 14:25:38 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/11 16:37:35 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,28 @@
 static bool	print_ope_l(t_ope_l *ope_l);
 static bool free_ope_l(t_ope_l *ope_l, bool ret);
 
-bool	push_swap(t_node **s_a, t_node **s_b)
+int	main(int argc, char *argv[])
 {
-	t_ope_l		*ope_l;
+	t_node	*s_a;
+	t_node	*s_b;
+	t_ope_l	*ope_l;
 
+	s_a = NULL;
+	s_b = NULL;
 	ope_l = NULL;
-	if (!insert_sort(s_a, s_b, &ope_l))
-		return (free_ope_l(ope_l, false));
-	if (!print_ope_l(ope_l))
-		return (free_ope_l(ope_l, false));
-	return (free_ope_l(ope_l, true));
+	if (argc == 1)
+		return (0);
+	else
+		create_stack(&s_a, &s_b, argc, argv);
+	if (!is_sorted(s_a))
+	{
+		if (!insert_sort(&s_a, &s_b, &ope_l))
+			return (free_ope_l(ope_l, false));
+		if (!print_ope_l(ope_l))
+			return (free_ope_l(ope_l, false));
+	}
+	free_stack__exit(s_a, s_b, 0);
+	return (0);
 }
 
 static bool	print_ope_l(t_ope_l *ope_l)

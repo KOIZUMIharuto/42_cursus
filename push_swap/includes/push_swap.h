@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/11 14:47:41 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/11 16:30:20 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef	struct s_ope_count
 
 void	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[]);
 void	join_node_and_list(t_node **prev_node, t_node *next_node);
-
-bool	push_swap(t_node **s_a, t_node **s_b);
 
 long	node_counter(t_node *stack);
 
