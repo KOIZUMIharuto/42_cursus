@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:53:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/11 14:25:51 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/11 14:47:41 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ bool	push_swap(t_node **s_a, t_node **s_b);
 long	node_counter(t_node *stack);
 
 bool	add_new_ope(t_ope_l **ope_l, char *ope);
-bool	format_ope_list(t_ope_l **ope_l);
 
 void	free_stack(t_node *stack);
 void	free_stack__exit(t_node *stack, t_node *s_b, int status);
@@ -69,6 +68,6 @@ bool	swap(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 bool	r_rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope);
 
-void	stack_printer(t_node *s_a, t_node *s_b); // for debug
+// void	stack_printer(t_node *s_a, t_node *s_b); // for debug
 
 #endif

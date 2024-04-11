@@ -6,7 +6,7 @@
 /*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 05:49:47 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/04/11 14:47:28 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int	main(int argc, char *argv[])
 // 	write(1, "\n", 1);
 // }
 
-// __attribute__ ((destructor))
-
-// static void	destructor(void)
-// {
-// 	system("leaks -q push_swap");
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q push_swap");
 // }

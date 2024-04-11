@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SANITIZEFRAG = -fsanitize=address
+# SANITIZEFRAG = -fsanitize=address
 
 BUFFER_SIZE = 5
 
