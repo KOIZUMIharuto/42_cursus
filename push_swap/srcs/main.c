@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:50:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 18:37:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:49:47 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,39 @@ int	main(int argc, char *argv[])
 {
 	t_node	*s_a;
 	t_node	*s_b;
-	int		num;
 
 	s_a = NULL;
+	s_b = NULL;
 	if (argc == 1)
 		return (0);
-	else if (argc == 2)
-	{
-		if (argv[1][0] == '\0')
-			return (0);
-		num = check_str__create_stack(&s_a, argv[1]);
-	}
 	else
-		num = check_argv__create_stack(&s_a, argc, argv);
-	if (!s_a)
-		free_stack__exit (NULL, NULL, 1);
-	s_b = init_stack();
-	if (!s_b)
-		free_stack__exit(s_a, NULL, 1);
-	if (!is_all_sorted(s_a, s_b))
-		push_swap(&s_a, &s_b, num);
+		create_stack(&s_a, &s_b, argc, argv);
+	if (!is_sorted(s_a))
+		push_swap(&s_a, &s_b);
 	free_stack__exit(s_a, s_b, 0);
 	return (0);
 }
+
+// void	stack_printer(t_node *s_a, t_node *s_b) // for debug
+// {
+// 	t_node	*s_tmp;
+
+// 	ft_printf("stack a\n");
+// 	s_tmp = s_a;
+// 	for(int i = 0; i < node_counter(s_a) + 1; i++)
+// 	{
+// 		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
+// 		s_tmp = s_tmp->next;
+// 	}
+// 	ft_printf("stack b\n");
+// 	s_tmp = s_b;
+// 	for(int i = 0; i < node_counter(s_b) + 1; i++)
+// 	{
+// 		ft_printf ("%d : %d[%d]\n", i, s_tmp->num, s_tmp->index);
+// 		s_tmp = s_tmp->next;
+// 	}
+// 	write(1, "\n", 1);
+// }
 
 // __attribute__ ((destructor))
 

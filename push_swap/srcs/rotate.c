@@ -3,30 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:42 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/14 13:02:06 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:32:50 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	sub_rotate_func(t_node **stack);
+static void	rotate_util_func(t_node **stack);
 
-void	rotate(t_node **s_a, t_node **s_b)
+bool	rotate(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope)
 {
-	if (s_a && *s_a && (*s_a)->index != -1)
-		sub_rotate_func(s_a);
-	if (s_b && *s_b && (*s_b)->index != -1)
-		sub_rotate_func(s_b);
+	if (!ope || !add_new_ope(ope_l, ope))
+		return (false);
+	if (s_a && *s_a && (*s_a)->index != -1 && (ope[1] == 'a' || ope[1] == 'r'))
+		rotate_util_func(s_a);
+	if (s_b && *s_b && (*s_b)->index != -1 && (ope[1] == 'b' || ope[1] == 'r'))
+		rotate_util_func(s_b);
+	return (true);
 }
 
-static void	sub_rotate_func(t_node **stack)
+static void	rotate_util_func(t_node **stack)
 {
 	t_node	*node_tmp;
 
 	node_tmp = (*stack)->prev;
 	*stack = (*stack)->next;
-	sub_swap_func(&node_tmp);
+	swap_util_func(&node_tmp);
 }
