@@ -1,4 +1,4 @@
-# tester
+# francinette
 https://github.com/xicodomingues/francinette
 ## Libft
 https://github.com/Tripouille/libftTester
