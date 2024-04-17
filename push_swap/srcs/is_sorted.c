@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:17:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:17:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:28:54 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	is_almost_sorted(t_node *stack)
 	s_tmp = stack;
 	while (s_tmp->index < s_tmp->next->index)
 		s_tmp = s_tmp->next;
-	s_tmp = s_tmp->next;
 	while (node_count-- > 1)
 	{
 		if (s_tmp->next->index == -1)

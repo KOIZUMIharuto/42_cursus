@@ -6,14 +6,14 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:21:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:17:13 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:29:26 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 static bool	print_ope_l(t_ope_l *ope_l);
-static bool free_ope_l(t_ope_l *ope_l, bool ret);
+static bool	free_ope_l(t_ope_l *ope_l, bool ret);
 
 int	main(int argc, char *argv[])
 {
@@ -50,7 +50,7 @@ static bool	print_ope_l(t_ope_l *ope_l)
 	return (true);
 }
 
-static bool free_ope_l(t_ope_l *ope_l, bool ret)
+static bool	free_ope_l(t_ope_l *ope_l, bool ret)
 {
 	t_ope_l	*tmp;
 

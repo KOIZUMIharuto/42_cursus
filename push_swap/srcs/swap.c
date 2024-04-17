@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:26:44 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:17:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:31:54 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ bool	swap(t_node **s_a, t_node **s_b, t_ope_l **ope_l, char *ope)
 {
 	if (!ope || !add_new_ope(ope_l, ope))
 		return (false);
-	if (s_a && *s_a && (*s_a)->next->index != -1 && (ope[1] == 'a' || ope[1] == 's'))
+	if (s_a && *s_a && (*s_a)->next->index != -1
+		&& (ope[1] == 'a' || ope[1] == 's'))
 		swap_util_func(s_a);
-	if (s_b && *s_b && (*s_b)->next->index != -1 && (ope[1] == 'b' || ope[1] == 's'))
+	if (s_b && *s_b && (*s_b)->next->index != -1
+		&& (ope[1] == 'b' || ope[1] == 's'))
 		swap_util_func(s_b);
 	return (true);
 }

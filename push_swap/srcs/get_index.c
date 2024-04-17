@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:47 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:16:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ long	get_min_index(t_node *stack)
 	return (min_num_index);
 }
 
-long	get_index_index(t_node *stack, long index)
+long	get_pos(t_node *stack, long index)
 {
 	long	index_index;
 

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:17:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:17:45 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/includes/libft.h"
 
-typedef	struct s_node
+typedef struct s_node
 {
 	int				num;
 	long			index;
@@ -23,14 +23,14 @@ typedef	struct s_node
 	struct s_node	*next;
 }		t_node;
 
-typedef	struct s_ope_list
+typedef struct s_ope_list
 {
 	char				*ope;
 	struct s_ope_list	*prev;
 	struct s_ope_list	*next;
 }		t_ope_l;
 
-typedef	struct s_ope_count
+typedef struct s_ope_count
 {
 	long	ra;
 	long	rb;
@@ -52,7 +52,7 @@ void	free_stack__exit(t_node *stack, t_node *s_b, int status);
 
 long	get_max_index(t_node *stack);
 long	get_min_index(t_node *stack);
-long	get_index_index(t_node *stack, long index);
+long	get_pos(t_node *stack, long index);
 
 bool	is_sorted(t_node *stack);
 bool	is_almost_sorted(t_node *stack);

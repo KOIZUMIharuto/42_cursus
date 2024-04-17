@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:52 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:16:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:28:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ static bool		do_ope(t_ope_c o_c, t_node **s_a, t_node **s_b, t_ope_l **o_l);
 
 bool	insert_sort(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 {
-	long	min_index;
-	while(node_counter(*s_a) > 3 && !is_almost_sorted(*s_a))
+	long	min_i;
+
+	while (node_counter(*s_a) > 3 && !is_almost_sorted(*s_a))
 		if (!push(s_a, s_b, ope_l, "pb"))
 			return (false);
 	if (!is_almost_sorted(*s_a))
@@ -29,17 +30,16 @@ bool	insert_sort(t_node **s_a, t_node **s_b, t_ope_l **ope_l)
 	while (node_counter(*s_b))
 		if (!insert_sort_util(s_a, s_b, ope_l))
 			return (false);
-	min_index = get_min_index(*s_a);
-	if (get_index_index(*s_a, min_index) < node_counter(*s_a)
-		- get_index_index(*s_a, min_index))
+	min_i = get_min_index(*s_a);
+	if (get_pos(*s_a, min_i) < node_counter(*s_a) - get_pos(*s_a, min_i))
 	{
-		while (get_index_index(*s_a, min_index) != 0)
+		while (get_pos(*s_a, min_i) != 0)
 			if (!rotate(s_a, s_b, ope_l, "ra"))
 				return (false);
 	}
 	else
 	{
-		while (get_index_index(*s_a, min_index) != 0)
+		while (get_pos(*s_a, min_i) != 0)
 			if (!r_rotate(s_a, s_b, ope_l, "rra"))
 				return (false);
 	}
@@ -88,7 +88,8 @@ static t_ope_c	count_ra_rra(t_node *s_a, t_node *s_b, long rb_c, long index)
 		while (s_a_tmp->index != get_min_index(s_a) && ra_count++ > -1)
 			s_a_tmp = s_a_tmp->next;
 	if (get_min_index(s_a) < index && index < get_max_index(s_a))
-		while (s_a_tmp->index < index && s_a_tmp->next->index != -1 && ra_count++ > -1)
+		while (s_a_tmp->index < index
+			&& s_a_tmp->next->index != -1 && ra_count++ > -1)
 			s_a_tmp = s_a_tmp->next;
 	if (ra_count < node_counter(s_a) - ra_count)
 		ope_count.ra = ra_count;
