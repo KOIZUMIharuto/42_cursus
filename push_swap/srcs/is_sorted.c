@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:17:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:28:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/17 18:27:11 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,27 @@ bool	is_sorted(t_node *stack)
 bool	is_almost_sorted(t_node *stack)
 {
 	long	node_count;
-	t_node	*s_tmp;
 
 	if (!stack)
 		return (false);
 	node_count = node_counter(stack);
-	s_tmp = stack;
-	while (s_tmp->index < s_tmp->next->index)
-		s_tmp = s_tmp->next;
+	while (stack->index < stack->next->index)
+		stack = stack->next;
+	stack = stack->next;
 	while (node_count-- > 1)
 	{
-		if (s_tmp->next->index == -1)
+		if (stack->next->index == -1)
 		{
-			if (s_tmp->index > s_tmp->next->next->index)
+			if (stack->index > stack->next->next->index)
 				return (false);
-			s_tmp = s_tmp->next;
+			stack = stack->next;
 		}
 		else
 		{
-			if (s_tmp->index > s_tmp->next->index)
+			if (stack->index > stack->next->index)
 				return (false);
 		}
-		s_tmp = s_tmp->next;
+		stack = stack->next;
 	}
 	return (true);
 }
