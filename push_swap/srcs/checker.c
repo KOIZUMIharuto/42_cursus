@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:16 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:16:19 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:25:53 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,9 @@ static bool	ft_strcmp(char *s1, char *s2)
 // 		s_tmp = s_tmp->next;
 // 	}
 // 	write(1, "\n", 1);
+// }
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q checker");
 // }

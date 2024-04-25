@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:52 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:28:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:24:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,18 +104,14 @@ static long	compress_and_sum(t_ope_c *ope_c)
 
 	while (ope_c->ra > 0 && ope_c->rb > 0)
 	{
-		if (ope_c->ra > 0)
-			ope_c->ra--;
-		if (ope_c->rb > 0)
-			ope_c->rb--;
+		ope_c->ra--;
+		ope_c->rb--;
 		ope_c->rr++;
 	}
 	while (ope_c->rra > 0 && ope_c->rrb > 0)
 	{
-		if (ope_c->rra > 0)
-			ope_c->rra--;
-		if (ope_c->rrb > 0)
-			ope_c->rrb--;
+		ope_c->rra--;
+		ope_c->rrb--;
 		ope_c->rrr++;
 	}
 	sum = ope_c->ra + ope_c->rb + ope_c->rr

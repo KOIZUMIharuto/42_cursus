@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:42 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:16:45 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:20:55 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	free_stack(t_node *stack)
 {
 	t_node	*stack_tmp;
 
-	while (stack->index != -1)
+	stack->prev->next = NULL;
+	while (stack)
 	{
 		stack_tmp = stack->next;
 		free (stack);
 		stack = stack_tmp;
 	}
-	free (stack);
 }
