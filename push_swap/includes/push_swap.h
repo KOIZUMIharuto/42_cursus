@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:17:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 17:27:52 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:38:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ typedef struct s_ope_count
 	long	rrr;
 }		t_ope_c;
 
-void	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[]);
+bool	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[]);
 void	join_node_and_list(t_node **prev_node, t_node *next_node);
 
 long	node_counter(t_node *stack);
 
 bool	add_new_ope(t_ope_l **ope_l, char *ope);
 
-void	free_stack(t_node *stack);
-void	free_stack__exit(t_node *stack, t_node *s_b, int status);
+void	free_stack_and_exit(t_node *stack, t_node *s_b, int status);
 
 long	get_max_index(t_node *stack);
 long	get_min_index(t_node *stack);

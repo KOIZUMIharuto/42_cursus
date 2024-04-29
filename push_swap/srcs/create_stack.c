@@ -6,32 +6,33 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:37 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/17 14:16:39 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:37:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
 static t_node	*init_stack(void);
-static bool		check_str__create_stack(t_node **stack, char *str);
+static bool		check_str_and_create_stack(t_node **stack, char *str);
 static bool		check_str_atoi(char **str, t_node *node);
-static bool		check_dup__set_index(t_node *new_node);
+static bool		check_dup_and_set_index(t_node *new_node);
 
-void	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[])
+bool	create_stack(t_node **s_a, t_node **s_b, int argc, char *argv[])
 {
 	int		arg_index;
 
 	*s_a = init_stack();
 	if (!*s_a)
-		free_stack__exit(NULL, NULL, 1);
+		return (false);
 	arg_index = 0;
 	while (++arg_index < argc)
-		if (!check_str__create_stack(s_a, argv[arg_index]))
-			free_stack__exit(*s_a, NULL, 1);
+		if (!check_str_and_create_stack(s_a, argv[arg_index]))
+			return (false);
 	*s_a = (*s_a)->next;
 	*s_b = init_stack();
 	if (!*s_b)
-		free_stack__exit(*s_a, NULL, 1);
+		return (false);
+	return (true);
 }
 
 static t_node	*init_stack(void)
@@ -48,7 +49,7 @@ static t_node	*init_stack(void)
 	return (stack);
 }
 
-static bool	check_str__create_stack(t_node **stack, char *str)
+static bool	check_str_and_create_stack(t_node **stack, char *str)
 {
 	t_node	*new_node;
 
@@ -62,7 +63,8 @@ static bool	check_str__create_stack(t_node **stack, char *str)
 		if (!new_node)
 			return (false);
 		join_node_and_list(stack, new_node);
-		if (!check_str_atoi(&str, new_node) || !check_dup__set_index(new_node))
+		if (!check_str_atoi(&str, new_node)
+			|| !check_dup_and_set_index(new_node))
 			return (false);
 	}
 	return (true);
@@ -96,7 +98,7 @@ static bool	check_str_atoi(char **str, t_node *node)
 	return (true);
 }
 
-static bool	check_dup__set_index(t_node *new_node)
+static bool	check_dup_and_set_index(t_node *new_node)
 {
 	t_node	*stack;
 

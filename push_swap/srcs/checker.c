@@ -6,13 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:16:16 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/25 16:25:53 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:34:54 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	get_ope_and_exec(t_node **s_a, t_node **s_b);
+static bool	get_ope_and_exec(t_node **s_a, t_node **s_b);
 static bool	exec_ope(t_node **s_a, t_node **s_b, char *line);
 static bool	ft_strcmp(char *s1, char *s2);
 
@@ -20,23 +20,30 @@ int	main(int argc, char *argv[])
 {
 	t_node	*s_a;
 	t_node	*s_b;
+	int		exit_status;
 
 	s_a = NULL;
 	s_b = NULL;
+	exit_status = 0;
 	if (argc == 1)
 		return (0);
 	else
-		create_stack(&s_a, &s_b, argc, argv);
-	get_ope_and_exec(&s_a, &s_b);
-	if (is_sorted(s_a) && node_counter(s_b) == 0)
-		ft_putendl_fd("OK", 1);
-	else
-		ft_putendl_fd("KO", 1);
-	free_stack__exit(s_a, s_b, 0);
+		if (!create_stack(&s_a, &s_b, argc, argv))
+			exit_status = 1;
+	if (exit_status == 0 && !get_ope_and_exec(&s_a, &s_b))
+		exit_status = 1;
+	if (exit_status == 0)
+	{
+		if (is_sorted(s_a) && node_counter(s_b) == 0)
+			ft_putendl_fd("OK", 1);
+		else
+			ft_putendl_fd("KO", 1);
+	}
+	free_stack_and_exit(s_a, s_b, exit_status);
 	return (0);
 }
 
-static void	get_ope_and_exec(t_node **s_a, t_node **s_b)
+static bool	get_ope_and_exec(t_node **s_a, t_node **s_b)
 {
 	char	*line;
 
@@ -48,10 +55,11 @@ static void	get_ope_and_exec(t_node **s_a, t_node **s_b)
 		if (!exec_ope(s_a, s_b, line))
 		{
 			free(line);
-			free_stack__exit(*s_a, *s_b, 1);
+			return (false);
 		}
 		free(line);
 	}
+	return (true);
 }
 
 static bool	exec_ope(t_node **s_a, t_node **s_b, char *line)

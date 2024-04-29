@@ -16,7 +16,7 @@ SRCS =\
 counter.c\
 create_stack_utils.c\
 create_stack.c\
-free_stack__exit.c\
+free_stack_and_exit.c\
 get_index.c\
 insert_sort.c\
 is_sorted.c\
