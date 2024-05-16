@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 23:37:03 by xxxx              #+#    #+#             */
-/*   Updated: 2024/05/08 13:02:38 by xxxx             ###   ########.fr       */
+/*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/05/16 12:51:15 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,5 @@
 
 # include "../libft/includes/libft.h"
 
-# define ARG_NUM_ERROR "Error: The number of arguments is not sufficient"
-
-char	***check_argv(int argc, char *argv[]);
 
 #endif
