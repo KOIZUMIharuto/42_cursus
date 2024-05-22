@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-# SANITIZEFRAG = -fsanitize=address
+SANITIZEFRAG = -fsanitize=address
 
 BUFFER_SIZE = 5
 
@@ -12,7 +12,8 @@ LIBFT_DIR = libft
 SRC_DIR = srcs
 
 SRCS =\
-pipex.c
+pipex.c\
+split_command.c
 
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
@@ -21,7 +22,7 @@ OBJ = $(SRC:.c=.o)
 all: $(MANDATORY_NAME)
 
 $(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(MANDATORY_NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(MANDATORY_NAME) $(SANITIZEFRAG)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)

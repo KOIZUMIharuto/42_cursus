@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/16 14:52:32 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:09:50 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	main(int argc, char *argv[], char *envp[])
 	index = 0;
 	while (index < argc)
 	{
-		commands = ft_split(argv[index], "\n\t\v\f\r ");
+		commands = split_command(argv[index]);
+		if (!commands)
+		{
+			ft_putendl_fd("split_command failed", 2);
+			return (1);
+		}
 		index2 = 0;
 		ft_putchar_fd('\n', 1);
 		while (commands[index2])
@@ -42,3 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	return (0);
 }
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q pipex");
+// }
