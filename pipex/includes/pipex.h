@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/21 17:36:20 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/05/23 13:47:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 
 typedef struct s_escape_sequence
 {
-	bool	double_quote;
-	bool	single_quote;
-	bool	backslash;
-}	t_esc_seq;
+	bool	double_q;
+	bool	single_q;
+	bool	bacl_s;
+}	t_esc;
 
 char	**split_command(char *command);
 

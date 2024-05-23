@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_argv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 23:53:35 by xxxx              #+#    #+#             */
-/*   Updated: 2024/05/08 14:00:35 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/05/17 13:52:11 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,35 @@ static void free_cmd(char ***cmd)
 	free(cmd);
 }
 
-int main(int argc, char **argv)
-{
-	char	***cmd;
-	int		index_1;
-	int		index_2;
+// int main(int argc, char **argv)
+// {
+// 	char	***cmd;
+// 	int		index_1;
+// 	int		index_2;
 
-	for (int i = 0; i < argc; i++)
-	{
-		ft_putendl_fd(argv[i], 1);
-	}
-	ft_putchar_fd('\n', 1);
-	cmd = check_argv(argc, argv);
-	if (!cmd)
-		return (1);
-	index_1 = 0;
-	while (cmd[index_1])
-	{
-		index_2 = 0;
-		while (cmd[index_1][index_2])
-		{
-			ft_putendl_fd(cmd[index_1][index_2], 1);
-			free(cmd[index_1][index_2]);
-			index_2++;
-		}
-		ft_putchar_fd('\n', 1);
-		free(cmd[index_1]);
-		index_1++;
-	}
-	free(cmd);
-	return (0);
-}
+// 	for (int i = 0; i < argc; i++)
+// 	{
+// 		ft_putendl_fd(argv[i], 1);
+// 	}
+// 	ft_putchar_fd('\n', 1);
+// 	cmd = check_argv(argc, argv);
+// 	if (!cmd)
+// 		return (1);
+// 	index_1 = 0;
+// 	while (cmd[index_1])
+// 	{
+// 		index_2 = 0;
+// 		while (cmd[index_1][index_2])
+// 		{
+// 			ft_putendl_fd(cmd[index_1][index_2], 1);
+// 			free(cmd[index_1][index_2]);
+// 			index_2++;
+// 		}
+// 		ft_putchar_fd('\n', 1);
+// 		free(cmd[index_1]);
+// 		index_1++;
+// 	}
+// 	free(cmd);
+// 	return (0);
+// }
 	

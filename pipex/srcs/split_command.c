@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   split_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:14:34 by xxxx              #+#    #+#             */
-/*   Updated: 2024/05/21 22:08:49 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/05/23 15:31:55 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static char	**recursive_split(char *str, char *delimiter, t_esc_seq *esc_seq, int str_count);
-static bool	is_split(char c, char *delimiter, t_esc_seq *esc_seq);
+static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count);
+static bool	is_split(char c, char *del, t_esc *esc);
 static bool	format_commands(char **commands);
 
 char	**split_command(char *command)
 {
-	char		**commands;
-	t_esc_seq	esc_seq;
-	int			index;
+	char	**commands;
+	t_esc	esc;
+	int		index;
 
-	esc_seq = (t_esc_seq){false, false, false};
-	commands = recursive_split(command, "\n\t\v\f\r ", &esc_seq, 0);
+	esc = (t_esc){false, false, false};
+	commands = recursive_split(command, "\n\t\v\f\r ", &esc, 0);
 	if (!commands)
 		return (NULL);
 	if (!format_commands(commands))
@@ -38,100 +38,75 @@ char	**split_command(char *command)
 }
 
 
-static char	**recursive_split(char *str, char *delimiter, t_esc_seq *esc_seq, int str_count)
+static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count)
 {
-	int			len;
-	char		*command;
-	char		**commands;
+	int		len;
+	char	*command;
+	char	**commands;
 
-	while (*str && is_split(*str, delimiter, esc_seq))
+	while (*str && is_split(*str, del, esc))
 		str++;
 	len = 1;
-	while (*str && str[len] && !is_split(str[len], delimiter, esc_seq))
+	while (*str && str[len] && !is_split(str[len], del, esc))
 		len++;
+	command = NULL;
+	if (*str)
+		commands = recursive_split(str + len, del, esc, str_count + 1);
+	else
+		commands = (char **)malloc((str_count + 1) * sizeof(char *));
+	if (!commands)
+		return (NULL);
 	if (*str)
 	{
-		command = ft_substr(str, 0, len);
-		if (!command)
+		commands[str_count] = ft_substr(str, 0, len);
+		if (!commands[str_count])
 			return (NULL);
-		commands = recursive_split(str + len, delimiter, esc_seq, str_count + 1);
-		if (!commands)
-		{
-			free(command);
-			return (NULL);
-		}
-		commands[str_count] = command;
 	}
 	else
-	{
-		commands = (char **)malloc((str_count + 1) * sizeof(char *));
-		if (!commands)
-			return (NULL);
 		commands[str_count] = NULL;
-	}
 	return (commands);
 }
 
-bool	is_split(char c, char *delimiter, t_esc_seq *esc_seq)
+bool	is_split(char c, char *del, t_esc *esc)
 {
-	if (ft_strchr(delimiter, c) && !(esc_seq->single_quote) && !(esc_seq->double_quote) && !(esc_seq->backslash))
+	if (ft_strchr(del, c) && !(esc->single_q || esc->double_q || esc->bacl_s))
 		return (true);
 	if (c == '\\')
-		esc_seq->backslash = !(esc_seq->backslash);
-	else 
+		esc->bacl_s = !(esc->bacl_s);
+	else
 	{
 		if (c == '\'')
-		{
-			if (esc_seq->single_quote)
-				esc_seq->single_quote = false;
-			else
-				if (!(esc_seq->double_quote) && !(esc_seq->backslash))
-					esc_seq->single_quote = true;
-		}
+			esc->single_q = !(esc->single_q || esc->double_q || esc->bacl_s);
 		else if (c == '\"')
-		{
-			if (!(esc_seq->backslash))
-			{
-				if (esc_seq->double_quote)
-					esc_seq->double_quote = false;
-				else
-					if (!(esc_seq->single_quote))
-						esc_seq->double_quote = true;
-			}
-		}
-		esc_seq->backslash = false;
+			if (!esc->bacl_s)
+				esc->double_q = !(esc->double_q || esc->single_q);
+		esc->bacl_s = false;
 	}
 	return (false);
 }
 
 static bool	format_commands(char **commands)
 {
-	t_esc_seq	esc_seq;
-	t_esc_seq	esc_seq_tmp;
-	char		*command;
-	int			index;	
+	t_esc	esc;
+	t_esc	esc_tmp;
+	int		index;
 
 	while (*commands)
 	{
-		esc_seq = (t_esc_seq){false, false, false};
+		esc = (t_esc){false, false, false};
 		index = 0;
 		while ((*commands)[index])
 		{
-			esc_seq_tmp = esc_seq;
-			(void)is_split((*commands)[index], "", &esc_seq);
-			if (esc_seq.backslash
-				|| esc_seq_tmp.single_quote != esc_seq.single_quote
-				|| esc_seq_tmp.double_quote != esc_seq.double_quote)
-				ft_memmove(*commands + index, *commands + index + 1, ft_strlen(*commands + index));
+			esc_tmp = esc;
+			(void)is_split((*commands)[index], "", &esc);
+			if (esc.bacl_s || esc_tmp.single_q != esc.single_q
+				|| esc_tmp.double_q != esc.double_q)
+				ft_memmove(&((*commands)[index]), &((*commands)[index + 1]),
+					ft_strlen(&((*commands)[index])));
 			else
 				index++;
 		}
-		command = ft_strdup(*commands);
-		if (!command)
-			return (false);
-		free(*commands);
-		*commands = command;
-		if (esc_seq.backslash || esc_seq.single_quote || esc_seq.double_quote)
+		if (esc.bacl_s || esc.single_q || esc.double_q)
 			return (false);
 		commands++;
 	}

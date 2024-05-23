@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:03:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/07 13:37:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:55:24 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char *argv[], char *envp[])
 		while (ft_strncmp(*envp, "PATH=", 5))
 			envp++;
 		// ft_putendl_fd(*envp, 2);
-		path_list = ft_split(*envp + 5, ':');
+		path_list = ft_split(*envp + 5, ":");
 		path_index = 0;
 		while (path_list[path_index])
 		{
@@ -73,7 +73,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (!path_list[path_index])
 		{
-			ft_putendl_fd("Error: command not found", 2);
+			ft_putstr_fd("Error: command not found\ncommand: ", 2);
+			ft_putendl_fd(cmd[0][0], 2);
 			return (1);
 		}
 		execve(path, cmd[0], envp);
@@ -103,7 +104,7 @@ int	main(int argc, char *argv[], char *envp[])
 		while (ft_strncmp(*envp, "PATH=", 5))
 			envp++;
 		// ft_putendl_fd(*envp, 2);
-		path_list = ft_split(*envp + 5, ':');
+		path_list = ft_split(*envp + 5, ":");
 		path_index = 0;
 		while (path_list[path_index])
 		{
@@ -116,7 +117,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (!path_list[path_index])
 		{
-			ft_putendl_fd("Error: command not found", 2);
+			ft_putstr_fd("Error: command not found\ncommand: ", 2);
+			ft_putendl_fd(cmd[1][0], 2);
 			return (1);
 		}
 		execve(path, cmd[1], envp);
