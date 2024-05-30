@@ -6,36 +6,44 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/29 12:57:28 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:51:59 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	char	***map;
 	int		row_count;
 	int		col_count;
+	t_data	***data;
 
-	if (argc >=2)
+	if (argc >= 2)
 	{
-		map = check_map(argv[1], &row_count, &col_count);
-		if (!map)
+		data = get_map_data(argv[1]);
+		if (!data)
 			return (1);
-		int i = 0;
-		while (i < row_count)
+		row_count = 0;
+		while (data[row_count])
 		{
-			int j = 0;
-			while (j < col_count)
+			col_count = 0;
+			ft_putstr_fd("! ", 1);
+			while (data[row_count][col_count])
 			{
-				ft_putstr_fd(map[i][j], 1);
-				ft_putchar_fd(':', 1);
-				j++;
+				ft_printf("%d ", data[row_count][col_count]->z);
+				free (data[row_count][col_count]);
+				col_count++;
 			}
+			free(data[row_count]);
 			ft_putchar_fd('\n', 1);
-			i++;
+			row_count++;
 		}
+		free (data);
 	}
 	return (0);
+}
+
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q fdf");
 }

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/29 15:53:50 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:48:42 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,23 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
+# include <stdio.h>
+
 # include "../minilibx_macos/mlx.h"
 # include "../libft/includes/libft.h"
 
+# define UPPER_HEX_LIST "0123456789ABCDEF"
+# define LOWER_HEX_LIST "0123456789abcdef"
 
+typedef struct s_data
+{
+	int				x;
+	int				y;
+	int				z;
+	unsigned int	color;
+}	t_data;
 
-char	***check_map(char *map_file, int *row_count, int *col_count);
+t_data	***get_map_data(char	*map_file);
+void	*free_data(t_data ***data);
 
 #endif
