@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 12:23:11 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/19 16:36:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:40:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
-		if (*s == (unsigned char)c)
+		if (*((char *)s) == (char)c)
 			return ((char *)s);
 		s++;
 	}
-	if (*s == (unsigned char)c)
+	if (*((char *)s) == (char)c)
 		return ((char *)s);
 	return (NULL);
 }
