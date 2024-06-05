@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 16:40:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:54:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ t_data		***get_map_data(char	*map_file);
 t_data		***recursive_gnl(int fd, double y);
 
 bool		x_y_counter(t_data ***data, int *x, int *y);
+
+bool		translate(t_data ***data, t_vector4 *vector, bool need_free);
+bool		scale(t_data ***data, t_vector4 *vector, bool need_free);
 
 t_vector4	*create_vector4(double x, double y, double z, double w);
 
