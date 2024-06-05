@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:49:15 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:40:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 # include "../minilibx_macos/mlx.h"
 # include "../libft/includes/libft.h"
 
-# include "myerror.h"
+# define USAGE_ERROR_MESSAGE "Error: Missing required argument.\n\
+Usage: ./fdf <path_to_map_file>"
+# define ATODBL_ERROR_MESSAGE "Error: Invalid value in map."
+# define COLUMN_ERROR_MESSAGE "Error: Invalid column count."
 
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
@@ -57,6 +60,7 @@ t_vector4	*create_vector4(double x, double y, double z, double w);
 
 void		*free_data3(t_data ***data, int free_index);
 void		*free_data2(t_data **data);
+void		*free_vector(t_data *data);
 
 void		*return_error_null(char *error_message);
 

@@ -14,6 +14,7 @@ MLX_DIR = minilibx_macos
 SRC_DIR = srcs
 
 SRCS =\
+affine.c\
 create_vector4.c\
 error.c\
 free.c\
