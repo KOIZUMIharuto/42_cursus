@@ -14,8 +14,9 @@ MLX_DIR = minilibx_macos
 SRC_DIR = srcs
 
 SRCS =\
-get_map_data.c\
+create_vector4.c\
 free.c\
+get_map_data.c\
 main.c
 
 
@@ -25,7 +26,7 @@ OBJ = $(SRC:.c=.o)
 all: $(MANDATORY_NAME)
 
 $(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME) -o $(MANDATORY_NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME) -o $(MANDATORY_NAME) 
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)

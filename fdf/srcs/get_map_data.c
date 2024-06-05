@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/30 15:47:26 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:37:51 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,17 @@ static t_data	**recursive_split(char *row, int y, int x)
 
 	if (*row)
 	{
-		while (*row == ' ' || *row == '\n')
-			row++;
 		if (!atoi_row(&row, &z, &color))
 			return (NULL);
 		data = recursive_split(row, y, x + 1);
 		if (data)
-			data[x] = (t_data *)malloc(sizeof(t_data));
+			data[x] = (t_data *)ft_calloc(1, sizeof(t_data));
 		if (!data || !data[x])
 			return (free_data(&data));
-		*(data[x]) = (t_data){x, y, z, color};
+		data[x]->origin = create_vector4((double)x, (double)y, (double)z, 1);
+		data[x]->fixed = create_vector4(0, 0, 0, 1);
+		if (!data[x]->origin || !data[x]->fixed)
+			return (free_data(&data));
 	}
 	else
 	{
@@ -88,9 +89,9 @@ static bool	atoi_row(char **row, int *z, unsigned int *color)
 	int	sign;
 
 	sign = 1;
-	if (**row == '-')
+	while (**row == ' ' || **row == '-')
 	{
-		sign = -1;
+		sign *= -1;
 		(*row)++;
 	}
 	if ((**row < '0' || '9' < **row))

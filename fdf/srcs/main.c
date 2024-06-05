@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/30 15:51:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:42:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,17 @@ int	main(int argc, char **argv)
 		while (data[row_count])
 		{
 			col_count = 0;
-			ft_putstr_fd("! ", 1);
+			// printf("row_count : %d\n", row_count);
 			while (data[row_count][col_count])
 			{
-				ft_printf("%d ", data[row_count][col_count]->z);
-				free (data[row_count][col_count]);
+				ft_printf("%d ", (int)(data[row_count][col_count]->origin->z));
 				col_count++;
 			}
-			free(data[row_count]);
-			ft_putchar_fd('\n', 1);
+			// ft_putchar_fd('\n', 1);
+			// printf("\n");
 			row_count++;
 		}
-		free (data);
+		free_data(data);
 	}
 	return (0);
 }
