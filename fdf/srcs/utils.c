@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 11:21:33 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 14:38:54 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/06/05 12:28:59 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	*free_data3(t_data ***data, int free_index)
+bool	x_y_counter(t_data ***data, int *x, int *y)
 {
-	if (data)
-	{
-		while (data[free_index])
-			free_data2(data[free_index++]);
-		free (data);
-	}
-	return (NULL);
-}
+	int		x_tmp;
 
-void	*free_data2(t_data **data)
-{
-	int	index;
-
-	if (data)
+	*y = 0;
+	while (data[*y])
 	{
-		index = 0;
-		while (data[index])
-		{
-			free (data[index]->origin);
-			free (data[index]->fixed);
-			free (data[index++]);
-		}
-		free (data);
+		*x = 0;
+		while (data[*y][*x])
+			(*x)++;
+		if (*y != 0 && *x != x_tmp)
+			return (false);
+		x_tmp = *x;
+		(*y)++;
 	}
-	return (NULL);
+	return (true);
 }

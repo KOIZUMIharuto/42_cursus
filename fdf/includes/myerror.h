@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map_data.c                                     :+:      :+:    :+:   */
+/*   myerror.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 13:54:54 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/06/05 13:10:16 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/06/05 13:38:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#ifndef MYERROR_H
+# define MYERROR_H
 
-t_data	***get_map_data(char	*map_file)
-{
-	int		fd;
-	t_data	***data;
+# define USAGE_ERROR_MESSAGE "Error: Missing required argument.\n\
+Usage: ./fdf <path_to_map_file>"
+# define ATODBL_ERROR_MESSAGE "Error: Invalid altitude in map."
 
-	fd = open(map_file, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	data = recursive_gnl(fd, 0);
-	return (data);
-}
+#endif
