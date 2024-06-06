@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map_data_utils.c                               :+:      :+:    :+:   */
+/*   get_map_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 14:36:13 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:28:35 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
 static t_data	**recursive_split(char *row, double y, double x);
-static void		set_data(t_data *data, t_vector4 *origin, unsigned int color);
+static void		set_data(t_data *data, t_vector4 *base, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static void		get_color(char **row, unsigned int *color);
 
@@ -58,7 +58,7 @@ static t_data	**recursive_split(char *row, double y, double x)
 		if (!data || !data[(int)x])
 			return (free_data2(data));
 		set_data(data[(int)x], create_vector4(x, y, z, 1), color);
-		if (!data[(int)x]->origin || !data[(int)x]->fixed)
+		if (!data[(int)x]->base || !data[(int)x]->fixed)
 			return (free_data2(data));
 	}
 	else
@@ -71,10 +71,10 @@ static t_data	**recursive_split(char *row, double y, double x)
 	return (data);
 }
 
-static void	set_data(t_data *data, t_vector4 *origin, unsigned int color)
+static void	set_data(t_data *data, t_vector4 *base, unsigned int color)
 {
-	data->origin = origin;
-	data->fixed = create_vector4(0, 0, 0, 1);
+	data->base = base;
+	data->fixed = create_vector4(base->x, base->y, base->z, base->w);
 	data->color = color;
 }
 

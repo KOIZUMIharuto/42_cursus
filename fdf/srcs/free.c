@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:21:33 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 16:39:51 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:10:42 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,17 @@ void	*free_data2(t_data **data)
 		index = 0;
 		while (data[index])
 		{
-			free_vector(data[index++]);
+			free_data(data[index++]);
 		}
 		free (data);
 	}
 	return (NULL);
 }
 
-void	*free_vector(t_data *data)
+void	*free_data(t_data *data)
 {
-
-	free (data->origin);
+	free (data->base);
 	free (data->fixed);
 	free (data);
-
+	return (NULL);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map_data.c                                     :+:      :+:    :+:   */
+/*   get_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../includes/fdf.h"
 
-t_data	***get_map_data(char	*map_file)
+t_data	***get_map(char	*map_file)
 {
 	int		fd;
 	t_data	***data;

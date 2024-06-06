@@ -15,13 +15,13 @@ SRC_DIR = srcs
 
 SRCS =\
 affine.c\
-create_vector4.c\
 error.c\
 free.c\
-get_map_data_utils.c\
-get_map_data.c\
+get_map_utils.c\
+get_map.c\
 main.c\
-utils.c
+utils.c\
+vector4.c
 
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
@@ -30,7 +30,7 @@ OBJ = $(SRC:.c=.o)
 all: $(MANDATORY_NAME)
 
 $(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME) -o $(MANDATORY_NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX_DIR)/$(MLX_NAME) -o $(MANDATORY_NAME) 
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
