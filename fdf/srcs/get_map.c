@@ -12,14 +12,14 @@
 
 #include "../includes/fdf.h"
 
-t_data	***get_map(char	*map_file)
+t_map	***get_map(char	*map_file)
 {
 	int		fd;
-	t_data	***data;
+	t_map	***map;
 
 	fd = open(map_file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	data = recursive_gnl(fd, 0);
-	return (data);
+	map = recursive_gnl(fd, 0);
+	return (map);
 }

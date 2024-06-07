@@ -12,39 +12,39 @@
 
 #include "../includes/fdf.h"
 
-static t_data	**recursive_split(char *row, double y, double x);
-static void		set_data(t_data *data, t_vector4 *base, unsigned int color);
+static t_map	**recursive_split(char *row, double y, double x);
+static void		set_data(t_map *map, t_vector4 *base, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static void		get_color(char **row, unsigned int *color);
 
-t_data	***recursive_gnl(int fd, double y)
+t_map	***recursive_gnl(int fd, double y)
 {
 	char	*row;
-	t_data	***data;
+	t_map	***map;
 
 	row = get_next_line(fd);
 	if (row)
 	{
-		data = recursive_gnl(fd, y + 1);
-		if (data)
-			data[(int)y] = recursive_split(row, y, 0);
+		map = recursive_gnl(fd, y + 1);
+		if (map)
+			map[(int)y] = recursive_split(row, y, 0);
 		free (row);
-		if (!data || !data[(int)y])
-			return (free_data3(data, (int)y + 1));
+		if (!map || !map[(int)y])
+			return (free_map3(map, (int)y + 1));
 	}
 	else
 	{
-		data = (t_data ***)ft_calloc(y + 1, sizeof(t_data **));
-		if (!data)
+		map = (t_map ***)ft_calloc(y + 1, sizeof(t_map **));
+		if (!map)
 			return (return_error_null(strerror(errno)));
-		data[(int)y] = NULL;
+		map[(int)y] = NULL;
 	}
-	return (data);
+	return (map);
 }
 
-static t_data	**recursive_split(char *row, double y, double x)
+static t_map	**recursive_split(char *row, double y, double x)
 {
-	t_data			**data;
+	t_map			**map;
 	double			z;
 	unsigned int	color;
 
@@ -52,30 +52,30 @@ static t_data	**recursive_split(char *row, double y, double x)
 	{
 		if (!atodbl_row(&row, &z, &color))
 			return (return_error_null(ATODBL_ERROR_MESSAGE));
-		data = recursive_split(row, y, x + 1);
-		if (data)
-			data[(int)x] = (t_data *)ft_calloc(1, sizeof(t_data));
-		if (!data || !data[(int)x])
-			return (free_data2(data));
-		set_data(data[(int)x], create_vector4(x, y, z, 1), color);
-		if (!data[(int)x]->base || !data[(int)x]->fixed)
-			return (free_data2(data));
+		map = recursive_split(row, y, x + 1);
+		if (map)
+			map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
+		if (!map || !map[(int)x])
+			return (free_map2(map));
+		set_data(map[(int)x], create_vector4(x, y, z, 1), color);
+		if (!map[(int)x]->base || !map[(int)x]->fixed)
+			return (free_map2(map));
 	}
 	else
 	{
-		data = (t_data **)ft_calloc(x + 1, sizeof(t_data *));
-		if (!data)
+		map = (t_map **)ft_calloc(x + 1, sizeof(t_map *));
+		if (!map)
 			return (return_error_null(strerror(errno)));
-		data[(int)x] = NULL;
+		map[(int)x] = NULL;
 	}
-	return (data);
+	return (map);
 }
 
-static void	set_data(t_data *data, t_vector4 *base, unsigned int color)
+static void	set_data(t_map *map, t_vector4 *base, unsigned int color)
 {
-	data->base = base;
-	data->fixed = create_vector4(base->x, base->y, base->z, base->w);
-	data->color = color;
+	map->base = base;
+	map->fixed = create_vector4(base->x, base->y, base->z, base->w);
+	map->color = color;
 }
 
 static bool	atodbl_row(char **row, double *z, unsigned int *color)
@@ -93,10 +93,10 @@ static bool	atodbl_row(char **row, double *z, unsigned int *color)
 	*z = sign * (*((*row)++) - '0');
 	while ('0' <= **row && **row <= '9')
 	{
-		if (*z < DBL_MIN / 10 || DBL_MAX / 10 < *z)
+		if (*z < -DBL_MAX / 10 || DBL_MAX / 10 < *z)
 			return (false);
 		*z *= 10;
-		if (*z < DBL_MIN + (**row - '0')
+		if (*z < -DBL_MAX + (**row - '0')
 			|| DBL_MAX - (**row - '0') < *z)
 			return (false);
 		*z += sign * (*((*row)++) - '0');
