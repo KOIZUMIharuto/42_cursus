@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 15:12:57 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:07:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ typedef struct s_vars
 	void		*win;
 	t_data		img;
 	t_vector	*pre_mouse;
+	t_vector	*rotate_center;
+	t_vector	*translate_center;
 }			t_vars;
 
 t_map		***get_map(char	*map_file);

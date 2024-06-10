@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:12:14 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/10 14:54:12 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:12:27 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	t_vector	*affine_center;
-
 	if (vars->pre_mouse->w)
 	{
-		affine_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
-		if (!translate(vars->map, affine_center, true, true))
+		vars->translate_center->x = WIDTH / 2;
+		vars->translate_center->y = HEIGHT / 2;
+		if (!translate(vars->map, vars->translate_center, false, true))
 			return (1);
-		affine_center = create_vector4(rad(vars->pre_mouse->y - y),
-				-rad(vars->pre_mouse->x - x), 0, 1);
-		if (!rotate(vars->map, affine_center, true, false))
+		vars->rotate_center->x = rad(vars->pre_mouse->y - y);
+		vars->rotate_center->y = -rad(vars->pre_mouse->x - x);
+		if (!rotate(vars->map, vars->rotate_center, false, false))
 			return (1);
-		affine_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
-		if (!translate(vars->map, affine_center, true, false))
+		if (!translate(vars->map, vars->translate_center, false, false))
 			return (1);
 	}
 	vars->pre_mouse->x = x;

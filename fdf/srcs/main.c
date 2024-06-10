@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 15:18:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:51:33 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static bool	init_isometric_projection(t_map ***map, t_vector *win_center)
 	isometic_vector = create_vector4(atan(sqrt(2)), 0, -rad(45), 1);
 	if (!rotate(map, isometic_vector, true, false))
 		return (false);
+	// if (!init_scale(map))
+	// 	return (false);
 	// data_printer(map);
 	if (!translate(map, win_center, true, false))
 		return (false);
@@ -68,6 +70,8 @@ static bool	init_scale(t_map ***map)
 	double		y_max;
 	t_vector	*magnification;
 
+	x_max = -DBL_MAX;
+	y_max = -DBL_MAX;
 	y = -1;
 	while (map[++y])
 	{
@@ -84,9 +88,9 @@ static bool	init_scale(t_map ***map)
 	y_max = (HEIGHT / 2 / y_max) * 0.9;
 	// printf("x_max: %.2F, y_max: %.2F\n", x_max, y_max);
 	if (x_max < y_max)
-		magnification = create_vector4(x_max, x_max, x_max / 4, 1);
+		magnification = create_vector4(x_max, x_max, x_max, 1);
 	else
-		magnification = create_vector4(y_max, y_max, y_max / 4, 1);
+		magnification = create_vector4(y_max, y_max, y_max, 1);
 	// printf("magnification(%.2F, %.2F, %.2F)\n", magnification->x, magnification->y, magnification->z);
 	return (scale(map, magnification, true, false));
 }

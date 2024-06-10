@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 14:46:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:16:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	rotate_z(t_vector *vector, double angle)
 	double	tmp_x;
 	double	tmp_y;
 
+	if (angle == 0)
+		return ;
 	tmp_x = vector->x;
 	tmp_y = vector->y;
 	vector->x = tmp_x * cos(angle) - tmp_y * sin(angle);
@@ -61,6 +63,8 @@ static void	rotate_y(t_vector *vector, double angle)
 	double	tmp_x;
 	double	tmp_z;
 
+	if (angle == 0)
+		return ;
 	tmp_x = vector->x;
 	tmp_z = vector->z;
 	vector->x = tmp_x * cos(angle) + tmp_z * sin(angle);
@@ -72,6 +76,8 @@ static void	rotate_x(t_vector *vector, double angle)
 	double	tmp_y;
 	double	tmp_z;
 
+	if (angle == 0)
+		return ;
 	tmp_y = vector->y;
 	tmp_z = vector->z;
 	vector->y = tmp_y * cos(angle) - tmp_z * sin(angle);
