@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:12:14 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/07 17:34:12 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/06/10 14:54:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
+	t_vector	*affine_center;
+
 	if (vars->pre_mouse->w)
 	{
-		if (!trans(vars->map, create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1), true, true))
+		affine_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
+		if (!translate(vars->map, affine_center, true, true))
 			return (1);
-		if (!rotate(vars->map, create_vector4(rad(vars->pre_mouse->y - y), -rad(vars->pre_mouse->x - x), 0, 1), true, false))
+		affine_center = create_vector4(rad(vars->pre_mouse->y - y),
+				-rad(vars->pre_mouse->x - x), 0, 1);
+		if (!rotate(vars->map, affine_center, true, false))
 			return (1);
-		if (!trans(vars->map, create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1), true, false))
+		affine_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
+		if (!translate(vars->map, affine_center, true, false))
 			return (1);
 	}
 	vars->pre_mouse->x = x;
@@ -34,17 +40,18 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		vars->pre_mouse->w = 1;
 	else if (key == SCLOLL_UP || key == SCLOLL_DOWN)
 	{
-		if (!trans(vars->map, create_vector4(x, y, 0, 1), true, true))
+		if (!translate(vars->map, create_vector4(x, y, 0, 1), true, true))
 			return (1);
-		if (!scale(vars->map, create_vector4(1.1, 1.1, 1.1, 1), true, key == SCLOLL_DOWN))
+		if (!scale(vars->map, create_vector4(1.1, 1.1, 1.1, 1),
+				true, key == SCLOLL_DOWN))
 			return (1);
-		if (!trans(vars->map, create_vector4(x, y, 0, 1), true, false))
+		if (!translate(vars->map, create_vector4(x, y, 0, 1), true, false))
 			return (1);
 	}
 	return (0);
 }
 
-int mouse_up(int key, int x, int y, t_vars *vars)
+int	mouse_up(int key, int x, int y, t_vars *vars)
 {
 	(void)x;
 	(void)y;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:51:53 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/06/10 15:18:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static bool	init_isometric_projection(t_map ***map, t_vector4 *win_center);
+static bool	init_isometric_projection(t_map ***map, t_vector *win_center);
 static bool	init_scale(t_map ***map);
 static int	return_error_int(t_map ***map, char *error_message);
 // static void	data_printer(t_map ***map);
@@ -20,7 +20,7 @@ static int	return_error_int(t_map ***map, char *error_message);
 int	main(int argc, char **argv)
 {
 	t_map		***map;
-	t_vector4	*win_center;
+	t_vector	*win_center;
 
 	if (argc < 2)
 		return (return_error_int(NULL, USAGE_ERROR_MESSAGE));
@@ -35,16 +35,16 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-static bool	init_isometric_projection(t_map ***map, t_vector4 *win_center)
+static bool	init_isometric_projection(t_map ***map, t_vector *win_center)
 {
-	t_vector4	*map_center;
-	t_vector4	*isometic_vector;
+	t_vector	*map_center;
+	t_vector	*isometic_vector;
 
 	if (!win_center)
 		return (false);
 	// data_printer(map);
 	map_center = create_vector4(0, 0, 0, 1);
-	if (!get_center(map, map_center) || !trans(map, map_center, true, true))
+	if (!get_center(map, map_center) || !translate(map, map_center, true, true))
 		return (false);
 	// data_printer(map);
 	if (!init_scale(map))
@@ -54,7 +54,7 @@ static bool	init_isometric_projection(t_map ***map, t_vector4 *win_center)
 	if (!rotate(map, isometic_vector, true, false))
 		return (false);
 	// data_printer(map);
-	if (!trans(map, win_center, true, false))
+	if (!translate(map, win_center, true, false))
 		return (false);
 	// data_printer(map);
 	return (true);
@@ -66,7 +66,7 @@ static bool	init_scale(t_map ***map)
 	int			y;
 	double		x_max;
 	double		y_max;
-	t_vector4	*magnification;
+	t_vector	*magnification;
 
 	y = -1;
 	while (map[++y])
@@ -125,8 +125,8 @@ static int	return_error_int(t_map ***map, char *error_message)
 // 	printf("\n");
 // }
 
-__attribute__((destructor))
-static void	destructor(void)
-{
-	system("leaks -q fdf");
-}
+// __attribute__((destructor))
+// static void	destructor(void)
+// {
+// 	system("leaks -q fdf");
+// }

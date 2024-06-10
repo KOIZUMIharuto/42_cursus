@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 
 static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector4 *base, unsigned int color);
+static void		set_data(t_map *map, t_vector *base, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static void		get_color(char **row, unsigned int *color);
 
@@ -71,7 +71,7 @@ static t_map	**recursive_split(char *row, double y, double x)
 	return (map);
 }
 
-static void	set_data(t_map *map, t_vector4 *base, unsigned int color)
+static void	set_data(t_map *map, t_vector *base, unsigned int color)
 {
 	map->base = base;
 	map->fixed = create_vector4(base->x, base->y, base->z, base->w);
