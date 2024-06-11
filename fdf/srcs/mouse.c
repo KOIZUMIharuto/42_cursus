@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:12:14 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/11 12:20:57 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:11:37 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/fdf.h"
+#include "../includes/fdf.h"
 
 int	mouse_move(int x, int y, t_vars *vars)
 {

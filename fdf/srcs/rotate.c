@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:16:36 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:12:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,3 @@ static void	rotate_x(t_vector *vector, double angle)
 	vector->y = tmp_y * cos(angle) - tmp_z * sin(angle);
 	vector->z = tmp_y * sin(angle) + tmp_z * cos(angle);
 }
-

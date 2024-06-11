@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 13:41:26 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:15:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 	t_vector		delta;
 	t_vector		step;
 	int				err;
-	unsigned int	color;
+	// unsigned int	color;
 
 	tmp = (t_vector){p0->fixed->x, p0->fixed->y, p0->fixed->z, 1};
 	delta = (t_vector){fabs(p1->fixed->x - tmp.x),

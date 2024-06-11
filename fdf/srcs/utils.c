@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 12:42:13 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:10:22 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,22 @@ bool	get_center(t_map ***map, t_vector *center)
 		return (false);
 	z_min_tmp = DBL_MAX;
 	z_max_tmp = -DBL_MAX;
-	while (map[(int)center->y])
+	while (map[(int)(++center->y)])
 	{
-		x_tmp = 0;
-		while (map[(int)center->y][x_tmp])
+		x_tmp = -1;
+		while (map[(int)center->y][++x_tmp])
 		{
 			if (map[(int)center->y][x_tmp]->base->z < z_min_tmp)
 				z_min_tmp = map[(int)center->y][x_tmp]->base->z;
 			if (map[(int)center->y][x_tmp]->base->z > z_max_tmp)
 				z_max_tmp = map[(int)center->y][x_tmp]->base->z;
-			x_tmp++;
 		}
 		if (center->y != 0 && x_tmp != (int)center->x)
 			return (false);
 		center->x = (double)x_tmp;
-		center->y++;
 	}
-	center->x = (center->x - 1) / 2;
-	center->y = (center->y - 1) / 2;
-	center->z = (z_max_tmp + z_min_tmp) / 2;
-	// printf("center(%.2F, %.2F, %.2F)\n", center->x, center->y, center->z);
+	*center = (t_vector){(center->x - 1) / 2, (center->y - 1) / 2,
+		(z_max_tmp + z_min_tmp) / 2, 1};
 	return (true);
 }
 

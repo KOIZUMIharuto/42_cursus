@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 13:39:08 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:15:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@
 # include <sys/stat.h>
 # include <math.h>
 
-#include "../minilibx_macos/mlx.h"
+# include "../minilibx_macos/mlx.h"
 # include "../libft/includes/libft.h"
 
 # define USAGE_ERROR_MESSAGE "Error: Missing required argument.\n\
 Usage: ./fdf <path_to_map_file>"
 # define ATODBL_ERROR_MESSAGE "Error: Invalid value in map."
 # define COLUMN_ERROR_MESSAGE "Error: Invalid column count."
-
 
 # define WIDTH 900
 # define HEIGHT 600
@@ -106,7 +105,6 @@ int			draw(t_vars *vars);
 int			mouse_move(int x, int y, t_vars *vars);
 int			mouse_down(int key, int x, int y, t_vars *vars);
 int			mouse_up(int key, int x, int y, t_vars *vars);
-
 
 void		*free_map3(t_map ***map, int free_index);
 void		*free_map2(t_map **map);
