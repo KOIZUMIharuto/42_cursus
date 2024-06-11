@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 14:36:07 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:42:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ bool	get_center(t_map ***map, t_vector *center)
 
 	if (!center)
 		return (false);
-	z_min_tmp = INT_MAX;
-	z_max_tmp = INT_MIN;
+	z_min_tmp = DBL_MAX;
+	z_max_tmp = -DBL_MAX;
 	while (map[(int)center->y])
 	{
 		x_tmp = 0;
@@ -35,7 +35,7 @@ bool	get_center(t_map ***map, t_vector *center)
 		}
 		if (center->y != 0 && x_tmp != (int)center->x)
 			return (false);
-		center->x = x_tmp;
+		center->x = (double)x_tmp;
 		center->y++;
 	}
 	center->x = (center->x - 1) / 2;

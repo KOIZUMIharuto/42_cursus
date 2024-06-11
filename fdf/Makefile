@@ -40,7 +40,7 @@ OBJ = $(SRC:.c=.o)
 all: $(MANDATORY_NAME)
 
 $(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MINILIBX)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -framework OpenGL -framework AppKit -o $(MANDATORY_NAME) $(MLXFLAGS) $(SANITIZEFRAG)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -framework OpenGL -framework AppKit -o $(MANDATORY_NAME) $(MLXFLAGS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:12:14 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/10 16:12:27 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:20:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 	{
 		if (!translate(vars->map, create_vector4(x, y, 0, 1), true, true))
 			return (1);
-		if (!scale(vars->map, create_vector4(1.1, 1.1, 1.1, 1),
-				true, key == SCLOLL_DOWN))
+		if (!scale(vars->map, 1.1, key == SCLOLL_DOWN))
 			return (1);
 		if (!translate(vars->map, create_vector4(x, y, 0, 1), true, false))
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:07:09 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:39:08 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ Usage: ./fdf <path_to_map_file>"
 
 # define WIDTH 900
 # define HEIGHT 600
+// # define WIDTH 1920
+// # define HEIGHT 1080
 
 # define KEY_ESC 53
 
@@ -78,7 +80,7 @@ typedef struct s_data
 typedef struct s_vars
 {
 	t_map		***map;
-	double		**z_buffer;
+	double		**z_buf;
 	void		*mlx;
 	void		*win;
 	t_data		img;
@@ -95,7 +97,7 @@ bool		get_center(t_map ***map, t_vector *center_pos);
 double		rad(double deg);
 
 bool		translate(t_map ***map, t_vector *vector, bool is_free, bool rev);
-bool		scale(t_map ***map, t_vector *vector, bool is_free, bool rev);
+bool		scale(t_map ***map, double ratio, bool rev);
 bool		rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void		mymlx_main(t_map ***map);

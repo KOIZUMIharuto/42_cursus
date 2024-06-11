@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:46:46 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/10 16:07:40 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:39:08 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	mymlx_main(t_map ***map)
 	t_vars	vars;
 
 	vars.map = map;
-	vars.z_buffer = malloc_z_buffer();
+	vars.z_buf = malloc_z_buffer();
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "fdf");
 	vars.img.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
@@ -46,29 +46,29 @@ void	mymlx_main(t_map ***map)
 
 static double	**malloc_z_buffer(void)
 {
-	double	**z_buffer;
+	double	**z_buf;
 	int		x;
 	int		y;
 
-	z_buffer = (double **)ft_calloc(HEIGHT, sizeof(double *));
-	if (!z_buffer)
+	z_buf = (double **)ft_calloc(HEIGHT, sizeof(double *));
+	if (!z_buf)
 		return (NULL);
 	y = -1;
 	while (++y < HEIGHT)
 	{
-		z_buffer[y] = (double *)ft_calloc(WIDTH, sizeof(double));
-		if (!z_buffer[y])
+		z_buf[y] = (double *)ft_calloc(WIDTH, sizeof(double));
+		if (!z_buf[y])
 		{
 			while (--y >= 0)
-				free (z_buffer[y]);
-			free (z_buffer);
+				free (z_buf[y]);
+			free (z_buf);
 			return (NULL);
 		}
 		x = -1;
 		while (++x < WIDTH)
-			z_buffer[y][x] = -DBL_MAX;
+			z_buf[y][x] = -DBL_MAX;
 	}
-	return (z_buffer);
+	return (z_buf);
 }
 
 static int	window_close(t_vars *vars)
@@ -78,8 +78,8 @@ static int	window_close(t_vars *vars)
 	free_map3(vars->map, 0);
 	y = -1;
 	while (++y < HEIGHT)
-		free(vars->z_buffer[y]);
-	free (vars->z_buffer);
+		free(vars->z_buf[y]);
+	free (vars->z_buf);
 	free (vars->pre_mouse);
 	free (vars->rotate_center);
 	free (vars->translate_center);
