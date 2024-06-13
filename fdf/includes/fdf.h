@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:15:12 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:54:31 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,28 +88,29 @@ typedef struct s_vars
 	t_vector	*translate_center;
 }			t_vars;
 
-t_map		***get_map(char	*map_file);
-t_map		***recursive_gnl(int fd, double y);
+t_map			***get_map(char	*map_file);
+t_map			***recursive_gnl(int fd, double y);
 
-t_vector	*create_vector4(double x, double y, double z, double w);
-bool		get_center(t_map ***map, t_vector *center_pos);
-double		rad(double deg);
+t_vector		*create_vector4(double x, double y, double z, double w);
+bool			get_center(t_map ***map, t_vector *center_pos);
+double			rad(double deg);
 
-bool		translate(t_map ***map, t_vector *vector, bool is_free, bool rev);
-bool		scale(t_map ***map, double ratio, bool rev);
-bool		rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
+bool			trans(t_map ***map, t_vector *vector, bool is_free, bool rev);
+bool			scale(t_map ***map, double ratio, bool rev);
+bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
-void		mymlx_main(t_map ***map);
-int			draw(t_vars *vars);
+void			mymlx_main(t_map ***map);
+int				draw(t_vars *vars);
+unsigned int	get_color(t_map *p0, t_vector tmp, t_map *p1);
 
-int			mouse_move(int x, int y, t_vars *vars);
-int			mouse_down(int key, int x, int y, t_vars *vars);
-int			mouse_up(int key, int x, int y, t_vars *vars);
+int				mouse_move(int x, int y, t_vars *vars);
+int				mouse_down(int key, int x, int y, t_vars *vars);
+int				mouse_up(int key, int x, int y, t_vars *vars);
 
-void		*free_map3(t_map ***map, int free_index);
-void		*free_map2(t_map **map);
-void		*free_map(t_map *map);
+void			*free_map3(t_map ***map, int free_index);
+void			*free_map2(t_map **map);
+void			*free_map(t_map *map);
 
-void		*return_error_null(char *error_message);
+void			*return_error_null(char *error_message);
 
 #endif

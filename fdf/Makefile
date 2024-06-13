@@ -19,6 +19,7 @@ LIBS=-lm -lmlx
 SRC_DIR = srcs
 
 SRCS =\
+draw_utils.c\
 draw.c\
 error.c\
 free.c\

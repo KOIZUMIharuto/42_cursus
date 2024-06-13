@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:09:55 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:41:34 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static bool	init_isometric_projection(t_map ***map, t_vector *win_center)
 	if (!win_center)
 		return (false);
 	map_center = create_vector4(-1, -1, -1, 1);
-	if (!get_center(map, map_center) || !translate(map, map_center, true, true))
+	if (!get_center(map, map_center) || !trans(map, map_center, true, true))
 		return (false);
 	isometic_vector = create_vector4(atan(sqrt(2)), 0, -rad(45), 1);
 	if (!rotate(map, isometic_vector, true, false))
 		return (false);
 	if (!init_scale(map))
 		return (false);
-	if (!translate(map, win_center, true, false))
+	if (!trans(map, win_center, true, false))
 		return (false);
 	return (true);
 }

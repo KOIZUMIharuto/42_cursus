@@ -6,13 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:48:05 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/10 14:48:23 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:41:34 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-bool	translate(t_map ***map, t_vector *vector, bool is_free, bool rev)
+bool	trans(t_map ***map, t_vector *vector, bool is_free, bool rev)
 {
 	int	x;
 	int	y;

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:15:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:59:40 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ int	draw(t_vars *vars)
 
 static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 {
-	t_vector		tmp;
-	t_vector		delta;
-	t_vector		step;
-	int				err;
-	// unsigned int	color;
+	t_vector	tmp;
+	t_vector	delta;
+	t_vector	step;
+	int			err;
 
 	tmp = (t_vector){p0->fixed->x, p0->fixed->y, p0->fixed->z, 1};
 	delta = (t_vector){fabs(p1->fixed->x - tmp.x),
@@ -65,7 +64,8 @@ static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 		if (0 <= tmp.x && tmp.x < WIDTH && 0 <= tmp.y && tmp.y < HEIGHT
 			&& vars->z_buf[(int)tmp.y][(int)tmp.x] <= tmp.z)
 		{
-			my_mlx_pixel_put(&(vars->img), tmp.x, tmp.y, p0->color);
+			my_mlx_pixel_put(&(vars->img),
+				tmp.x, tmp.y, get_color(p0, tmp, p1));
 			vars->z_buf[(int)tmp.y][(int)tmp.x] = tmp.z;
 		}
 		if (fabs(tmp.x - p1->fixed->x) <= 1 && fabs(tmp.y - p1->fixed->y) <= 1)

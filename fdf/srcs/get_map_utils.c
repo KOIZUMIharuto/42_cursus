@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map_utils.c                               :+:      :+:    :+:   */
+/*   get_map_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/06 16:28:35 by xxxx             ###   ########.fr       */
+/*   Created: 2024/06/13 15:56:12 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/06/13 15:56:15 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_map	**recursive_split(char *row, double y, double x);
 static void		set_data(t_map *map, t_vector *base, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
-static void		get_color(char **row, unsigned int *color);
+static void		get_col(char **row, unsigned int *color);
 
 t_map	***recursive_gnl(int fd, double y)
 {
@@ -101,13 +101,13 @@ static bool	atodbl_row(char **row, double *z, unsigned int *color)
 			return (false);
 		*z += sign * (*((*row)++) - '0');
 	}
-	get_color(row, color);
+	get_col(row, color);
 	while (**row == ' ' || **row == '\n')
 		(*row)++;
 	return (true);
 }
 
-static void	get_color(char **row, unsigned int *color)
+static void	get_col(char **row, unsigned int *color)
 {
 	int	i;
 
