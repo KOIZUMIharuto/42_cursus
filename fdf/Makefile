@@ -23,7 +23,6 @@ draw_utils.c\
 draw.c\
 error.c\
 free.c\
-get_map_utils.c\
 get_map.c\
 main.c\
 mouse.c\

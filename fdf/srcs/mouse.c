@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:56:27 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:30:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	mouse_move(int x, int y, t_vars *vars)
 {
 	if (vars->pre_mouse->w)
 	{
-		vars->translate_center->x = WIDTH / 2;
-		vars->translate_center->y = HEIGHT / 2;
-		if (!trans(vars->map, vars->translate_center, false, true))
+		vars->tran_center->x = WIDTH / 2;
+		vars->tran_center->y = HEIGHT / 2;
+		if (!trans(vars->map, vars->tran_center, false, true))
 			return (1);
 		vars->rotate_center->x = rad(vars->pre_mouse->y - y);
 		vars->rotate_center->y = -rad(vars->pre_mouse->x - x);
 		if (!rotate(vars->map, vars->rotate_center, false, false))
 			return (1);
-		if (!trans(vars->map, vars->translate_center, false, false))
+		if (!trans(vars->map, vars->tran_center, false, false))
 			return (1);
 	}
 	vars->pre_mouse->x = x;

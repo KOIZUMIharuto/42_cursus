@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:56:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:59:42 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static double	**malloc_z_buffer(void);
 static int		key_hook(int keycode, t_vars *vars);
 static int		window_close(t_vars *vars);
 
-void	mymlx_main(t_map ***map)
+void	my_mlx_main(t_map ***map)
 {
 	t_vars	vars;
 
@@ -29,9 +29,9 @@ void	mymlx_main(t_map ***map)
 			&vars.img.bits_per_pixel, &vars.img.line_length, &vars.img.endian);
 	vars.pre_mouse = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 0);
 	vars.rotate_center = create_vector4(0, 0, 0, 0);
-	vars.translate_center = create_vector4(0, 0, 0, 0);
-	if (vars.map && vars.mlx && vars.win && vars.img.img && vars.img.addr
-		&& vars.pre_mouse && vars.rotate_center && vars.translate_center)
+	vars.tran_center = create_vector4(0, 0, 0, 0);
+	if (vars.map && vars.pre_mouse && vars.rotate_center && vars.tran_center
+		&& vars.img.addr && vars.z_buf && vars.mlx && vars.win && vars.img.img)
 	{
 		mlx_hook(vars.win, ON_MOUSEMOVE, 0, mouse_move, &vars);
 		mlx_hook(vars.win, ON_MOUSEDOWN, 0, mouse_down, &vars);
@@ -41,6 +41,7 @@ void	mymlx_main(t_map ***map)
 		mlx_loop_hook(vars.mlx, draw, &vars);
 		mlx_loop(vars.mlx);
 	}
+	ft_putendl_fd(strerror(errno), 2);
 	window_close(&vars);
 }
 
@@ -75,14 +76,17 @@ static int	window_close(t_vars *vars)
 {
 	int	y;
 
-	free_map3(vars->map, 0);
+	free_map3(vars->map, 0, NULL);
 	y = -1;
-	while (++y < HEIGHT)
-		free(vars->z_buf[y]);
-	free (vars->z_buf);
+	if (vars->z_buf)
+	{
+		while (++y < HEIGHT)
+			free(vars->z_buf[y]);
+		free (vars->z_buf);
+	}
 	free (vars->pre_mouse);
 	free (vars->rotate_center);
-	free (vars->translate_center);
+	free (vars->tran_center);
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->img.img);
 	exit(0);
@@ -90,7 +94,6 @@ static int	window_close(t_vars *vars)
 
 static int	key_hook(int keycode, t_vars *vars)
 {
-	printf("keycode	: %d\n", keycode);
 	if (keycode == KEY_ESC)
 		window_close(vars);
 	return (0);
