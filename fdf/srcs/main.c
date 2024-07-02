@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/17 17:58:00 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:58:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ static int	return_error_int(t_map ***map, char *error_message)
 	return (1);
 }
 
-__attribute__((destructor))
-static void	destructor(void)
-{
-	system("leaks -q fdf");
-}
+// __attribute__((destructor))
+// static void	destructor(void)
+// {
+// 	system("leaks -q fdf");
+// }

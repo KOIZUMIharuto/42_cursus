@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:59:40 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:02:39 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 			&& vars->z_buf[(int)tmp.y][(int)tmp.x] <= tmp.z)
 		{
 			my_mlx_pixel_put(&(vars->img),
-				tmp.x, tmp.y, get_color(p0, tmp, p1));
+				(int)round(tmp.x), (int)round(tmp.y), get_color(p0, tmp, p1));
 			vars->z_buf[(int)tmp.y][(int)tmp.x] = tmp.z;
 		}
 		if (fabs(tmp.x - p1->fixed->x) <= 1 && fabs(tmp.y - p1->fixed->y) <= 1)
@@ -98,5 +98,13 @@ static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if (data->endian == 0)
+		*(unsigned int *)dst = color;
+	else
+	{
+		dst[0] = color / 0x1000000;
+		dst[1] = (color / 0x10000) % 0x100;
+		dst[2] = (color / 0x100) % 0x100;
+		dst[3] = color % 0x100;
+	}
 }
