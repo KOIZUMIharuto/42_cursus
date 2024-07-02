@@ -24,6 +24,7 @@ draw.c\
 error.c\
 free.c\
 get_map.c\
+key.c\
 main.c\
 mouse.c\
 my_mlx.c\
