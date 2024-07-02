@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/17 17:51:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:50:39 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ Required: .fdf file"
 # define COLUMN_ERROR_MESSAGE "Error: Inconsistent number of \
 columns in map rows."
 
-// # define WIDTH 900
-// # define HEIGHT 600
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 900
+# define HEIGHT 600
+// # define WIDTH 1920
+// # define HEIGHT 1080
 
 # define KEY_ESC 53
 

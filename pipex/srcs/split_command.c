@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:14:34 by xxxx              #+#    #+#             */
-/*   Updated: 2024/05/23 15:31:55 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:33:02 by xxxx             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**split_command(char *command)
 static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count)
 {
 	int		len;
-	char	*command;
+	// char	*command;
 	char	**commands;
 
 	while (*str && is_split(*str, del, esc))
@@ -49,7 +49,7 @@ static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count)
 	len = 1;
 	while (*str && str[len] && !is_split(str[len], del, esc))
 		len++;
-	command = NULL;
+	// command = NULL;
 	if (*str)
 		commands = recursive_split(str + len, del, esc, str_count + 1);
 	else
