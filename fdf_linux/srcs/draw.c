@@ -6,13 +6,12 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/24 14:02:39 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:05:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-// static void	init_z_buffer(double **z_buf);
 static void	draw_line(t_vars *vars, t_map *p0, t_map *p1);
 static void	set_err(int *err, t_vector *tmp, t_vector *delta, t_vector *step);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);

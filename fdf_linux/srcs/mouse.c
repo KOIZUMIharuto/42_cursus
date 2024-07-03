@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:29:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:14:51 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ int	mouse_up(int key, int x, int y, t_vars *vars)
 
 static int	error_exit(t_vars *vars, char *error_message)
 {
-	perror(error_message);
+	ft_putstr_fd("Error: ", 2);
+	ft_putendl_fd(error_message, 2);
+	vars->exit_status = 1;
 	win_off(vars);
 	return (1);
 }

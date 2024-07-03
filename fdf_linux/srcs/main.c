@@ -6,13 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:26:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:04:37 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static int	init_isometric_projection(t_map ***map, t_vector *win_center);
+static int	init_isometric_projection(t_map ***map);
 static bool	init_scale(t_map ***map);
 static int	return_error_int(t_map ***map, char *error_message, char *option);
 
@@ -20,7 +20,6 @@ int	main(int argc, char **argv)
 {
 	int			fd;
 	t_map		***map;
-	t_vector	*win_center;
 
 	if (argc < 2)
 		return (return_error_int(NULL, ARG_ERROR_MESSAGE, USAGE));
@@ -33,19 +32,20 @@ int	main(int argc, char **argv)
 	close(fd);
 	if (!map)
 		return (1);
-	win_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
-	if (init_isometric_projection(map, win_center) == 1)
+	if (init_isometric_projection(map) == 1)
 		return (1);
 	my_mlx_main(map);
 	free_map3(map, 0, NULL);
 	return (0);
 }
 
-static int	init_isometric_projection(t_map ***map, t_vector *win_center)
+static int	init_isometric_projection(t_map ***map)
 {
+	t_vector	*win_center;
 	t_vector	*map_center;
 	t_vector	*isometic_vector;
 
+	win_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
 	if (!win_center)
 		return (return_error_int(NULL, strerror(errno), NULL));
 	map_center = create_vector4(-1, -1, -1, 1);
@@ -62,7 +62,7 @@ static int	init_isometric_projection(t_map ***map, t_vector *win_center)
 	if (!rotate(map, isometic_vector, true, false))
 		return (return_error_int(NULL, strerror(errno), NULL));
 	if (!init_scale(map))
-		return (return_error_int(NULL, strerror(errno), NULL));
+		return (return_error_int(NULL, SCALE_ERROR_MESSAGE, NULL));
 	trans(map, win_center, true, false);
 	return (0);
 }

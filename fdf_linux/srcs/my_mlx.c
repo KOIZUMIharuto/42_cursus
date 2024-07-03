@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:29:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:13:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	my_mlx_main(t_map ***map)
 		mlx_loop_hook(vars.mlx, draw, &vars);
 		mlx_loop(vars.mlx);
 	}
-	ft_putendl_fd(strerror(errno), 2);
+	perror("Error");
 	vars.exit_status = 1;
 	win_off(&vars);
 }

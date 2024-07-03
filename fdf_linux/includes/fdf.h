@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:29:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:07:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <errno.h>
 # include <stdio.h>
 # include <string.h>
-// # include <sys/types.h>
-// # include <sys/stat.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
@@ -35,6 +33,7 @@
 # define ALTITUDE_ERROR_MESSAGE "Invalid altitude in map."
 # define COLOR_ERROR_MESSAGE "Invalid color in map."
 # define COLUMN_ERROR_MESSAGE "Inconsistent number of columns in map rows."
+# define SCALE_ERROR_MESSAGE "Invalid scale ratio."
 # define ZOOM_ERROR_MESSAGE "Zoom operation failed."
 # define ROTATE_ERROR_MESSAGE "Rotation operation failed."
 # define TRANSLATE_ERROR_MESSAGE "Translation operation failed."
