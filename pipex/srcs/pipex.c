@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/25 13:32:15 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/07/03 15:51:56 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	return (0);
 }
-// 
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q pipex");
-// }
+
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q pipex");
+}

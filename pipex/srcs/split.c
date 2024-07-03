@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_command.c                                    :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:14:34 by xxxx              #+#    #+#             */
-/*   Updated: 2024/06/25 13:33:02 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/07/03 15:48:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count);
+static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count);
 static bool	is_split(char c, char *del, t_esc *esc);
 static bool	format_commands(char **commands);
 
@@ -20,28 +20,20 @@ char	**split_command(char *command)
 {
 	char	**commands;
 	t_esc	esc;
-	int		index;
 
 	esc = (t_esc){false, false, false};
 	commands = recursive_split(command, "\n\t\v\f\r ", &esc, 0);
 	if (!commands)
 		return (NULL);
 	if (!format_commands(commands))
-	{
-		index = 0;
-		while (commands[index])
-			free(commands[index++]);
-		free(commands);
-		return (NULL);
-	}
+		return (free_commands(commands, 0));
 	return (commands);
 }
 
 
-static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count)
+static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 {
 	int		len;
-	// char	*command;
 	char	**commands;
 
 	while (*str && is_split(*str, del, esc))
@@ -49,21 +41,20 @@ static char	**recursive_split(char *str, char *del, t_esc *esc, int str_count)
 	len = 1;
 	while (*str && str[len] && !is_split(str[len], del, esc))
 		len++;
-	// command = NULL;
 	if (*str)
-		commands = recursive_split(str + len, del, esc, str_count + 1);
+		commands = recursive_split(str + len, del, esc, cmd_count + 1);
 	else
-		commands = (char **)malloc((str_count + 1) * sizeof(char *));
+		commands = (char **)ft_calloc((cmd_count + 1),  sizeof(char *));
 	if (!commands)
 		return (NULL);
 	if (*str)
 	{
-		commands[str_count] = ft_substr(str, 0, len);
-		if (!commands[str_count])
-			return (NULL);
+		commands[cmd_count] = ft_substr(str, 0, len);
+		if (!commands[cmd_count])
+			return (free_commands(commands, cmd_count + 1));
 	}
 	else
-		commands[str_count] = NULL;
+		commands[cmd_count] = NULL;
 	return (commands);
 }
 

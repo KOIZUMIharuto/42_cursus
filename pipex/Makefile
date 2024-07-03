@@ -12,8 +12,9 @@ LIBFT_DIR = libft
 SRC_DIR = srcs
 
 SRCS =\
+free.c\
 pipex.c\
-split_command.c
+split.c
 
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
