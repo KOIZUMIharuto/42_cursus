@@ -18,7 +18,7 @@ LIBS = -lXext -lX11 -lm
 SRC_DIR = srcs
 
 SRCS =\
-draw_utils.c\
+culc_color.c\
 draw.c\
 error.c\
 free.c\

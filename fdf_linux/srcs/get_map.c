@@ -128,6 +128,8 @@ static bool	get_col(char **row, unsigned int *color)
 			*color = 16 * *color + i;
 			(*row)++;
 		}
+		if (**row && **row != ' ' && **row != '\n')
+			return (false);
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:05:57 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:00:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 			&& vars->z_buf[(int)tmp.y][(int)tmp.x] <= tmp.z)
 		{
 			my_mlx_pixel_put(&(vars->img),
-				(int)round(tmp.x), (int)round(tmp.y), get_color(p0, tmp, p1));
+				(int)round(tmp.x), (int)round(tmp.y), culc_color(p0, tmp, p1));
 			vars->z_buf[(int)tmp.y][(int)tmp.x] = tmp.z;
 		}
 		if (fabs(tmp.x - p1->fixed->x) <= 1 && fabs(tmp.y - p1->fixed->y) <= 1)

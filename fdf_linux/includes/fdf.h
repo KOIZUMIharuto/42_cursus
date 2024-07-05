@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:07:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:58:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map ***map);
 int				draw(t_vars *vars);
-unsigned int	get_color(t_map *p0, t_vector tmp, t_map *p1);
+unsigned int	culc_color(t_map *p0, t_vector tmp, t_map *p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);

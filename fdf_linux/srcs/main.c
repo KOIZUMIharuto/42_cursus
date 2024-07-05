@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:04:37 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:52:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,23 @@ static int	init_isometric_projection(t_map ***map)
 	t_vector	*map_center;
 	t_vector	*isometic_vector;
 
-	win_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
-	if (!win_center)
+	isometic_vector = create_vector4(atan(sqrt(2)), 0, rad(45), 1);
+	if (!rotate(map, isometic_vector, true, false))
 		return (return_error_int(NULL, strerror(errno), NULL));
-	map_center = create_vector4(-1, -1, -1, 1);
+	map_center = create_vector4(0, 0, 0, 1);
 	if (!map_center)
 		return (return_error_int(NULL, strerror(errno), NULL));
 	if (!get_center(map, map_center))
 	{
 		free(map_center);
-		free(win_center);
 		return (return_error_int(NULL, COLUMN_ERROR_MESSAGE, NULL));
 	}
 	trans(map, map_center, true, true);
-	isometic_vector = create_vector4(atan(sqrt(2)), 0, -rad(45), 1);
-	if (!rotate(map, isometic_vector, true, false))
-		return (return_error_int(NULL, strerror(errno), NULL));
 	if (!init_scale(map))
 		return (return_error_int(NULL, SCALE_ERROR_MESSAGE, NULL));
+	win_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
+	if (!win_center)
+		return (return_error_int(NULL, strerror(errno), NULL));
 	trans(map, win_center, true, false);
 	return (0);
 }
@@ -71,6 +70,7 @@ static bool	init_scale(t_map ***map)
 {
 	int			x;
 	int			y;
+	double		ratio;
 	t_vector	max;
 
 	max = (t_vector){0, 0, 0, 0};
@@ -86,8 +86,9 @@ static bool	init_scale(t_map ***map)
 				max.y = fabs(map[y][x]->fixed->y);
 		}
 	}
-	max.x = WIDTH / 2 / max.x * 0.9;
-	max.y = HEIGHT / 2 / max.y * 0.9;
+	ratio = 0.9;
+	max.x = WIDTH / 2 / max.x * ratio;
+	max.y = HEIGHT / 2 / max.y * ratio;
 	if (max.x < max.y)
 		return (scale(map, max.x, false));
 	else

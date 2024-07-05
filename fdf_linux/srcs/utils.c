@@ -6,39 +6,55 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/17 17:19:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 13:54:51 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
+static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max);
+
 bool	get_center(t_map ***map, t_vector *center)
 {
-	double	x_tmp;
-	double	z_min_tmp;
-	double	z_max_tmp;
+	int			x_tmp;
+	int			x_i;
+	int			y_i;
+	t_vector	min;
+	t_vector	max;
 
 	if (!center)
 		return (false);
-	z_min_tmp = DBL_MAX;
-	z_max_tmp = -DBL_MAX;
-	while (map[(int)(++center->y)])
+	y_i = -1;
+	min = (t_vector){DBL_MAX, DBL_MAX, DBL_MAX, 0};
+	max = (t_vector){-DBL_MAX, -DBL_MAX, -DBL_MAX, 0};
+	while (map[++y_i])
 	{
-		center->x = -1;
-		while (map[(int)center->y][(int)(++center->x)])
-		{
-			if (map[(int)center->y][(int)center->x]->base->z < z_min_tmp)
-				z_min_tmp = map[(int)center->y][(int)center->x]->base->z;
-			if (map[(int)center->y][(int)center->x]->base->z > z_max_tmp)
-				z_max_tmp = map[(int)center->y][(int)center->x]->base->z;
-		}
-		if (center->y != 0 && center->x != x_tmp)
+		x_i = -1;
+		while (map[y_i][++x_i])
+			update_min_max(map[y_i][x_i]->fixed, &min, &max);
+		if (y_i != 0 && x_i != x_tmp)
 			return (false);
-		x_tmp = center->x;
+		x_tmp = x_i;
 	}
-	*center = (t_vector){(center->x - 1) / 2, (center->y - 1) / 2,
-		(z_max_tmp + z_min_tmp) / 2, 1};
+	*center = (t_vector){(max.x + min.x) / 2, (max.y + min.y) / 2,
+		(max.z + min.z) / 2, 1};
 	return (true);
+}
+
+static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max)
+{
+	if (vector->x < min->x)
+		min->x = vector->x;
+	if (vector->x > max->x)
+		max->x = vector->x;
+	if (vector->y < min->y)
+		min->y = vector->y;
+	if (vector->y > max->y)
+		max->y = vector->y;
+	if (vector->z < min->z)
+		min->z = vector->z;
+	if (vector->z > max->z)
+		max->z = vector->z;
 }
 
 double	rad(double deg)
