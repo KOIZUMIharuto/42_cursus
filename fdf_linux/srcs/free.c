@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:21:33 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/14 12:58:07 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:08:14 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*free_map3(t_map ***map, int free_index, char *error_message)
 	if (map)
 	{
 		while (map[free_index])
-			free_map2(map[free_index++], NULL);
+			free_map2(map[free_index++], 0, NULL);
 		free (map);
 	}
 	if (error_message)
@@ -25,16 +25,13 @@ void	*free_map3(t_map ***map, int free_index, char *error_message)
 	return (NULL);
 }
 
-void	*free_map2(t_map **map, char *error_message)
+void	*free_map2(t_map **map, int free_index, char *error_message)
 {
-	int	index;
-
 	if (map)
 	{
-		index = 0;
-		while (map[index])
+		while (map[free_index])
 		{
-			free_map(map[index++], NULL);
+			free_map(map[free_index++], NULL);
 		}
 		free (map);
 	}

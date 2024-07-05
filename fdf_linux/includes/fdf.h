@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/05 13:58:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/05 18:06:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int				mouse_down(int key, int x, int y, t_vars *vars);
 int				mouse_up(int key, int x, int y, t_vars *vars);
 
 void			*free_map3(t_map ***map, int free_index, char *error_message);
-void			*free_map2(t_map **map, char *error_message);
+void			*free_map2(t_map **map, int free_index, char *error_message);
 void			*free_map(t_map *map, char *error_message);
 
 void			*return_error_null(char *error_message);

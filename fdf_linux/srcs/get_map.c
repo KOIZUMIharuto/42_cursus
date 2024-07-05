@@ -56,10 +56,10 @@ static t_map	**recursive_split(char *row, double y, double x)
 		if (map)
 			map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
 		if (!map || !map[(int)x])
-			return (free_map2(map, NULL));
+			return (free_map2(map, (int)x + 1, NULL));
 		set_data(map[(int)x], create_vector4(x, y, z, 1), color);
 		if (!map[(int)x]->base || !map[(int)x]->fixed)
-			return (free_map2(map, NULL));
+			return (free_map2(map, (int)x, NULL));
 	}
 	else
 	{
