@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:14:51 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:55:28 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,24 @@ static int	error_exit(t_vars *vars, char *error_message);
 
 int	mouse_move(int x, int y, t_vars *vars)
 {
-	if (vars->pre_mouse->w)
+	t_vector	delta;
+
+	if (vars->on_mouse_down)
 	{
+		delta = (t_vector){vars->pre_mouse->x - x, vars->pre_mouse->y - y, 0};
 		if (!vars->is_shift)
 		{
-			vars->tran_center->x = vars->pre_mouse->x - x;
-			vars->tran_center->y = vars->pre_mouse->y - y;
-			if (!trans(vars->map, vars->tran_center, false, true))
+			add_vector(vars->model_center, delta, false);
+			if (!trans(vars->map, &delta, false, true))
 				return (error_exit(vars, TRANSLATE_ERROR_MESSAGE));
 		}
 		else
 		{
-			*(vars->tran_center) = (t_vector){WIDTH / 2, HEIGHT / 2, 0, 0};
-			vars->rotate_angle->x = rad(vars->pre_mouse->y - y);
-			vars->rotate_angle->y = -rad(vars->pre_mouse->x - x);
-			if (!trans(vars->map, vars->tran_center, false, true)
+			vars->rotate_angle->x = rad(delta.y);
+			vars->rotate_angle->y = -rad(delta.x);
+			if (!trans(vars->map, vars->model_center, false, true)
 				|| !rotate(vars->map, vars->rotate_angle, false, false)
-				|| !trans(vars->map, vars->tran_center, false, false))
+				|| !trans(vars->map, vars->model_center, false, false))
 				return (error_exit(vars, ROTATE_ERROR_MESSAGE));
 		}
 	}
@@ -44,12 +45,15 @@ int	mouse_move(int x, int y, t_vars *vars)
 int	mouse_down(int key, int x, int y, t_vars *vars)
 {
 	if (key == Button1)
-		vars->pre_mouse->w = 1;
+		vars->on_mouse_down = true;
 	else if (key == Button4 || key == Button5)
 	{
-		if (!trans(vars->map, create_vector4(x, y, 0, 1), true, true)
-			|| !scale(vars->map, 1.1, key == Button5)
-			|| !trans(vars->map, create_vector4(x, y, 0, 1), true, false))
+		add_vector(vars->model_center, (t_vector){x, y, 0}, false);
+		mult_vector(vars->model_center, ZOOM_RATIO, key == Button5);
+		add_vector(vars->model_center, (t_vector){x, y, 0}, true);
+		if (!trans(vars->map, create_vector(x, y, 0), true, true)
+			|| !scale(vars->map, ZOOM_RATIO, key == Button5)
+			|| !trans(vars->map, create_vector(x, y, 0), true, false))
 			return (error_exit(vars, ZOOM_ERROR_MESSAGE));
 	}
 	return (0);
@@ -60,7 +64,7 @@ int	mouse_up(int key, int x, int y, t_vars *vars)
 	(void)x;
 	(void)y;
 	if (key == Button1)
-		vars->pre_mouse->w = 0;
+		vars->on_mouse_down = false;
 	return (0);
 }
 

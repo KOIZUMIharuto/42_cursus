@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/05 13:52:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:52:10 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static int	init_isometric_projection(t_map ***map)
 	t_vector	*map_center;
 	t_vector	*isometic_vector;
 
-	isometic_vector = create_vector4(atan(sqrt(2)), 0, rad(45), 1);
+	isometic_vector = create_vector(atan(sqrt(2)), 0, rad(45));
 	if (!rotate(map, isometic_vector, true, false))
 		return (return_error_int(NULL, strerror(errno), NULL));
-	map_center = create_vector4(0, 0, 0, 1);
+	map_center = create_vector(0, 0, 0);
 	if (!map_center)
 		return (return_error_int(NULL, strerror(errno), NULL));
 	if (!get_center(map, map_center))
@@ -59,7 +59,7 @@ static int	init_isometric_projection(t_map ***map)
 	trans(map, map_center, true, true);
 	if (!init_scale(map))
 		return (return_error_int(NULL, SCALE_ERROR_MESSAGE, NULL));
-	win_center = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 1);
+	win_center = create_vector(WIDTH / 2, HEIGHT / 2, 0);
 	if (!win_center)
 		return (return_error_int(NULL, strerror(errno), NULL));
 	trans(map, win_center, true, false);
@@ -73,17 +73,17 @@ static bool	init_scale(t_map ***map)
 	double		ratio;
 	t_vector	max;
 
-	max = (t_vector){0, 0, 0, 0};
+	max = (t_vector){0, 0, 0};
 	y = -1;
 	while (map[++y])
 	{
 		x = -1;
 		while (map[y][++x])
 		{
-			if (fabs(map[y][x]->fixed->x) > max.x)
-				max.x = fabs(map[y][x]->fixed->x);
-			if (fabs(map[y][x]->fixed->y) > max.y)
-				max.y = fabs(map[y][x]->fixed->y);
+			if (fabs(map[y][x]->pos->x) > max.x)
+				max.x = fabs(map[y][x]->pos->x);
+			if (fabs(map[y][x]->pos->y) > max.y)
+				max.y = fabs(map[y][x]->pos->y);
 		}
 	}
 	ratio = 0.9;
@@ -105,9 +105,3 @@ static int	return_error_int(t_map ***map, char *error_message, char *option)
 		ft_putendl_fd(option, 2);
 	return (1);
 }
-
-// __attribute__((destructor))
-// static void	destructor(void)
-// {
-// 	system("leaks -q fdf");
-// }

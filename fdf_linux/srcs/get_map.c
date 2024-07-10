@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 
 static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector *base, unsigned int color);
+static void		set_data(t_map *map, t_vector *pos, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static bool		get_col(char **row, unsigned int *color);
 
@@ -23,7 +23,14 @@ t_map	***get_map(int fd, double y)
 	t_map	***map;
 
 	row = get_next_line(fd);
-	if (row)
+	if (!row)
+	{
+		map = (t_map ***)ft_calloc(y + 1, sizeof(t_map **));
+		if (!map)
+			return (return_error_null(strerror(errno)));
+		map[(int)y] = NULL;
+	}
+	else
 	{
 		map = get_map(fd, y + 1);
 		if (map)
@@ -31,13 +38,6 @@ t_map	***get_map(int fd, double y)
 		free (row);
 		if (!map || !map[(int)y])
 			return (free_map3(map, (int)y + 1, NULL));
-	}
-	else
-	{
-		map = (t_map ***)ft_calloc(y + 1, sizeof(t_map **));
-		if (!map)
-			return (return_error_null(strerror(errno)));
-		map[(int)y] = NULL;
 	}
 	return (map);
 }
@@ -48,7 +48,14 @@ static t_map	**recursive_split(char *row, double y, double x)
 	double			z;
 	unsigned int	color;
 
-	if (*row)
+	if (!*row)
+	{
+		map = (t_map **)ft_calloc(x + 1, sizeof(t_map *));
+		if (!map)
+			return (return_error_null(strerror(errno)));
+		map[(int)x] = NULL;
+	}
+	else
 	{
 		if (!atodbl_row(&row, &z, &color))
 			return (NULL);
@@ -57,24 +64,16 @@ static t_map	**recursive_split(char *row, double y, double x)
 			map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
 		if (!map || !map[(int)x])
 			return (free_map2(map, (int)x + 1, NULL));
-		set_data(map[(int)x], create_vector4(x, y, z, 1), color);
-		if (!map[(int)x]->base || !map[(int)x]->fixed)
+		set_data(map[(int)x], create_vector(x, y, z), color);
+		if (!map[(int)x]->pos || !map[(int)x]->pos)
 			return (free_map2(map, (int)x, NULL));
-	}
-	else
-	{
-		map = (t_map **)ft_calloc(x + 1, sizeof(t_map *));
-		if (!map)
-			return (return_error_null(strerror(errno)));
-		map[(int)x] = NULL;
 	}
 	return (map);
 }
 
-static void	set_data(t_map *map, t_vector *base, unsigned int color)
+static void	set_data(t_map *map, t_vector *pos, unsigned int color)
 {
-	map->base = base;
-	map->fixed = create_vector4(base->x, base->y, base->z, base->w);
+	map->pos = pos;
 	map->color = color;
 }
 
@@ -83,11 +82,11 @@ static bool	atodbl_row(char **row, double *z, unsigned int *color)
 	int	sign;
 
 	sign = 1;
-	while (**row == ' ' || **row == '-')
-	{
-		sign *= -1;
+	while (**row == ' ')
 		(*row)++;
-	}
+	sign = 1 - 2 * (**row == '-');
+	if (sign < 0)
+		(*row)++;
 	if ((**row < '0' || '9' < **row))
 		return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
 	*z = sign * (*((*row)++) - '0');

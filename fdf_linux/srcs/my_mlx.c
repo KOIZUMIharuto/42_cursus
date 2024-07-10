@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:23 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:51:46 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_main(t_map ***map)
 	t_vars	vars;
 
 	init_vars(&vars, map);
-	if (vars.map && vars.pre_mouse && vars.rotate_angle && vars.tran_center
+	if (vars.map && vars.pre_mouse && vars.rotate_angle && vars.model_center
 		&& vars.img.addr && vars.z_buf && vars.mlx && vars.win && vars.img.img)
 	{
 		mlx_hook(vars.win, MotionNotify, PointerMotionMask, mouse_move, &vars);
@@ -46,10 +46,11 @@ static void	init_vars(t_vars *vars, t_map ***map)
 	vars->img.img = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->img.addr = mlx_get_data_addr(vars->img.img, &vars->img.bits_per_pixel,
 			&vars->img.line_length, &vars->img.endian);
+	vars->on_mouse_down = false;
 	vars->is_shift = false;
-	vars->pre_mouse = create_vector4(WIDTH / 2, HEIGHT / 2, 0, 0);
-	vars->rotate_angle = create_vector4(0, 0, 0, 0);
-	vars->tran_center = create_vector4(0, 0, 0, 0);
+	vars->pre_mouse = create_vector(WIDTH / 2, HEIGHT / 2, 0);
+	vars->rotate_angle = create_vector(0, 0, 0);
+	vars->model_center = create_vector(WIDTH / 2, HEIGHT / 2, 0);
 	vars->exit_status = 0;
 }
 
@@ -94,7 +95,7 @@ int	win_off(t_vars *vars)
 	}
 	free (vars->pre_mouse);
 	free (vars->rotate_angle);
-	free (vars->tran_center);
+	free (vars->model_center);
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_image(vars->mlx, vars->img.img);
 	exit(vars->exit_status);

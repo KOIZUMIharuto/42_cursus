@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/05 18:06:12 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:49:59 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,21 @@
 # define KEY_ESC 65307
 # define KEY_SFT_L 65505
 
+# define ZOOM_RATIO 1.1
+
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
 
-typedef struct s_vector4
+typedef struct s_vector
 {
 	double			x;
 	double			y;
 	double			z;
-	double			w;
 }	t_vector;
 
 typedef struct s_map
 {
-	t_vector		*base;
-	t_vector		*fixed;
+	t_vector		*pos;
 	unsigned int	color;
 }	t_map;
 
@@ -78,16 +78,20 @@ typedef struct s_vars
 	void		*mlx;
 	void		*win;
 	t_data		img;
+	bool		on_mouse_down;
 	bool		is_shift;
 	t_vector	*pre_mouse;
 	t_vector	*rotate_angle;
-	t_vector	*tran_center;
+	t_vector	*model_center;
 	int			exit_status;
 }			t_vars;
 
 t_map			***get_map(int fd, double y);
 
-t_vector		*create_vector4(double x, double y, double z, double w);
+t_vector		*create_vector(double x, double y, double z);
+void			add_vector(t_vector *src, t_vector add, bool sign);
+void			mult_vector(t_vector *src, double ratio, bool rev);
+
 bool			get_center(t_map ***map, t_vector *center_pos);
 double			rad(double deg);
 
