@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:09 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:13:27 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:59:34 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static unsigned int	culc_red(unsigned int color);
 static unsigned int	culc_green(unsigned int color);
 static unsigned int	culc_blue(unsigned int color);
 
-unsigned int	culc_color(t_map *p0, t_vector tmp, t_map *p1)
+unsigned int	culc_color(t_map *p0, t_vector_int tmp, t_map *p1)
 {
 	double			len;
 	double			progress;

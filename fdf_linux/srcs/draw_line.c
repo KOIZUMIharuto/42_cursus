@@ -6,67 +6,68 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 15:06:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:13:17 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1);
-static void	get_end_point_utils(t_vector_int *end_p, t_vector p0, double slope);
+static void	slope_over_1(t_vector_int *p0, int d_x, int d_y, int c);
+static void	slope_under_1(t_vector_int *p0, int d_x, int d_y, int c);
+static void	get_next_point(t_vector_int *p0, t_vector_int p1);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 {
-	t_end_points	end_points;
+	t_end_points	end_ps;
 
-	get_end_point(&(end_points.p0), *(p0->fixed), *(p1->fixed));
-	get_end_point(&(end_points.p1), *(p1->fixed), *(p0->fixed));
-	if (p0->fixed->z >= p1->fixed->z)
-		end_points.z = p0->fixed->z;
-	else
-		end_points.z = p1->fixed->z;
-	(void)vars;
-}
-
-static void	get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1)
-{
-	double	slope;
-
-	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
-		*end_p = (t_vector_int){(int)round(p0.x), (int)round(p0.y)};
-	else
+	get_end_point(&(end_ps.p0), *(p0->fixed), *(p1->fixed));
+	get_end_point(&(end_ps.p1), *(p1->fixed), *(p0->fixed));
+	while (end_ps.p0.x != end_ps.p1.x || end_ps.p0.y != end_ps.p1.y)
 	{
-		if (p0.x == p1.x)
-			*end_p = (t_vector_int){(int)round(p0.x),
-				(p0.y > HEIGHT) * HEIGHT * (p0.y >= 0)};
-		else if (p0.y == p1.y)
-			*end_p = (t_vector_int){(p0.x > WIDTH) * WIDTH * (p0.x >= 0),
-				(int)round(p0.y)};
-		else
-		{
-			slope = (p1.y - p0.y) / (p1.x - p0.x);
-			get_end_point_utils(end_p, p0, slope);
-		}
+		my_mlx_pixel_put(&(vars->img), end_ps.p0.x,
+			end_ps.p0.y, culc_color(p0, end_ps.p0, p1));
+		get_next_point(&(end_ps.p0), end_ps.p1);
 	}
 }
 
-static void	get_end_point_utils(t_vector_int *end_p, t_vector p0, double slope)
+static void	get_next_point(t_vector_int *p0, t_vector_int p1)
 {
-	int		y_intcpt;
-	int		width_intcpt;
+	int	d_x;
+	int	d_y;
+	int	c;
 
-	y_intcpt = (int)round(p0.y - slope * p0.x);
-	width_intcpt = (int)round(slope * WIDTH + y_intcpt);
-	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
-		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
-		*end_p = (t_vector_int){(WIDTH <= p0.x) * WIDTH * (p0.x >= 0),
-			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt};
+	d_x = p0->x - p1.x;
+	d_y = p1.y - p0->y;
+	c = -1 * (d_x * p0->y + d_y * p0->x);
+	if (abs(d_x) < abs(d_y))
+		slope_over_1(p0, d_x, d_y, c);
 	else
-		*end_p = (t_vector_int){
-			(HEIGHT <= p0.y) * (int)round((HEIGHT - y_intcpt) / slope)
-			+ (p0.y < 0) * (int)round(-(y_intcpt / slope)),
-			(HEIGHT <= p0.y) * HEIGHT * (p0.y >= 0)};
+		slope_under_1(p0, d_x, d_y, c);
+}
+
+static void	slope_over_1(t_vector_int *p0, int d_x, int d_y, int c)
+{
+	int	sign_y;
+	int	sign_x;
+
+	sign_y = 2 * (d_y > 0) - 1;
+	sign_x = 2 * (d_x < 0) - 1;
+	if ((d_x * (p0->y + sign_y * 2) + d_y * (p0->x + sign_x) + c) - (d_x * p0->y + d_y * p0->x + c) > 0)
+		p0->x += sign_x;
+	p0->y += sign_y;
+}
+
+static void	slope_under_1(t_vector_int *p0, int d_x, int d_y, int c)
+{
+	int	sign_y;
+	int	sign_x;
+
+	sign_y = 2 * (d_y > 0) - 1;
+	sign_x = 2 * (d_x < 0) - 1;
+	if ((d_x * (p0->y + sign_y) + d_y * (p0->x + sign_x * 2) + c) - (d_x * p0->y + d_y * p0->x + c) > 0)
+		p0->y += sign_y;
+	p0->x += sign_x;
 }
 
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)

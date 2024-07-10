@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:59:00 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:00:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@
 
 typedef struct s_vector_int
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	double	z;
 }	t_vector_int;
 
 typedef struct s_end_points
 {
 	t_vector_int	p0;
 	t_vector_int	p1;
-	double			z;
 }	t_end_points;
 
 typedef struct s_vector
@@ -117,8 +117,9 @@ bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map ***map);
 int				draw(t_vars *vars);
+void			get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1);
 void			draw_line(t_vars *vars, t_map *p0, t_map *p1);
-unsigned int	culc_color(t_map *p0, t_vector tmp, t_map *p1);
+unsigned int	culc_color(t_map *p0, t_vector_int tmp, t_map *p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);
