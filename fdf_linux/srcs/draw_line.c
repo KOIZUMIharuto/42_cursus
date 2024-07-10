@@ -6,58 +6,67 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:59:17 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:06:59 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	set_err(int *err, t_vector *tmp, t_vector *delta, t_vector *step);
+static void	get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1);
+static void	get_end_point_utils(t_vector_int *end_p, t_vector p0, double slope);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 {
-	t_vector	tmp;
-	t_vector	delta;
-	t_vector	step;
-	int			err;
+	t_end_points	end_points;
 
-	tmp = (t_vector){p0->fixed->x, p0->fixed->y, p0->fixed->z};
-	delta = (t_vector){fabs(p1->fixed->x - tmp.x),
-		fabs(p1->fixed->y - tmp.y), 0};
-	step = (t_vector){2 * (tmp.x < p1->fixed->x) - 1,
-		2 * (tmp.y < p1->fixed->y) - 1, 0};
-	err = delta.x - delta.y;
-	while (1)
+	get_end_point(&(end_points.p0), *(p0->fixed), *(p1->fixed));
+	get_end_point(&(end_points.p1), *(p1->fixed), *(p0->fixed));
+	if (p0->fixed->z >= p1->fixed->z)
+		end_points.z = p0->fixed->z;
+	else
+		end_points.z = p1->fixed->z;
+	(void)vars;
+}
+
+static void	get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1)
+{
+	double	slope;
+
+	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
+		*end_p = (t_vector_int){(int)round(p0.x), (int)round(p0.y)};
+	else
 	{
-		if (0 <= tmp.x && tmp.x < WIDTH && 0 <= tmp.y && tmp.y < HEIGHT
-			&& vars->z_buf[(int)tmp.y][(int)tmp.x] <= tmp.z)
+		if (p0.x == p1.x)
+			*end_p = (t_vector_int){(int)round(p0.x),
+				(p0.y > HEIGHT) * HEIGHT * (p0.y >= 0)};
+		else if (p0.y == p1.y)
+			*end_p = (t_vector_int){(p0.x > WIDTH) * WIDTH * (p0.x >= 0),
+				(int)round(p0.y)};
+		else
 		{
-			my_mlx_pixel_put(&(vars->img),
-				(int)round(tmp.x), (int)round(tmp.y), culc_color(p0, tmp, p1));
-			vars->z_buf[(int)tmp.y][(int)tmp.x] = tmp.z;
+			slope = (p1.y - p0.y) / (p1.x - p0.x);
+			get_end_point_utils(end_p, p0, slope);
 		}
-		if (fabs(tmp.x - p1->fixed->x) <= 1 && fabs(tmp.y - p1->fixed->y) <= 1)
-			break ;
-		set_err(&err, &tmp, &delta, &step);
 	}
 }
 
-static void	set_err(int *err, t_vector *tmp, t_vector *delta, t_vector *step)
+static void	get_end_point_utils(t_vector_int *end_p, t_vector p0, double slope)
 {
-	int	e2;
+	int		y_intcpt;
+	int		width_intcpt;
 
-	e2 = 2 * *err;
-	if (e2 > -(delta->y))
-	{
-		*err -= (delta->y);
-		tmp->x += step->x;
-	}
-	if (e2 < (delta->x))
-	{
-		*err += (delta->x);
-		tmp->y += step->y;
-	}
+	y_intcpt = (int)round(p0.y - slope * p0.x);
+	width_intcpt = (int)round(slope * WIDTH + y_intcpt);
+	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
+		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
+		*end_p = (t_vector_int){(WIDTH <= p0.x) * WIDTH * (p0.x >= 0),
+			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt};
+	else
+		*end_p = (t_vector_int){
+			(HEIGHT <= p0.y) * (int)round((HEIGHT - y_intcpt) / slope)
+			+ (p0.y < 0) * (int)round(-(y_intcpt / slope)),
+			(HEIGHT <= p0.y) * HEIGHT * (p0.y >= 0)};
 }
 
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)
