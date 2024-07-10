@@ -19,6 +19,7 @@ SRC_DIR = srcs
 
 SRCS =\
 culc_color.c\
+draw_line.c\
 draw.c\
 error.c\
 free.c\

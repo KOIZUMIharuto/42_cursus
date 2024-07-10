@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/08 13:52:10 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:33:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_isometric_projection(map) == 1)
 		return (1);
+	copy_vector(map, false);
 	my_mlx_main(map);
 	free_map3(map, 0, NULL);
 	return (0);
@@ -80,10 +81,10 @@ static bool	init_scale(t_map ***map)
 		x = -1;
 		while (map[y][++x])
 		{
-			if (fabs(map[y][x]->pos->x) > max.x)
-				max.x = fabs(map[y][x]->pos->x);
-			if (fabs(map[y][x]->pos->y) > max.y)
-				max.y = fabs(map[y][x]->pos->y);
+			if (fabs(map[y][x]->fixed->x) > max.x)
+				max.x = fabs(map[y][x]->fixed->x);
+			if (fabs(map[y][x]->fixed->y) > max.y)
+				max.y = fabs(map[y][x]->fixed->y);
 		}
 	}
 	ratio = 0.9;

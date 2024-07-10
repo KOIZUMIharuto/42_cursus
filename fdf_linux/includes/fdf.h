@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/08 13:49:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:59:00 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
+# define KEY_R 114
 # define KEY_ESC 65307
 # define KEY_SFT_L 65505
 
@@ -48,6 +49,19 @@
 
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
+
+typedef struct s_vector_int
+{
+	int	x;
+	int	y;
+}	t_vector_int;
+
+typedef struct s_end_points
+{
+	t_vector_int	p0;
+	t_vector_int	p1;
+	double			z;
+}	t_end_points;
 
 typedef struct s_vector
 {
@@ -58,7 +72,8 @@ typedef struct s_vector
 
 typedef struct s_map
 {
-	t_vector		*pos;
+	t_vector		*base;
+	t_vector		*fixed;
 	unsigned int	color;
 }	t_map;
 
@@ -91,6 +106,7 @@ t_map			***get_map(int fd, double y);
 t_vector		*create_vector(double x, double y, double z);
 void			add_vector(t_vector *src, t_vector add, bool sign);
 void			mult_vector(t_vector *src, double ratio, bool rev);
+void			copy_vector(t_map ***map, bool b_to_f);
 
 bool			get_center(t_map ***map, t_vector *center_pos);
 double			rad(double deg);
@@ -101,6 +117,7 @@ bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map ***map);
 int				draw(t_vars *vars);
+void			draw_line(t_vars *vars, t_map *p0, t_map *p1);
 unsigned int	culc_color(t_map *p0, t_vector tmp, t_map *p1);
 int				win_off(t_vars *vars);
 

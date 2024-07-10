@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/08 14:37:57 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:13:27 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ bool	rotate(t_map ***map, t_vector *vector, bool is_free, bool rev)
 		x = -1;
 		while (map[y][++x])
 		{
-			rotate_z(map[y][x]->pos, vector->z);
-			rotate_y(map[y][x]->pos, vector->y);
-			rotate_x(map[y][x]->pos, vector->x);
+			rotate_z(map[y][x]->fixed, vector->z);
+			rotate_y(map[y][x]->fixed, vector->y);
+			rotate_x(map[y][x]->fixed, vector->x);
 		}
 	}
 	if (is_free)

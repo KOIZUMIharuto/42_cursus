@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 11:21:33 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/08 13:45:53 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:36:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	*free_map2(t_map **map, int free_index, char *error_message)
 
 void	*free_map(t_map *map, char *error_message)
 {
-	free (map->pos);
+	free (map->base);
+	free (map->fixed);
 	free (map);
 	if (error_message)
 		ft_putendl_fd(error_message, 2);
