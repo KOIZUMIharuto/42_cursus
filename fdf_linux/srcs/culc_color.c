@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:09 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 15:59:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:01:33 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ unsigned int	culc_color(t_map *p0, t_vector_int tmp, t_map *p1)
 	unsigned int	green;
 	unsigned int	blue;
 
-	len = hypot(p1->fixed->x - p0->fixed->x, p1->fixed->y - p0->fixed->y);
-	progress = hypot(tmp.x - p0->fixed->x, tmp.y - p0->fixed->y) / len;
+	len = hypot(p1->isome->x - p0->isome->x, p1->isome->y - p0->isome->y);
+	progress = hypot(tmp.x - p0->isome->x, tmp.y - p0->isome->y) / len;
 	red = (1 - progress) * culc_red(p0->color) + progress * culc_red(p1->color);
 	green = (1 - progress) * culc_green(p0->color)
 		+ progress * culc_green(p1->color);

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 16:00:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:20:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ typedef struct s_vector
 typedef struct s_map
 {
 	t_vector		*base;
-	t_vector		*fixed;
+	t_vector		*isome;
+	t_vector		*plot;
 	unsigned int	color;
 }	t_map;
 

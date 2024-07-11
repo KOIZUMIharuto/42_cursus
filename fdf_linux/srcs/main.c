@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:33:36 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:01:33 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ static bool	init_scale(t_map ***map)
 		x = -1;
 		while (map[y][++x])
 		{
-			if (fabs(map[y][x]->fixed->x) > max.x)
-				max.x = fabs(map[y][x]->fixed->x);
-			if (fabs(map[y][x]->fixed->y) > max.y)
-				max.y = fabs(map[y][x]->fixed->y);
+			if (fabs(map[y][x]->isome->x) > max.x)
+				max.x = fabs(map[y][x]->isome->x);
+			if (fabs(map[y][x]->isome->y) > max.y)
+				max.y = fabs(map[y][x]->isome->y);
 		}
 	}
 	ratio = 0.9;

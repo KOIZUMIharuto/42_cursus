@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 
 static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector *fixed, unsigned int color);
+static void		set_data(t_map *map, t_vector *isome, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static bool		get_col(char **row, unsigned int *color);
 
@@ -29,16 +29,14 @@ t_map	***get_map(int fd, double y)
 		if (!map)
 			return (return_error_null(strerror(errno)));
 		map[(int)y] = NULL;
+		return (map);
 	}
-	else
-	{
-		map = get_map(fd, y + 1);
-		if (map)
-			map[(int)y] = recursive_split(row, y, 0);
-		free (row);
-		if (!map || !map[(int)y])
-			return (free_map3(map, (int)y + 1, NULL));
-	}
+	map = get_map(fd, y + 1);
+	if (map)
+		map[(int)y] = recursive_split(row, y, 0);
+	free (row);
+	if (!map || !map[(int)y])
+		return (free_map3(map, (int)y + 1, NULL));
 	return (map);
 }
 
@@ -54,27 +52,25 @@ static t_map	**recursive_split(char *row, double y, double x)
 		if (!map)
 			return (return_error_null(strerror(errno)));
 		map[(int)x] = NULL;
+		return (map);
 	}
-	else
-	{
-		if (!atodbl_row(&row, &z, &color))
-			return (NULL);
-		map = recursive_split(row, y, x + 1);
-		if (map)
-			map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
-		if (!map || !map[(int)x])
-			return (free_map2(map, (int)x + 1, NULL));
-		set_data(map[(int)x], create_vector(x, y, z), color);
-		if (!map[(int)x]->base || !map[(int)x]->fixed)
-			return (free_map2(map, (int)x, NULL));
-	}
+	if (!atodbl_row(&row, &z, &color))
+		return (NULL);
+	map = recursive_split(row, y, x + 1);
+	if (map)
+		map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
+	if (!map || !map[(int)x])
+		return (free_map2(map, (int)x + 1, NULL));
+	set_data(map[(int)x], create_vector(x, y, z), color);
+	if (!map[(int)x]->base || !map[(int)x]->isome)
+		return (free_map2(map, (int)x, NULL));
 	return (map);
 }
 
 static void	set_data(t_map *map, t_vector *pos, unsigned int color)
 {
 	map->base = pos;
-	map->fixed = create_vector(pos->x, pos->y, pos->z);
+	map->isome = create_vector(pos->x, pos->y, pos->z);
 	map->color = color;
 }
 

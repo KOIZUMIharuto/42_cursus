@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 17:03:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:22:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@ int	draw(t_vars *vars)
 		x = -1;
 		while (vars->map[y][++x])
 		{
-			if (vars->map[y][x + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y][x + 1]->fixed))
+			if (vars->map[y][x + 1] && checker(*vars->map[y][x]->isome,
+				*vars->map[y][x + 1]->isome))
 				draw_line(vars, vars->map[y][x], vars->map[y][x + 1]);
-			if (vars->map[y + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y + 1][x]->fixed))
+			if (vars->map[y + 1] && checker(*vars->map[y][x]->isome,
+				*vars->map[y + 1][x]->isome))
 				draw_line(vars, vars->map[y][x], vars->map[y + 1][x]);
 		}
 	}
@@ -103,7 +101,7 @@ void	get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1)
 			get_end_point_utils(end_p, p0, slope);
 		}
 	}
-	end_p->z = (p0.z >= p1.z) * p0.z + (p0.z < p1.z) * p1.z;
+	end_p->z = (p0.z + p1.z) / 2;
 }
 
 static void	get_end_point_utils(t_vector_int *end_p, t_vector p0, double slope)
