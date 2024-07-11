@@ -6,13 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:02:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:18:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:35:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	do_pers(t_map ***map)
+void	do_pers(t_map ***map, t_vector v_p)
 {
 	
 }
