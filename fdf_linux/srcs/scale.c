@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:28:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:01:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:32:31 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	scale(t_map ***map, double ratio, bool rev)
 	{
 		x = -1;
 		while (map[y][++x])
-			mult_vector(map[y][x]->isome, ratio, rev);
+			mult_vector(map[y][x]->fixed, ratio, rev);
 	}
 	return (true);
 }

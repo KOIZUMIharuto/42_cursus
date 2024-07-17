@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:01:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:01:34 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int	main(int argc, char **argv)
 	t_map		***map;
 
 	if (argc < 2)
-		return (return_error_int(NULL, ARG_ERROR_MESSAGE, USAGE));
+		return (return_error_int(NULL, ARGUMENT_ERROR, USAGE));
+	else if (argc > 2)
+		ft_putendl_fd(ARGUMENT_WARNING, 1);
 	if (!ft_strnstr(argv[1], ".fdf", ft_strlen(argv[1])))
-		return (return_error_int(NULL, EXTENSION_ERROR_MESSAGE, EXTENTION));
+		return (return_error_int(NULL, EXTENSION_ERROR, EXTENTION_REQUIRED));
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		return (return_error_int(NULL, strerror(errno), NULL));
@@ -55,11 +57,11 @@ static int	init_isometric_projection(t_map ***map)
 	if (!get_center(map, map_center))
 	{
 		free(map_center);
-		return (return_error_int(NULL, COLUMN_ERROR_MESSAGE, NULL));
+		return (return_error_int(NULL, COLUMN_ERROR, NULL));
 	}
 	trans(map, map_center, true, true);
 	if (!init_scale(map))
-		return (return_error_int(NULL, SCALE_ERROR_MESSAGE, NULL));
+		return (return_error_int(NULL, SCALE_ERROR, NULL));
 	win_center = create_vector(WIDTH / 2, HEIGHT / 2, 0);
 	if (!win_center)
 		return (return_error_int(NULL, strerror(errno), NULL));
@@ -81,10 +83,10 @@ static bool	init_scale(t_map ***map)
 		x = -1;
 		while (map[y][++x])
 		{
-			if (fabs(map[y][x]->isome->x) > max.x)
-				max.x = fabs(map[y][x]->isome->x);
-			if (fabs(map[y][x]->isome->y) > max.y)
-				max.y = fabs(map[y][x]->isome->y);
+			if (fabs(map[y][x]->fixed->x) > max.x)
+				max.x = fabs(map[y][x]->fixed->x);
+			if (fabs(map[y][x]->fixed->y) > max.y)
+				max.y = fabs(map[y][x]->fixed->y);
 		}
 	}
 	ratio = 0.9;

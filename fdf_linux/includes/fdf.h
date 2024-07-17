@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:20:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:34:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@
 # include "../minilibx-linux/mlx.h"
 # include "../libft/includes/libft.h"
 
-# define ARG_ERROR_MESSAGE "Missing required argument."
+# define ARGUMENT_ERROR "Missing required argument."
 # define USAGE "Usage: ./fdf <path_to_map_file>"
-# define EXTENSION_ERROR_MESSAGE "Invalid file extension."
-# define EXTENTION "Required: .fdf file"
-# define FILE_OPEN_ERROR_MESSAGE "Failed to open file."
-# define ALTITUDE_ERROR_MESSAGE "Invalid altitude in map."
-# define COLOR_ERROR_MESSAGE "Invalid color in map."
-# define COLUMN_ERROR_MESSAGE "Inconsistent number of columns in map rows."
-# define SCALE_ERROR_MESSAGE "Invalid scale ratio."
-# define ZOOM_ERROR_MESSAGE "Zoom operation failed."
-# define ROTATE_ERROR_MESSAGE "Rotation operation failed."
-# define TRANSLATE_ERROR_MESSAGE "Translation operation failed."
+# define ARGUMENT_WARNING "Warning: Only the first argument is valid."
+# define EXTENSION_ERROR "Invalid file extension."
+# define EXTENTION_REQUIRED "Required: .fdf file"
+# define FILE_OPEN_ERROR "Failed to open file."
+# define ALTITUDE_ERROR "Invalid altitude in map."
+# define COLOR_ERROR "Invalid color in map."
+# define COLUMN_ERROR "Inconsistent number of columns in map rows."
+# define SCALE_ERROR "Invalid scale ratio."
+# define ZOOM_ERROR "Zoom operation failed."
+# define ROTATE_ERROR "Rotation operation failed."
+# define TRANSLATE_ERROR "Translation operation failed."
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -50,17 +51,17 @@
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
 
-typedef struct s_vector_int
+typedef struct s_vector_long
 {
 	int		x;
 	int		y;
 	double	z;
-}	t_vector_int;
+}	t_vect_long;
 
 typedef struct s_end_points
 {
-	t_vector_int	p0;
-	t_vector_int	p1;
+	t_vect_long	p0;
+	t_vect_long	p1;
 }	t_end_points;
 
 typedef struct s_vector
@@ -73,8 +74,7 @@ typedef struct s_vector
 typedef struct s_map
 {
 	t_vector		*base;
-	t_vector		*isome;
-	t_vector		*plot;
+	t_vector		*fixed;
 	unsigned int	color;
 }	t_map;
 
@@ -118,9 +118,9 @@ bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map ***map);
 int				draw(t_vars *vars);
-void			get_end_point(t_vector_int *end_p, t_vector p0, t_vector p1);
+void			get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1);
 void			draw_line(t_vars *vars, t_map *p0, t_map *p1);
-unsigned int	culc_color(t_map *p0, t_vector_int tmp, t_map *p1);
+unsigned int	culc_color(t_map *p0, t_vect_long tmp, t_map *p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);

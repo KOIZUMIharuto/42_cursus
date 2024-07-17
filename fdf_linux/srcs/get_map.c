@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 
 static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector *isome, unsigned int color);
+static void		set_data(t_map *map, t_vector *fixed, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static bool		get_col(char **row, unsigned int *color);
 
@@ -62,7 +62,7 @@ static t_map	**recursive_split(char *row, double y, double x)
 	if (!map || !map[(int)x])
 		return (free_map2(map, (int)x + 1, NULL));
 	set_data(map[(int)x], create_vector(x, y, z), color);
-	if (!map[(int)x]->base || !map[(int)x]->isome)
+	if (!map[(int)x]->base || !map[(int)x]->fixed)
 		return (free_map2(map, (int)x, NULL));
 	return (map);
 }
@@ -70,7 +70,7 @@ static t_map	**recursive_split(char *row, double y, double x)
 static void	set_data(t_map *map, t_vector *pos, unsigned int color)
 {
 	map->base = pos;
-	map->isome = create_vector(pos->x, pos->y, pos->z);
+	map->fixed = create_vector(pos->x, pos->y, pos->z);
 	map->color = color;
 }
 
@@ -85,19 +85,19 @@ static bool	atodbl_row(char **row, double *z, unsigned int *color)
 	if (sign < 0)
 		(*row)++;
 	if ((**row < '0' || '9' < **row))
-		return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+		return (return_error_bool(ALTITUDE_ERROR));
 	*z = sign * (*((*row)++) - '0');
 	while ('0' <= **row && **row <= '9')
 	{
 		if (*z < -DBL_MAX / 10 || DBL_MAX / 10 < *z)
-			return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+			return (return_error_bool(ALTITUDE_ERROR));
 		*z *= 10;
 		if (*z < -DBL_MAX + (**row - '0') || DBL_MAX - (**row - '0') < *z)
-			return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+			return (return_error_bool(ALTITUDE_ERROR));
 		*z += sign * (*((*row)++) - '0');
 	}
 	if (!get_col(row, color))
-		return (return_error_bool(COLOR_ERROR_MESSAGE));
+		return (return_error_bool(COLOR_ERROR));
 	while (**row == ' ' || **row == '\n')
 		(*row)++;
 	return (true);
