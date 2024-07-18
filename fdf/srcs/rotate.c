@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:12:43 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/11 15:32:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,13 @@ static void	rotate_x(t_vector *vector, double angle);
 
 bool	rotate(t_map ***map, t_vector *vector, bool is_free, bool rev)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	if (!vector)
 		return (false);
 	if (rev)
-	{
-		vector->x *= -1;
-		vector->y *= -1;
-		vector->z *= -1;
-	}
+		*vector = (t_vector){-vector->x, -vector->y, -vector->z};
 	y = -1;
 	while (map[++y])
 	{

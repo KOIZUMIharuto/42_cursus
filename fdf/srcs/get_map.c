@@ -13,7 +13,7 @@
 #include "../includes/fdf.h"
 
 static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector *base, unsigned int color);
+static void		set_data(t_map *map, t_vector *fixed, unsigned int color);
 static bool		atodbl_row(char **row, double *z, unsigned int *color);
 static bool		get_col(char **row, unsigned int *color);
 
@@ -23,22 +23,20 @@ t_map	***get_map(int fd, double y)
 	t_map	***map;
 
 	row = get_next_line(fd);
-	if (row)
-	{
-		map = get_map(fd, y + 1);
-		if (map)
-			map[(int)y] = recursive_split(row, y, 0);
-		free (row);
-		if (!map || !map[(int)y])
-			return (free_map3(map, (int)y + 1, NULL));
-	}
-	else
+	if (!row)
 	{
 		map = (t_map ***)ft_calloc(y + 1, sizeof(t_map **));
 		if (!map)
 			return (return_error_null(strerror(errno)));
 		map[(int)y] = NULL;
+		return (map);
 	}
+	map = get_map(fd, y + 1);
+	if (map)
+		map[(int)y] = recursive_split(row, y, 0);
+	free (row);
+	if (!map || !map[(int)y])
+		return (free_map3(map, (int)y + 1, NULL));
 	return (map);
 }
 
@@ -48,33 +46,31 @@ static t_map	**recursive_split(char *row, double y, double x)
 	double			z;
 	unsigned int	color;
 
-	if (*row)
-	{
-		if (!atodbl_row(&row, &z, &color))
-			return (NULL);
-		map = recursive_split(row, y, x + 1);
-		if (map)
-			map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
-		if (!map || !map[(int)x])
-			return (free_map2(map, NULL));
-		set_data(map[(int)x], create_vector4(x, y, z, 1), color);
-		if (!map[(int)x]->base || !map[(int)x]->fixed)
-			return (free_map2(map, NULL));
-	}
-	else
+	if (!*row)
 	{
 		map = (t_map **)ft_calloc(x + 1, sizeof(t_map *));
 		if (!map)
 			return (return_error_null(strerror(errno)));
 		map[(int)x] = NULL;
+		return (map);
 	}
+	if (!atodbl_row(&row, &z, &color))
+		return (NULL);
+	map = recursive_split(row, y, x + 1);
+	if (map)
+		map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
+	if (!map || !map[(int)x])
+		return (free_map2(map, (int)x + 1, NULL));
+	set_data(map[(int)x], create_vector(x, y, z), color);
+	if (!map[(int)x]->base || !map[(int)x]->fixed)
+		return (free_map2(map, (int)x, NULL));
 	return (map);
 }
 
-static void	set_data(t_map *map, t_vector *base, unsigned int color)
+static void	set_data(t_map *map, t_vector *pos, unsigned int color)
 {
-	map->base = base;
-	map->fixed = create_vector4(base->x, base->y, base->z, base->w);
+	map->base = pos;
+	map->fixed = create_vector(pos->x, pos->y, pos->z);
 	map->color = color;
 }
 
@@ -83,25 +79,25 @@ static bool	atodbl_row(char **row, double *z, unsigned int *color)
 	int	sign;
 
 	sign = 1;
-	while (**row == ' ' || **row == '-')
-	{
-		sign *= -1;
+	while (**row == ' ')
 		(*row)++;
-	}
+	sign = 1 - 2 * (**row == '-');
+	if (sign < 0)
+		(*row)++;
 	if ((**row < '0' || '9' < **row))
-		return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+		return (return_error_bool(ALTITUDE_ERROR));
 	*z = sign * (*((*row)++) - '0');
 	while ('0' <= **row && **row <= '9')
 	{
 		if (*z < -DBL_MAX / 10 || DBL_MAX / 10 < *z)
-			return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+			return (return_error_bool(ALTITUDE_ERROR));
 		*z *= 10;
 		if (*z < -DBL_MAX + (**row - '0') || DBL_MAX - (**row - '0') < *z)
-			return (return_error_bool(ALTITUDE_ERROR_MESSAGE));
+			return (return_error_bool(ALTITUDE_ERROR));
 		*z += sign * (*((*row)++) - '0');
 	}
 	if (!get_col(row, color))
-		return (return_error_bool(COLOR_ERROR_MESSAGE));
+		return (return_error_bool(COLOR_ERROR));
 	while (**row == ' ' || **row == '\n')
 		(*row)++;
 	return (true);
@@ -128,6 +124,8 @@ static bool	get_col(char **row, unsigned int *color)
 			*color = 16 * *color + i;
 			(*row)++;
 		}
+		if (**row && **row != ' ' && **row != '\n')
+			return (false);
 	}
 	return (true);
 }

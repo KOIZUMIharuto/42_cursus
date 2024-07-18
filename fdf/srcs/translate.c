@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:48:05 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:41:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:13:27 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 bool	trans(t_map ***map, t_vector *vector, bool is_free, bool rev)
 {
-	int	x;
-	int	y;
-	int	dir;
+	int			x;
+	int			y;
+	int			dir;
+	t_vector	delta;
 
 	if (!vector)
 		return (false);
 	dir = 1 - 2 * (int)rev;
+	delta = (t_vector){dir * vector->x, dir * vector->y, dir * vector->z};
 	y = -1;
 	while (map[++y])
 	{
 		x = -1;
 		while (map[y][++x])
 		{
-			map[y][x]->fixed->x += dir * vector->x;
-			map[y][x]->fixed->y += dir * vector->y;
-			map[y][x]->fixed->z += dir * vector->z;
+			add_vector(map[y][x]->fixed, delta, true);
 		}
 	}
 	if (is_free)

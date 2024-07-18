@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/02 14:37:58 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/07/17 13:34:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,54 +18,57 @@
 # include <errno.h>
 # include <stdio.h>
 # include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <math.h>
 
-# include "../minilibx_macos/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "../libft/includes/libft.h"
 
-# define USAGE_ERROR_MESSAGE "Error: Missing required argument.\n\
-Usage: ./fdf <path_to_map_file>"
-# define EXTENSION_ERROR_MESSAGE "Error: Invalid file extension.\n\
-Required: .fdf file"
-# define FILE_OPEN_ERROR_MESSAGE "Error: Failed to open file."
-# define ALTITUDE_ERROR_MESSAGE "Error: Invalid altitude in map."
-# define COLOR_ERROR_MESSAGE "Error: Invalid color in map."
-# define COLUMN_ERROR_MESSAGE "Error: Inconsistent number of \
-columns in map rows."
-# define ZOOM_ERROR_MESSAGE "Error: Zoom operation failed."
-# define ROTATE_ERROR_MESSAGE "Error: Rotation operation failed."
-# define TRANSLATE_ERROR_MESSAGE "Error: Translation operation failed."
+# define ARGUMENT_ERROR "Missing required argument."
+# define USAGE "Usage: ./fdf <path_to_map_file>"
+# define ARGUMENT_WARNING "Warning: Only the first argument is valid."
+# define EXTENSION_ERROR "Invalid file extension."
+# define EXTENTION_REQUIRED "Required: .fdf file"
+# define FILE_OPEN_ERROR "Failed to open file."
+# define ALTITUDE_ERROR "Invalid altitude in map."
+# define COLOR_ERROR "Invalid color in map."
+# define COLUMN_ERROR "Inconsistent number of columns in map rows."
+# define SCALE_ERROR "Invalid scale ratio."
+# define ZOOM_ERROR "Zoom operation failed."
+# define ROTATE_ERROR "Rotation operation failed."
+# define TRANSLATE_ERROR "Translation operation failed."
 
 # define WIDTH 1920
 # define HEIGHT 1080
 
-# define KEY_ESC 53
-# define KEY_SFT_L 257
+# define KEY_R 114
+# define KEY_ESC 65307
+# define KEY_SFT_L 65505
 
-# define ON_MOUSEDOWN 4
-# define ON_MOUSEUP 5
-# define ON_MOUSEMOVE 6
-
-# define LEFT 1
-# define RIGHT 2
-# define SCLOLL_UP 4
-# define SCLOLL_DOWN 5
-
-# define ON_KEY_PRESSED 2
-# define ON_KEY_RELEASED 3
-# define ON_DESTROY 17
+# define ZOOM_RATIO 1.1
 
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
 
-typedef struct s_vector4
+typedef struct s_vector_long
+{
+	int		x;
+	int		y;
+	double	z;
+}	t_vect_long;
+
+typedef struct s_end_points
+{
+	t_vect_long	p0;
+	t_vect_long	p1;
+}	t_end_points;
+
+typedef struct s_vector
 {
 	double			x;
 	double			y;
 	double			z;
-	double			w;
 }	t_vector;
 
 typedef struct s_map
@@ -91,16 +94,21 @@ typedef struct s_vars
 	void		*mlx;
 	void		*win;
 	t_data		img;
+	bool		on_mouse_down;
 	bool		is_shift;
 	t_vector	*pre_mouse;
 	t_vector	*rotate_angle;
-	t_vector	*tran_center;
+	t_vector	*model_center;
 	int			exit_status;
 }			t_vars;
 
 t_map			***get_map(int fd, double y);
 
-t_vector		*create_vector4(double x, double y, double z, double w);
+t_vector		*create_vector(double x, double y, double z);
+void			add_vector(t_vector *src, t_vector add, bool sign);
+void			mult_vector(t_vector *src, double ratio, bool rev);
+void			copy_vector(t_map ***map, bool b_to_f);
+
 bool			get_center(t_map ***map, t_vector *center_pos);
 double			rad(double deg);
 
@@ -110,8 +118,10 @@ bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map ***map);
 int				draw(t_vars *vars);
-unsigned int	get_color(t_map *p0, t_vector tmp, t_map *p1);
-int				window_close(t_vars *vars);
+void			get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1);
+void			draw_line(t_vars *vars, t_map *p0, t_map *p1);
+unsigned int	culc_color(t_map *p0, t_vect_long tmp, t_map *p1);
+int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);
 int				key_released(int key_code, t_vars *vars);
@@ -120,7 +130,7 @@ int				mouse_down(int key, int x, int y, t_vars *vars);
 int				mouse_up(int key, int x, int y, t_vars *vars);
 
 void			*free_map3(t_map ***map, int free_index, char *error_message);
-void			*free_map2(t_map **map, char *error_message);
+void			*free_map2(t_map **map, int free_index, char *error_message);
 void			*free_map(t_map *map, char *error_message);
 
 void			*return_error_null(char *error_message);

@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scale.c                                            :+:      :+:    :+:   */
+/*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 16:28:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:31 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/06/03 14:25:28 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/06/10 14:42:45 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-bool	scale(t_map ***map, double ratio, bool rev)
+t_vector	*create_vector4(double x, double y, double z, double w)
 {
-	int	x;
-	int	y;
+	t_vector	*vector4;
 
-	if (ratio == 0)
-		return (false);
-	y = -1;
-	while (map[++y])
-	{
-		x = -1;
-		while (map[y][++x])
-			mult_vector(map[y][x]->fixed, ratio, rev);
-	}
-	return (true);
+	vector4 = (t_vector *)ft_calloc(1, sizeof(t_vector));
+	if (!vector4)
+		return (return_error_null(strerror(errno)));
+	*vector4 = (t_vector){x, y, z, w};
+	return (vector4);
 }

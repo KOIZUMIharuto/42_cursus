@@ -6,39 +6,36 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/24 14:02:39 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:38:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-// static void	init_z_buffer(double **z_buf);
-static void	draw_line(t_vars *vars, t_map *p0, t_map *p1);
-static void	set_err(int *err, t_vector *tmp, t_vector *delta, t_vector *step);
-static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
+static void	init_z_buffer(double **z_buf);
+static bool	checker(t_vector p0, t_vector p1);
+static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope);
 
 int	draw(t_vars *vars)
 {
 	int	x;
 	int	y;
 
-	ft_memset(vars->img.addr, 0, HEIGHT * vars->img.line_length);
-	y = -1;
-	while (++y < HEIGHT)
-	{
-		x = -1;
-		while (++x < WIDTH)
-			vars->z_buf[y][x] = -DBL_MAX;
-	}
+	ft_bzero(vars->img.addr, HEIGHT * vars->img.line_length);
+	init_z_buffer(vars->z_buf);
 	y = -1;
 	while (vars->map[++y])
 	{
 		x = -1;
 		while (vars->map[y][++x])
 		{
-			if (vars->map[y][x + 1])
+			if (vars->map[y][x + 1]
+				&& checker(*vars->map[y][x]->fixed,
+				*vars->map[y][x + 1]->fixed))
 				draw_line(vars, vars->map[y][x], vars->map[y][x + 1]);
-			if (vars->map[y + 1] && vars->map[y + 1][x])
+			if (vars->map[y + 1]
+				&& checker(*vars->map[y][x]->fixed,
+				*vars->map[y + 1][x]->fixed))
 				draw_line(vars, vars->map[y][x], vars->map[y + 1][x]);
 		}
 	}
@@ -46,65 +43,83 @@ int	draw(t_vars *vars)
 	return (0);
 }
 
-static void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
+static void	init_z_buffer(double **z_buf)
 {
-	t_vector	tmp;
-	t_vector	delta;
-	t_vector	step;
-	int			err;
+	int	x;
+	int	y;
 
-	tmp = (t_vector){p0->fixed->x, p0->fixed->y, p0->fixed->z, 1};
-	delta = (t_vector){fabs(p1->fixed->x - tmp.x),
-		fabs(p1->fixed->y - tmp.y), 0, 0};
-	step = (t_vector){2 * (tmp.x < p1->fixed->x) - 1,
-		2 * (tmp.y < p1->fixed->y) - 1, 0, 0};
-	err = delta.x - delta.y;
-	while (1)
+	y = -1;
+	while (++y < HEIGHT)
 	{
-		if (0 <= tmp.x && tmp.x < WIDTH && 0 <= tmp.y && tmp.y < HEIGHT
-			&& vars->z_buf[(int)tmp.y][(int)tmp.x] <= tmp.z)
-		{
-			my_mlx_pixel_put(&(vars->img),
-				(int)round(tmp.x), (int)round(tmp.y), get_color(p0, tmp, p1));
-			vars->z_buf[(int)tmp.y][(int)tmp.x] = tmp.z;
-		}
-		if (fabs(tmp.x - p1->fixed->x) <= 1 && fabs(tmp.y - p1->fixed->y) <= 1)
-			break ;
-		set_err(&err, &tmp, &delta, &step);
+		x = -1;
+		while (++x < WIDTH)
+			z_buf[y][x] = -DBL_MAX;
 	}
 }
 
-static void	set_err(int *err, t_vector *tmp, t_vector *delta, t_vector *step)
+static bool	checker(t_vector p0, t_vector p1)
 {
-	int	e2;
+	double	slope;
+	double	y_intcpt;
+	double	width_intcpt;
 
-	e2 = 2 * *err;
-	if (e2 > -(delta->y))
-	{
-		*err -= (delta->y);
-		tmp->x += step->x;
-	}
-	if (e2 < (delta->x))
-	{
-		*err += (delta->x);
-		tmp->y += step->y;
-	}
-}
-
-static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	if (data->endian == 0)
-		*(unsigned int *)dst = color;
+	if ((0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
+		|| (0 <= p1.x && p1.x < WIDTH && 0 <= p1.y && p1.y < HEIGHT))
+		return (true);
+	if ((p0.x < 0 && p1.x < 0) || (p0.x >= WIDTH && p1.x >= WIDTH)
+		|| (p0.y < 0 && p1.y < 0) || (p0.y >= HEIGHT && p1.y >= HEIGHT))
+		return (false);
+	if (p0.x == p1.x)
+		return (0 <= p0.x && p0.x < WIDTH);
+	else if (p0.y == p1.y)
+		return (0 <= p0.y && p0.y < HEIGHT);
 	else
 	{
-		dst[0] = color / 0x1000000;
-		dst[1] = (color / 0x10000) % 0x100;
-		dst[2] = (color / 0x100) % 0x100;
-		dst[3] = color % 0x100;
+		slope = (p1.y - p0.y) / (p1.x - p0.x);
+		y_intcpt = p0.y - slope * p0.x;
+		width_intcpt = slope * WIDTH + y_intcpt;
+		return ((slope >= 0 && y_intcpt < HEIGHT && width_intcpt > 0)
+			|| (slope < 0 && width_intcpt < HEIGHT && y_intcpt > 0));
 	}
+}
+
+void	get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1)
+{
+	double	slope;
+
+	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
+		*end_p = (t_vect_long){(long)round(p0.x), (long)round(p0.y), 0};
+	else
+	{
+		if (p0.x == p1.x)
+			*end_p = (t_vect_long){(long)round(p0.x),
+				(p0.y >= HEIGHT) * (HEIGHT - 1) * (p0.y >= 0), 0};
+		else if (p0.y == p1.y)
+			*end_p = (t_vect_long){(p0.x >= WIDTH) * (WIDTH - 1) * (p0.x >= 0),
+				(long)round(p0.y), 0};
+		else
+		{
+			slope = (p1.y - p0.y) / (p1.x - p0.x);
+			get_end_point_utils(end_p, p0, slope);
+		}
+	}
+	end_p->z = (p0.z >= p1.z) * p0.z + (p0.z < p1.z) * p1.z;
+}
+
+static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope)
+{
+	long	y_intcpt;
+	long	width_intcpt;
+
+	y_intcpt = (long)round(p0.y - slope * p0.x);
+	width_intcpt = (long)round(slope * WIDTH + y_intcpt);
+	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
+		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
+		*end_p = (t_vect_long){(WIDTH <= p0.x) * (WIDTH - 1) * (p0.x >= 0),
+			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt, 0};
+	else
+		*end_p = (t_vect_long){
+			(HEIGHT <= p0.y) * (long)round((HEIGHT - y_intcpt) / slope)
+			+ (p0.y < 0) * (long)round(-(y_intcpt / slope)),
+			(HEIGHT <= p0.y) * (HEIGHT - 1) * (p0.y >= 0), 0};
 }

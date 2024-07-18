@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scale.c                                            :+:      :+:    :+:   */
+/*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 16:28:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:31 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/06/19 14:43:21 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/06/19 14:43:27 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-bool	scale(t_map ***map, double ratio, bool rev)
+int	key_pressed(int key_code, t_vars *vars)
 {
-	int	x;
-	int	y;
+	if (key_code == KEY_ESC)
+		window_close(vars);
+	else if (key_code == KEY_SFT_L)
+		vars->is_shift = true;
+	return (0);
+}
 
-	if (ratio == 0)
-		return (false);
-	y = -1;
-	while (map[++y])
-	{
-		x = -1;
-		while (map[y][++x])
-			mult_vector(map[y][x]->fixed, ratio, rev);
-	}
-	return (true);
+int	key_released(int key_code, t_vars *vars)
+{
+	if (key_code == KEY_SFT_L)
+		vars->is_shift = false;
+	return (0);
 }

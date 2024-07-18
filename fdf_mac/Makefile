@@ -5,21 +5,21 @@ SANITIZEFRAG = -fsanitize=address
 BUFFER_SIZE = 10000
 
 LIBFT_NAME = libft.a
-NAME = fdf
+MANDATORY_NAME = fdf
 
 LIBFT_DIR = libft
 
-MLX_DIR = ./minilibx-linux
-MLX = $(MLX_DIR)/libmlx.a
+MINILIBX_DIR := ./minilibx_macos
+MINILIBX := $(MINILIBX_DIR)/libmlx.a
 
-LDFLAGS = -L/usr/lib -L$(MLX_DIR)/obj
-LIBS = -lXext -lX11 -lm
+INCLUDES := -I$(MINILIBX_DIR)
+LDFLAGS := -L$(MINILIBX_DIR)
+LIBS=-lm -lmlx
 
 SRC_DIR = srcs
 
 SRCS =\
-culc_color.c\
-draw_line.c\
+draw_utils.c\
 draw.c\
 error.c\
 free.c\
@@ -38,10 +38,10 @@ vector.c
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: $(MANDATORY_NAME)
 
-$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX)
-	@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -o $(NAME) $(MLXFLAGS)
+$(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MINILIBX)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -framework OpenGL -framework AppKit -o $(MANDATORY_NAME) $(MLXFLAGS)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
@@ -49,18 +49,18 @@ $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX)
 $(LIBFT_DIR)/$(LIBFT_NAME):
 	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
 
-$(MLX):
-	@make -j4 -C $(MLX_DIR)
+$(MINILIBX):
+	@make -j4 -C $(MINILIBX_DIR)
 
 clean:
 	@rm -f $(OBJ)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean 
-	@rm -f $(NAME)
+	@rm -f $(MANDATORY_NAME)
 	@rm -f $(LIBFT_DIR)/$(LIBFT_NAME)
-	@make -C $(MLX_DIR) clean
-	@rm -f $(MLX)
+	@make -C $(MINILIBX_DIR) clean
+	@rm -f $(MINILIBX)
 
 re: fclean all
 
