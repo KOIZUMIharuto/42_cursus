@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:25:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:01:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:32:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void	copy_vector(t_map ***map, bool b_to_f)
 		{
 			if (b_to_f)
 			{
-				map[y][x]->isome->x = map[y][x]->base->x;
-				map[y][x]->isome->y = map[y][x]->base->y;
-				map[y][x]->isome->z = map[y][x]->base->z;
+				map[y][x]->fixed->x = map[y][x]->base->x;
+				map[y][x]->fixed->y = map[y][x]->base->y;
+				map[y][x]->fixed->z = map[y][x]->base->z;
 			}
 			else
 			{
-				map[y][x]->base->x = map[y][x]->isome->x;
-				map[y][x]->base->y = map[y][x]->isome->y;
-				map[y][x]->base->z = map[y][x]->isome->z;
+				map[y][x]->base->x = map[y][x]->fixed->x;
+				map[y][x]->base->y = map[y][x]->fixed->y;
+				map[y][x]->base->z = map[y][x]->fixed->z;
 			}
 		}
 	}

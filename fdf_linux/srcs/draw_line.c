@@ -6,27 +6,26 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 16:17:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:43:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	slope_over_1(t_vector_int *p0, int d_x, int d_y, int *e);
-static void	slope_under_1(t_vector_int *p0, int d_x, int d_y, int *e);
+static void	slope_over_1(t_vect_long *p0, t_vect_long delta, int *e);
+static void	slope_under_1(t_vect_long *p0, t_vect_long delta, int *e);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 {
 	t_end_points	end_ps;
-	int				d_x;
-	int				d_y;
+	t_vect_long		delta;
 	int				e;
 
-	get_end_point(&(end_ps.p0), *(p0->isome), *(p1->isome));
-	get_end_point(&(end_ps.p1), *(p1->isome), *(p0->isome));
-	d_x = end_ps.p1.x - end_ps.p0.x;
-	d_y = end_ps.p1.y - end_ps.p0.y;
+	get_end_point(&(end_ps.p0), *(p0->fixed), *(p1->fixed));
+	get_end_point(&(end_ps.p1), *(p1->fixed), *(p0->fixed));
+	delta.x = end_ps.p1.x - end_ps.p0.x;
+	delta.y = end_ps.p1.y - end_ps.p0.y;
 	e = 0;
 	while (end_ps.p0.x != end_ps.p1.x || end_ps.p0.y != end_ps.p1.y)
 	{
@@ -38,42 +37,42 @@ void	draw_line(t_vars *vars, t_map *p0, t_map *p1)
 				end_ps.p0.y, culc_color(p0, end_ps.p0, p1));
 			vars->z_buf[end_ps.p0.y][end_ps.p0.x] = end_ps.p0.z;
 		}
-		if (abs(d_x) <= abs(d_y))
-			slope_over_1(&(end_ps.p0), d_x, d_y, &e);
+		if (abs(delta.x) <= abs(delta.y))
+			slope_over_1(&(end_ps.p0), delta, &e);
 		else
-			slope_under_1(&(end_ps.p0), d_x, d_y, &e);
+			slope_under_1(&(end_ps.p0), delta, &e);
 	}
 }
 
-static void	slope_over_1(t_vector_int *p0, int d_x, int d_y, int *e)
+static void	slope_over_1(t_vect_long *p0, t_vect_long delta, int *e)
 {
 	int	sign_y;
 	int	sign_x;
 
-	sign_y = 2 * (d_y > 0) - 1;
-	sign_x = 2 * (d_x > 0) - 1;
+	sign_y = 2 * (delta.y > 0) - 1;
+	sign_x = 2 * (delta.x > 0) - 1;
 	p0->y += sign_y;
-	*e += 2 * abs(d_x);
-	if (*e > abs(d_y))
+	*e += 2 * abs(delta.x);
+	if (*e > abs(delta.y))
 	{
 		p0->x += sign_x;
-		*e -= 2 * abs(d_y);
+		*e -= 2 * abs(delta.y);
 	}
 }
 
-static void	slope_under_1(t_vector_int *p0, int d_x, int d_y, int *e)
+static void	slope_under_1(t_vect_long *p0, t_vect_long delta, int *e)
 {
 	int	sign_y;
 	int	sign_x;
 
-	sign_y = 2 * (d_y > 0) - 1;
-	sign_x = 2 * (d_x > 0) - 1;
+	sign_y = 2 * (delta.y > 0) - 1;
+	sign_x = 2 * (delta.x > 0) - 1;
 	p0->x += sign_x;
-	*e += 2 * abs(d_y);
-	if (*e > abs(d_x))
+	*e += 2 * abs(delta.y);
+	if (*e > abs(delta.x))
 	{
 		p0->y += sign_y;
-		*e -= 2 * abs(d_x);
+		*e -= 2 * abs(delta.x);
 	}
 }
 
