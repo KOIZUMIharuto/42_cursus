@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/17 13:01:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:41:22 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	init_isometric_projection(t_map ***map)
 	if (!get_center(map, map_center))
 	{
 		free(map_center);
-		return (return_error_int(NULL, COLUMN_ERROR, NULL));
+		return (return_error_int(map, COLUMN_ERROR, NULL));
 	}
 	trans(map, map_center, true, true);
 	if (!init_scale(map))
