@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 14:14:34 by xxxx              #+#    #+#             */
-/*   Updated: 2024/07/03 15:48:58 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/07/09 10:50:17 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/07/09 14:57:15 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count);
 static bool	is_split(char c, char *del, t_esc *esc);
-static bool	format_commands(char **commands);
+static bool	format_cmds(char **cmds);
 
-char	**split_command(char *command)
+char	**split_cmd(char *cmd)
 {
-	char	**commands;
+	char	**cmds;
 	t_esc	esc;
 
 	esc = (t_esc){false, false, false};
-	commands = recursive_split(command, "\n\t\v\f\r ", &esc, 0);
-	if (!commands)
+	cmds = recursive_split(cmd, "\n\t\v\f\r ", &esc, 0);
+	if (!cmds)
 		return (NULL);
-	if (!format_commands(commands))
-		return (free_commands(commands, 0));
-	return (commands);
+	if (!format_cmds(cmds))
+		return (free_cmds(cmds, 0, NULL));
+	return (cmds);
 }
 
 
 static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 {
 	int		len;
-	char	**commands;
+	char	**cmds;
 
 	while (*str && is_split(*str, del, esc))
 		str++;
@@ -42,20 +42,26 @@ static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 	while (*str && str[len] && !is_split(str[len], del, esc))
 		len++;
 	if (*str)
-		commands = recursive_split(str + len, del, esc, cmd_count + 1);
+		cmds = recursive_split(str + len, del, esc, cmd_count + 1);
 	else
-		commands = (char **)ft_calloc((cmd_count + 1),  sizeof(char *));
-	if (!commands)
+		cmds = (char **)ft_calloc((cmd_count + 1),  sizeof(char *));
+	if (!cmds)
+	{
+		// エラー出力
 		return (NULL);
+	}
 	if (*str)
 	{
-		commands[cmd_count] = ft_substr(str, 0, len);
-		if (!commands[cmd_count])
-			return (free_commands(commands, cmd_count + 1));
+		cmds[cmd_count] = ft_substr(str, 0, len);
+		if (!cmds[cmd_count])
+		{
+			// エラー出力
+			return (free_cmds(cmds, cmd_count + 1, NULL));
+		}
 	}
 	else
-		commands[cmd_count] = NULL;
-	return (commands);
+		cmds[cmd_count] = NULL;
+	return (cmds);
 }
 
 bool	is_split(char c, char *del, t_esc *esc)
@@ -76,30 +82,33 @@ bool	is_split(char c, char *del, t_esc *esc)
 	return (false);
 }
 
-static bool	format_commands(char **commands)
+static bool	format_cmds(char **cmds)
 {
 	t_esc	esc;
 	t_esc	esc_tmp;
 	int		index;
 
-	while (*commands)
+	while (*cmds)
 	{
 		esc = (t_esc){false, false, false};
 		index = 0;
-		while ((*commands)[index])
+		while ((*cmds)[index])
 		{
 			esc_tmp = esc;
-			(void)is_split((*commands)[index], "", &esc);
+			(void)is_split((*cmds)[index], "", &esc);
 			if (esc.bacl_s || esc_tmp.single_q != esc.single_q
 				|| esc_tmp.double_q != esc.double_q)
-				ft_memmove(&((*commands)[index]), &((*commands)[index + 1]),
-					ft_strlen(&((*commands)[index])));
+				ft_memmove(&((*cmds)[index]), &((*cmds)[index + 1]),
+					ft_strlen(&((*cmds)[index])));
 			else
 				index++;
 		}
 		if (esc.bacl_s || esc.single_q || esc.double_q)
+		{
+			// エラー出力
 			return (false);
-		commands++;
+		}
+		cmds++;
 	}
 	return (true);
 }

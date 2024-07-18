@@ -13,6 +13,7 @@ SRC_DIR = srcs
 
 SRCS =\
 free.c\
+main.c\
 pipex.c\
 split.c
 
