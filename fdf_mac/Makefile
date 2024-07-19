@@ -19,7 +19,8 @@ LIBS=-lm -lmlx
 SRC_DIR = srcs
 
 SRCS =\
-draw_utils.c\
+culc_color.c\
+draw_line.c\
 draw.c\
 error.c\
 free.c\
@@ -50,7 +51,7 @@ $(LIBFT_DIR)/$(LIBFT_NAME):
 	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
 
 $(MINILIBX):
-	@make -j4 -C $(MINILIBX_DIR)
+	@make -C $(MINILIBX_DIR)
 
 clean:
 	@rm -f $(OBJ)
