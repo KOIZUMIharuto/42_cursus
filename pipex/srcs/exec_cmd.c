@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/09 15:31:52 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:02:16 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_path(char *cmd, char **envp)
 				if (!path)
 					return (NULL); // エラー出力
 				if (access(path, F_OK) == 0)
-					return((char *)free_cmds(paths, 0, (void *)path));
+					return ((char *)free_cmds(paths, 0, NULL));
 				free(path);
 			}
 			free_cmds(paths, 0, NULL);
