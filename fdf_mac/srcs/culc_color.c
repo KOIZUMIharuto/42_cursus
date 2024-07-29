@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:09 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/17 13:34:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:42:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static unsigned int	culc_red(unsigned int color);
 static unsigned int	culc_green(unsigned int color);
 static unsigned int	culc_blue(unsigned int color);
 
-unsigned int	culc_color(t_map *p0, t_vect_long tmp, t_map *p1)
+unsigned int	culc_color(t_dot *p0, t_vect_int tmp, t_dot *p1)
 {
 	double			len;
 	double			progress;
@@ -24,8 +24,8 @@ unsigned int	culc_color(t_map *p0, t_vect_long tmp, t_map *p1)
 	unsigned int	green;
 	unsigned int	blue;
 
-	len = hypot(p1->fixed->x - p0->fixed->x, p1->fixed->y - p0->fixed->y);
-	progress = hypot(tmp.x - p0->fixed->x, tmp.y - p0->fixed->y) / len;
+	len = hypot(p1->fixed.x - p0->fixed.x, p1->fixed.y - p0->fixed.y);
+	progress = hypot(tmp.x - p0->fixed.x, tmp.y - p0->fixed.y) / len;
 	red = (1 - progress) * culc_red(p0->color) + progress * culc_red(p1->color);
 	green = (1 - progress) * culc_green(p0->color)
 		+ progress * culc_green(p1->color);

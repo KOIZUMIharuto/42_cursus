@@ -6,22 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:25:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:32:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:11:40 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-t_vector	*create_vector(double x, double y, double z)
-{
-	t_vector	*vector;
-
-	vector = (t_vector *)ft_calloc(1, sizeof(t_vector));
-	if (!vector)
-		return (return_error_null(strerror(errno)));
-	*vector = (t_vector){x, y, z};
-	return (vector);
-}
 
 void	add_vector(t_vector *src, t_vector add, bool sign)
 {
@@ -46,29 +35,29 @@ void	mult_vector(t_vector *src, double ratio, bool rev)
 	}
 }
 
-void	copy_vector(t_map ***map, bool b_to_f)
+void	copy_vector(t_list *map, bool b_to_f)
 {
-	int	x;
-	int	y;
+	t_list	*row;
+	t_dot	*dot;
 
-	y = -1;
-	while (map[++y])
+	while (map)
 	{
-		x = -1;
-		while (map[y][++x])
+		row = (t_list *)(map->content);
+		while (row)
 		{
+			dot = (t_dot *)(row->content);
 			if (b_to_f)
-			{
-				map[y][x]->fixed->x = map[y][x]->base->x;
-				map[y][x]->fixed->y = map[y][x]->base->y;
-				map[y][x]->fixed->z = map[y][x]->base->z;
-			}
+				dot->fixed = (t_vector){
+					dot->base.x,
+					dot->base.y,
+					dot->base.z};
 			else
-			{
-				map[y][x]->base->x = map[y][x]->fixed->x;
-				map[y][x]->base->y = map[y][x]->fixed->y;
-				map[y][x]->base->z = map[y][x]->fixed->z;
-			}
+				dot->base = (t_vector){
+					dot->fixed.x,
+					dot->fixed.y,
+					dot->fixed.z};
+			row = row->next;
 		}
+		map = map->next;
 	}
 }

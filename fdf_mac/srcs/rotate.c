@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:25 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:11:19 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,26 @@ static void	rotate_z(t_vector *vector, double angle);
 static void	rotate_y(t_vector *vector, double angle);
 static void	rotate_x(t_vector *vector, double angle);
 
-bool	rotate(t_map ***map, t_vector *vector, bool is_free, bool rev)
+void	rotate(t_list *map, t_vector *vector, bool rev)
 {
-	int	x;
-	int	y;
+	t_list	*row;
+	t_dot	*dot;
 
-	if (!vector)
-		return (false);
 	if (rev)
 		*vector = (t_vector){-vector->x, -vector->y, -vector->z};
-	y = -1;
-	while (map[++y])
+	while (map)
 	{
-		x = -1;
-		while (map[y][++x])
+		row = (t_list *)(map->content);
+		while (row)
 		{
-			rotate_z(map[y][x]->fixed, vector->z);
-			rotate_y(map[y][x]->fixed, vector->y);
-			rotate_x(map[y][x]->fixed, vector->x);
+			dot = (t_dot *)(row->content);
+			rotate_z(&dot->fixed, vector->z);
+			rotate_y(&dot->fixed, vector->y);
+			rotate_x(&dot->fixed, vector->x);
+			row = row->next;
 		}
+		map = map->next;
 	}
-	if (is_free)
-		free(vector);
-	return (true);
 }
 
 static void	rotate_z(t_vector *vector, double angle)

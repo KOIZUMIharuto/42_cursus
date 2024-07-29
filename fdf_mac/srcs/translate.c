@@ -6,33 +6,28 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:48:05 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:13:27 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:11:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-bool	trans(t_map ***map, t_vector *vector, bool is_free, bool rev)
+void	trans(t_list *map, t_vector *vector, bool rev)
 {
-	int			x;
-	int			y;
-	int			dir;
-	t_vector	delta;
+	t_list	*row;
+	t_dot	*dot;
 
-	if (!vector)
-		return (false);
-	dir = 1 - 2 * (int)rev;
-	delta = (t_vector){dir * vector->x, dir * vector->y, dir * vector->z};
-	y = -1;
-	while (map[++y])
+	if (rev)
+		*vector = (t_vector){-vector->x, -vector->y, -vector->z};
+	while (map)
 	{
-		x = -1;
-		while (map[y][++x])
+		row = (t_list *)(map->content);
+		while (row)
 		{
-			add_vector(map[y][x]->fixed, delta, true);
+			dot = (t_dot *)(row->content);
+			add_vector(&dot->fixed, *vector, true);
+			row = row->next;
 		}
+		map = map->next;
 	}
-	if (is_free)
-		free(vector);
-	return (true);
 }

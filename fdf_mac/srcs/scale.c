@@ -6,25 +6,29 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:28:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:31 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:11:24 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-bool	scale(t_map ***map, double ratio, bool rev)
+bool	scale(t_list *map, double ratio, bool rev)
 {
-	int	x;
-	int	y;
+	t_list	*row;
+	t_dot	*dot;
 
 	if (ratio == 0)
 		return (false);
-	y = -1;
-	while (map[++y])
+	while (map)
 	{
-		x = -1;
-		while (map[y][++x])
-			mult_vector(map[y][x]->fixed, ratio, rev);
+		row = (t_list *)(map->content);
+		while (row)
+		{
+			dot = (t_dot *)(row->content);
+			mult_vector(&dot->fixed, ratio, rev);
+			row = row->next;
+		}
+		map = map->next;
 	}
 	return (true);
 }

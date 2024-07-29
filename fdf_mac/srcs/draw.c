@@ -6,37 +6,39 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/17 13:38:43 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:11:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	init_z_buffer(double **z_buf);
-static bool	checker(t_vector p0, t_vector p1);
-static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope);
+static void		init_z_buffer(double **z_buf);
+static bool		checker(t_vector p0, t_vector p1);
+static t_dot	*get_dot_by_index(t_list *map, int x, int y);
 
 int	draw(t_vars *vars)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	t_dot	*dot;
+	t_dot	*right_dot;
+	t_dot	*bottom_dot;
 
 	ft_bzero(vars->img.addr, HEIGHT * vars->img.line_length);
 	init_z_buffer(vars->z_buf);
 	y = -1;
-	while (vars->map[++y])
+	while (++y == 0 || bottom_dot)
 	{
 		x = -1;
-		while (vars->map[y][++x])
+		while (++x == 0 || right_dot)
 		{
-			if (vars->map[y][x + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y][x + 1]->fixed))
-				draw_line(vars, vars->map[y][x], vars->map[y][x + 1]);
-			if (vars->map[y + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y + 1][x]->fixed))
-				draw_line(vars, vars->map[y][x], vars->map[y + 1][x]);
+			dot = get_dot_by_index(vars->map, x, y);
+			right_dot = get_dot_by_index(vars->map, x + 1, y);
+			if (right_dot && checker(dot->fixed, right_dot->fixed))
+				draw_line(vars, dot, right_dot);
+			bottom_dot = get_dot_by_index(vars->map, x, y + 1);
+			if (bottom_dot && checker(dot->fixed, bottom_dot->fixed))
+				draw_line(vars, dot, bottom_dot);
 		}
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
@@ -55,6 +57,22 @@ static void	init_z_buffer(double **z_buf)
 		while (++x < WIDTH)
 			z_buf[y][x] = -DBL_MAX;
 	}
+}
+
+static t_dot	*get_dot_by_index(t_list *map, int x, int y)
+{
+	t_list	*row;
+
+	while (map && y-- >= 0)
+		map = map->next;
+	if (!map)
+		return (NULL);
+	row = (t_list *)(map->content);
+	while (row && x-- >= 0)
+		row = row->next;
+	if (!row)
+		return (NULL);
+	return ((t_dot *)(row->content));
 }
 
 static bool	checker(t_vector p0, t_vector p1)
@@ -81,45 +99,4 @@ static bool	checker(t_vector p0, t_vector p1)
 		return ((slope >= 0 && y_intcpt < HEIGHT && width_intcpt > 0)
 			|| (slope < 0 && width_intcpt < HEIGHT && y_intcpt > 0));
 	}
-}
-
-void	get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1)
-{
-	double	slope;
-
-	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
-		*end_p = (t_vect_long){(long)round(p0.x), (long)round(p0.y), 0};
-	else
-	{
-		if (p0.x == p1.x)
-			*end_p = (t_vect_long){(long)round(p0.x),
-				(p0.y >= HEIGHT) * (HEIGHT - 1) * (p0.y >= 0), 0};
-		else if (p0.y == p1.y)
-			*end_p = (t_vect_long){(p0.x >= WIDTH) * (WIDTH - 1) * (p0.x >= 0),
-				(long)round(p0.y), 0};
-		else
-		{
-			slope = (p1.y - p0.y) / (p1.x - p0.x);
-			get_end_point_utils(end_p, p0, slope);
-		}
-	}
-	end_p->z = (p0.z >= p1.z) * p0.z + (p0.z < p1.z) * p1.z;
-}
-
-static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope)
-{
-	long	y_intcpt;
-	long	width_intcpt;
-
-	y_intcpt = (long)round(p0.y - slope * p0.x);
-	width_intcpt = (long)round(slope * WIDTH + y_intcpt);
-	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
-		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
-		*end_p = (t_vect_long){(WIDTH <= p0.x) * (WIDTH - 1) * (p0.x >= 0),
-			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt, 0};
-	else
-		*end_p = (t_vect_long){
-			(HEIGHT <= p0.y) * (long)round((HEIGHT - y_intcpt) / slope)
-			+ (p0.y < 0) * (long)round(-(y_intcpt / slope)),
-			(HEIGHT <= p0.y) * (HEIGHT - 1) * (p0.y >= 0), 0};
 }

@@ -36,13 +36,14 @@ utils.c\
 vector.c
 
 
+
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJ = $(SRC:.c=.o)
 
 all: $(MANDATORY_NAME)
 
 $(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MINILIBX)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -framework OpenGL -framework AppKit -o $(MANDATORY_NAME) $(MLXFLAGS)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -framework OpenGL -framework AppKit -o $(MANDATORY_NAME) $(MLXFLAGS) $(SANITIZEFRAG)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
