@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/22 16:03:46 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:40:07 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define USAGE "Usage: ./fdf <path_to_map_file>"
 # define ARGUMENT_WARNING "Warning: Only the first argument is valid."
 # define EXTENSION_ERROR "Invalid file extension."
-# define EXTENTION_REQUIRED "Required: .fdf file"
+# define EXTENTION "Required: .fdf file"
 # define FILE_OPEN_ERROR "Failed to open file."
 # define ALTITUDE_ERROR "Invalid altitude in map."
 # define COLOR_ERROR "Invalid color in map."
@@ -51,7 +51,7 @@
 # define UPPER_HEX_LIST "0123456789ABCDEF"
 # define LOWER_HEX_LIST "0123456789abcdef"
 
-typedef struct s_vector_long
+typedef struct s_vector_int
 {
 	int		x;
 	int		y;
@@ -82,7 +82,7 @@ typedef struct s_xyc
 {
 	int		y;
 	int		x;
-	void	*content;
+	char	*content;
 }	t_xyc;
 
 typedef struct s_data
@@ -96,7 +96,7 @@ typedef struct s_data
 
 typedef struct s_vars
 {
-	t_dot		**map;
+	t_list		*map;
 	double		**z_buf;
 	void		*mlx;
 	void		*win;
@@ -109,22 +109,22 @@ typedef struct s_vars
 	int			exit_status;
 }			t_vars;
 
-t_dot			**get_map(int fd, int y);
+void			get_map(t_list **map, int fd);
 
 void			add_vector(t_vector *src, t_vector add, bool sign);
 void			mult_vector(t_vector *src, double ratio, bool rev);
-void			copy_vector(t_dot ***map, bool b_to_f);
+void			copy_vector(t_list *map, bool b_to_f);
 
-bool			get_center(t_dot ***map, t_vector *center_pos);
+bool			fdf_atoi(const char *str, int *result);
+void			get_center(t_list *map, t_vector *center_pos);
 double			rad(double deg);
 
-bool			trans(t_dot **map, t_vector *vector, bool is_free, bool rev);
-bool			scale(t_dot **map, double ratio, bool rev);
-bool			rotate(t_dot **map, t_vector *vector, bool is_free, bool rev);
+void			trans(t_list *map, t_vector *vector, bool rev);
+bool			scale(t_list *map, double ratio, bool rev);
+void			rotate(t_list *map, t_vector *vector, bool rev);
 
-void			my_mlx_main(t_dot **map);
+void			my_mlx_main(t_list *map);
 int				draw(t_vars *vars);
-void			get_end_dot(t_vect_int *end_p, t_vector p0, t_vector p1);
 void			draw_line(t_vars *vars, t_dot *p0, t_dot *p1);
 unsigned int	culc_color(t_dot *p0, t_vect_int tmp, t_dot *p1);
 int				win_off(t_vars *vars);
@@ -135,10 +135,7 @@ int				mouse_move(int x, int y, t_vars *vars);
 int				mouse_down(int key, int x, int y, t_vars *vars);
 int				mouse_up(int key, int x, int y, t_vars *vars);
 
-void			*free_map3(t_dot **map, int free_index, char *error_message);
-void			*free_map2(t_dot *map, int free_index, char *error_message);
-void			*free_map(t_dot map, char *error_message);
-void			free_xyc(void *xyc);
+void			free_map(void *content);
 
 void			*return_error_null(char *error_message);
 void			*return_error_bool(char *error_message);

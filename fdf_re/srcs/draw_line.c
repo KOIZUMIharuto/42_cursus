@@ -6,21 +6,22 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/22 11:42:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:49:32 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	slope_over_1(t_vect_int *p0, t_vect_int delta, int *e);
-static void	slope_under_1(t_vect_int *p0, t_vect_int delta, int *e);
+static void	get_end_dot(t_vect_int *end_p, t_vector p0, t_vector p1);
+static void	get_end_dot_utils(t_vect_int *end_p, t_vector p0, double slope);
+static void	get_next_dot(t_vect_int *p0, t_vect_int delta, int *e);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 void	draw_line(t_vars *vars, t_dot *p0, t_dot *p1)
 {
 	t_end_dots	end_ps;
-	t_vect_int		delta;
-	int				e;
+	t_vect_int	delta;
+	int			e;
 
 	get_end_dot(&(end_ps.p0), p0->fixed, p1->fixed);
 	get_end_dot(&(end_ps.p1), p1->fixed, p0->fixed);
@@ -37,42 +38,73 @@ void	draw_line(t_vars *vars, t_dot *p0, t_dot *p1)
 				end_ps.p0.y, culc_color(p0, end_ps.p0, p1));
 			vars->z_buf[end_ps.p0.y][end_ps.p0.x] = end_ps.p0.z;
 		}
-		if (abs(delta.x) <= abs(delta.y))
-			slope_over_1(&(end_ps.p0), delta, &e);
+		get_next_dot(&(end_ps.p0), delta, &e);
+	}
+}
+
+static void	get_end_dot(t_vect_int *end_p, t_vector p0, t_vector p1)
+{
+	double	slope;
+
+	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
+		*end_p = (t_vect_int){(int)round(p0.x), (int)round(p0.y), 0};
+	else
+	{
+		if (p0.x == p1.x)
+			*end_p = (t_vect_int){(int)round(p0.x),
+				(p0.y >= HEIGHT) * (HEIGHT - 1) * (p0.y >= 0), 0};
+		else if (p0.y == p1.y)
+			*end_p = (t_vect_int){(p0.x >= WIDTH) * (WIDTH - 1) * (p0.x >= 0),
+				(int)round(p0.y), 0};
 		else
-			slope_under_1(&(end_ps.p0), delta, &e);
+		{
+			slope = (p1.y - p0.y) / (p1.x - p0.x);
+			get_end_dot_utils(end_p, p0, slope);
+		}
 	}
+	end_p->z = (p0.z >= p1.z) * p0.z + (p0.z < p1.z) * p1.z;
 }
 
-static void	slope_over_1(t_vect_int *p0, t_vect_int delta, int *e)
+static void	get_end_dot_utils(t_vect_int *end_p, t_vector p0, double slope)
 {
-	int	sign_y;
-	int	sign_x;
+	int	y_intcpt;
+	int	width_intcpt;
 
-	sign_y = 2 * (delta.y > 0) - 1;
-	sign_x = 2 * (delta.x > 0) - 1;
-	p0->y += sign_y;
-	*e += 2 * abs(delta.x);
-	if (*e > abs(delta.y))
-	{
-		p0->x += sign_x;
-		*e -= 2 * abs(delta.y);
-	}
+	y_intcpt = (int)round(p0.y - slope * p0.x);
+	width_intcpt = (int)round(slope * WIDTH + y_intcpt);
+	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
+		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
+		*end_p = (t_vect_int){(WIDTH <= p0.x) * (WIDTH - 1) * (p0.x >= 0),
+			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt, 0};
+	else
+		*end_p = (t_vect_int){
+			(HEIGHT <= p0.y) * (int)round((HEIGHT - y_intcpt) / slope)
+			+ (p0.y < 0) * (int)round(-(y_intcpt / slope)),
+			(HEIGHT <= p0.y) * (HEIGHT - 1) * (p0.y >= 0), 0};
 }
 
-static void	slope_under_1(t_vect_int *p0, t_vect_int delta, int *e)
-{
-	int	sign_y;
-	int	sign_x;
 
-	sign_y = 2 * (delta.y > 0) - 1;
-	sign_x = 2 * (delta.x > 0) - 1;
-	p0->x += sign_x;
-	*e += 2 * abs(delta.y);
-	if (*e > abs(delta.x))
+static void	get_next_dot(t_vect_int *p0, t_vect_int delta, int *e)
+{
+	if (abs(delta.x) <= abs(delta.y))
 	{
-		p0->y += sign_y;
-		*e -= 2 * abs(delta.x);
+		p0->y += 2 * (delta.y > 0) - 1;
+		*e += 2 * abs(delta.x);
+		if (*e > abs(delta.y))
+		{
+			p0->x += 2 * (delta.x > 0) - 1;
+			*e -= 2 * abs(delta.y);
+		}
+	}
+	else
+	{
+		p0->x += 2 * (delta.x > 0) - 1;
+		*e += 2 * abs(delta.y);
+		if (*e > abs(delta.x))
+		{
+			p0->y += 2 * (delta.y > 0) - 1;
+			*e -= 2 * abs(delta.x);
+		}
 	}
 }
 

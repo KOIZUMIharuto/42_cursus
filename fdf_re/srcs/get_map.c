@@ -1,82 +1,103 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                     :+:      :+:    :+:   */
+/*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/05 13:54:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:13:24 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	split_row(void *xyc);
-static bool	get_col(char *row, unsigned int *color);
 
-void	get_map(t_list *map, int fd)
+static bool		split_row(t_list **row_list, char *row, int y_index);
+static t_list	*set_dot(char *value, int x, int y);
+static bool		get_col(char *row, unsigned int *color);
+static bool		check_column(t_list *map);
+
+void	get_map(t_list **map, int fd)
 {
 	char	*row;
-	int		row_count;
-	t_xyc	*xyc_tmp;
-	t_list	*row_tmp;
+	int		y_index;
+	t_list	*row_list;
 
-
-	row_count = -1;
+	y_index = -1;
 	while (1)
 	{
 		row = get_next_line(fd);
 		if (!row)
 			break ;
-		xyc_tmp = (t_xyc *)ft_calloc(1, sizeof(t_xyc));
-		if (xyc_tmp)
-			return (ft_lstclear(&map, &free_xyc));
-		*xyc_tmp = (t_xyc){row_count, -1, (void *)row};
-		row_tmp = ft_lstnew((void *)&xyc_tmp);
-		if (!row_tmp)
-			return (ft_lstclear(&map, &free_xyc));
-		ft_lstadd_back(&map, row_tmp);
-	}
-	ft_lstiter(map, split_row);
-}
-
-static void	split_row(void *xyc)
-{
-	char	**words;
-	int		index;
-	t_dot	*dot;
-	t_list	*dots_tmp;
-	t_list	*row;
-
-	if (xyc)
-		words = ft_split((const char *)((t_xyc *)xyc)->content, " ");
-	if (!xyc || !words)
-		return ;
-	index = -1;
-	while (words[++index])
-	{
-		dot = (t_dot *)ft_calloc(1, sizeof(t_dot));
-		set_value(dot, ((t_xyc *)xyc)->y, index, words[index]);
-		dots_tmp = ft_lstnew((void *)&dot);
-		free (words[index]);
-		if (!dots_tmp)
+		row_list = NULL;
+		if (!split_row(&row_list, row, ++y_index))
 		{
-			while (words[++index])
-				free (words[index]);
-			free (words);
-			return (ft_lstclear(&row, &free_xyc));
+			ft_lstclear(map, &free_map);
+			return ;
 		}
-		ft_lstadd_back(&row, dots_tmp);
+		ft_lstadd_back(map, row_list);
 	}
-	free (words);
-	free_xyc(xyc);
-	xyc = (void *)row;
+	if (check_column(*map))
+		return ;
+	ft_lstclear(map, &free_map);
+	ft_putstr_fd("Error: ", 2);
+	ft_putendl_fd(COLUMN_ERROR, 2);
 }
 
-static void	set_value(t_dot *dot, int y, int x, char *word)
+static bool	split_row(t_list **row_list, char *row, int y_index)
 {
+	char	**value;
+	int		x_index;
+	t_list	*dot;
 
+	value = ft_split(row, " ");
+	if (!value)
+		return (return_error_bool(strerror(errno)));
+	x_index = -1;
+	while (1)
+	{
+		if (!value[++x_index])
+			break ;
+		dot = set_dot(value[x_index], x_index, y_index);
+		if (!dot)
+		{
+			while (*value)
+				free(*(value++));
+			free (value);
+			ft_lstclear(row_list, free);
+			return (false);
+		}
+		ft_lstadd_back(row_list, dot);
+	}
+	return (true);
+}
+
+static t_list	*set_dot(char *value, int x, int y)
+{
+	t_list	*dot;
+	t_dot	*dot_data;
+	int		z;
+
+	if (!fdf_atoi(value, &z))
+		return (return_error_null(ALTITUDE_ERROR));
+	dot_data = (t_dot *)ft_calloc(1, sizeof(t_dot));
+	if (!dot_data)
+		return (return_error_null(strerror(errno)));
+	dot_data->base = (t_vector){(double)x, (double)y, (double)z};
+	dot_data->fixed = (t_vector){(double)x, (double)y, (double)z};
+	if (!get_col(ft_strchr(value, ','), &dot_data->color))
+	{
+		free (dot_data);
+		return (return_error_null(COLOR_ERROR));
+	}
+	dot = ft_lstnew((void *)dot_data);
+	if (!dot)
+	{
+		free (dot_data);
+		return (return_error_null(strerror(errno)));
+	}
+	return (dot);
 }
 
 static bool	get_col(char *row, unsigned int *color)
@@ -102,6 +123,23 @@ static bool	get_col(char *row, unsigned int *color)
 		}
 		if (row)
 			return (false);
+	}
+	return (true);
+}
+
+static bool	check_column(t_list *map)
+{
+	int	x;
+	int	x_tmp;
+
+	x = ft_lstsize((t_list *)(map->content));
+	map = map->next;
+	while (map)
+	{
+		x_tmp = ft_lstsize((t_list *)(map->content));
+		if (x != x_tmp)
+			return (false);
+		map = map->next;
 	}
 	return (true);
 }

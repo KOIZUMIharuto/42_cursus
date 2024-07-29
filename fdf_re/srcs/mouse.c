@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/22 11:35:10 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:32:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ int	mouse_move(int x, int y, t_vars *vars)
 		if (!vars->is_shift)
 		{
 			add_vector(&vars->model_center, delta, false);
-			if (!trans(vars->map, &delta, false, true))
-				return (error_exit(vars, TRANSLATE_ERROR));
+			trans(vars->map, &delta, true);
 		}
 		else
 		{
 			vars->rotate_angle.x = rad(delta.y);
 			vars->rotate_angle.y = -rad(delta.x);
-			if (!trans(vars->map, &vars->model_center, false, true)
-				|| !rotate(vars->map, &vars->rotate_angle, false, false)
-				|| !trans(vars->map, &vars->model_center, false, false))
-				return (error_exit(vars, ROTATE_ERROR));
+			trans(vars->map, &vars->model_center, true);
+			rotate(vars->map, &vars->rotate_angle, false);
+			trans(vars->map, &vars->model_center, false);
 		}
 	}
 	vars->pre_mouse.x = x;
@@ -51,10 +49,10 @@ int	mouse_down(int key, int x, int y, t_vars *vars)
 		add_vector(&vars->model_center, (t_vector){x, y, 0}, false);
 		mult_vector(&vars->model_center, ZOOM_RATIO, key == Button5);
 		add_vector(&vars->model_center, (t_vector){x, y, 0}, true);
-		if (!trans(vars->map, &(t_vector){x, y, 0}, false, true)
-			|| !scale(vars->map, ZOOM_RATIO, key == Button5)
-			|| !trans(vars->map, &(t_vector){x, y, 0}, false, false))
+		trans(vars->map, &(t_vector){x, y, 0}, true);
+		if (!scale(vars->map, ZOOM_RATIO, key == Button5))
 			return (error_exit(vars, ZOOM_ERROR));
+		trans(vars->map, &(t_vector){x, y, 0}, false);
 	}
 	return (0);
 }
