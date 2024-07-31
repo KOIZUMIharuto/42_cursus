@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/29 16:11:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:37:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,16 @@ static int	init_isometric_projection(t_list *map)
 
 static bool	init_scale(t_list *map)
 {
+	t_list		*map_tmp;
 	t_list		*row;
 	t_dot		*dot;
-	double		ratio;
 	t_vector	max;
 
+	map_tmp = map;
 	max = (t_vector){0, 0, 0};
-	while (map)
+	while (map_tmp)
 	{
-		row = (t_list *)(map->content);
+		row = (t_list *)(map_tmp->content);
 		while (row)
 		{
 			dot = (t_dot *)(row->content);
@@ -81,15 +82,12 @@ static bool	init_scale(t_list *map)
 				max.y = fabs(dot->fixed.y);
 			row = row->next;
 		}
-		map = map->next;
+		map_tmp = map_tmp->next;
 	}
-	ratio = 0.9;
-	max.x = WIDTH / 2 / max.x * ratio;
-	max.y = HEIGHT / 2 / max.y * ratio;
-	if (max.x < max.y)
-		return (scale(map, max.x, false));
+	if (WIDTH / max.x < HEIGHT / max.y)
+		return (scale(map, WIDTH / 2 / max.x * 0.9, false));
 	else
-		return (scale(map, max.y, false));
+		return (scale(map, HEIGHT / 2 / max.y * 0.9, false));
 }
 
 static int	return_error_int(t_list *map, char *error_message, char *option)

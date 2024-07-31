@@ -6,12 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:13:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/29 16:13:24 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:36:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
 
 static bool		split_row(t_list **row_list, char *row, int y_index);
 static t_list	*set_dot(char *value, int x, int y);
@@ -23,6 +22,7 @@ void	get_map(t_list **map, int fd)
 	char	*row;
 	int		y_index;
 	t_list	*row_list;
+	t_list	*row_node;
 
 	y_index = -1;
 	while (1)
@@ -32,11 +32,11 @@ void	get_map(t_list **map, int fd)
 			break ;
 		row_list = NULL;
 		if (!split_row(&row_list, row, ++y_index))
-		{
-			ft_lstclear(map, &free_map);
-			return ;
-		}
-		ft_lstadd_back(map, row_list);
+			return (ft_lstclear(map, &free_map));
+		row_node = ft_lstnew((void *)row_list);
+		if (!row_node)
+			return (ft_lstclear(map, &free_map));
+		ft_lstadd_back(map, (void *)row_node);
 	}
 	if (check_column(*map))
 		return ;
@@ -51,25 +51,26 @@ static bool	split_row(t_list **row_list, char *row, int y_index)
 	int		x_index;
 	t_list	*dot;
 
-	value = ft_split(row, " ");
+	value = ft_split(row, " \n");
+	free (row);
 	if (!value)
 		return (return_error_bool(strerror(errno)));
 	x_index = -1;
-	while (1)
+	while (value[++x_index])
 	{
-		if (!value[++x_index])
-			break ;
 		dot = set_dot(value[x_index], x_index, y_index);
+		free (value[x_index]);
 		if (!dot)
 		{
-			while (*value)
-				free(*(value++));
+			while (value[++x_index])
+				free(value[x_index]);
 			free (value);
 			ft_lstclear(row_list, free);
 			return (false);
 		}
 		ft_lstadd_back(row_list, dot);
 	}
+	free (value);
 	return (true);
 }
 
@@ -108,7 +109,7 @@ static bool	get_col(char *row, unsigned int *color)
 		*color = 0xFFFFFF;
 	else
 	{
-		row++;
+		row += 3;
 		*color = 0;
 		while (*row && (ft_strchr(UPPER_HEX_LIST, *row)
 				|| ft_strchr(LOWER_HEX_LIST, *row)))
@@ -121,7 +122,7 @@ static bool	get_col(char *row, unsigned int *color)
 			*color = 16 * *color + i;
 			row++;
 		}
-		if (row)
+		if (*row)
 			return (false);
 	}
 	return (true);

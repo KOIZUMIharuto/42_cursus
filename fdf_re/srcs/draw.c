@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/29 16:11:05 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:02:03 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static t_dot	*get_dot_by_index(t_list *map, int x, int y)
 {
 	t_list	*row;
 
-	while (map && y-- >= 0)
+	while (map && y-- > 0)
 		map = map->next;
 	if (!map)
 		return (NULL);
 	row = (t_list *)(map->content);
-	while (row && x-- >= 0)
+	while (row && x-- > 0)
 		row = row->next;
 	if (!row)
 		return (NULL);

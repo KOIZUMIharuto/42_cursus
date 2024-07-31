@@ -6,14 +6,13 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/29 16:11:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:02:32 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
 static void	update_min_max(t_vector vector, t_vector *min, t_vector *max);
-
 
 bool	fdf_atoi(const char *str, int *result)
 {
