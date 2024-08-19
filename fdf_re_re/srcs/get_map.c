@@ -86,6 +86,7 @@ static bool	set_data(t_dot *dot, char **value, int y, int *x)
 	{
 		if (!fdf_atoi(value[x_index], &z))
 			return (return_error_bool(ALTITUDE_ERROR));
+		color = 0;
 		if (!get_color(value[x_index], &color))
 			return (return_error_bool(COLOR_ERROR));
 		dot[x_index].base = (t_vector){(double)x_index, (double)y, (double)z};
@@ -101,27 +102,27 @@ static bool	set_data(t_dot *dot, char **value, int y, int *x)
 static bool	get_color(char *value, unsigned int *color)
 {
 	int		i;
-	char	*col_txt;
 
-	col_txt = ft_strchr(value, ',');
-	if (!col_txt)
+	value = ft_strchr(value, ',');
+	if (!value)
 		*color = 0xFFFFFF;
 	else
 	{
-		col_txt += 3;
-		*color = 0;
-		while (*col_txt && (ft_strchr(UPPER_HEX, *col_txt)
-				|| ft_strchr(LOWER_HEX, *col_txt)))
+		if (ft_strncmp(value, ",0x", 3))
+			return (false);
+		value += 3;
+		while (*value && (ft_strchr(UPPER_HEX, *value)
+				|| ft_strchr(LOWER_HEX, *value)))
 		{
 			i = 0;
-			while (UPPER_HEX[i] != *col_txt && LOWER_HEX[i] != *col_txt)
+			while (UPPER_HEX[i] != *value && LOWER_HEX[i] != *value)
 				i++;
 			if (*color > ((unsigned int)0xFFFFFF - i) / 16)
 				return (false);
 			*color = 16 * *color + i;
-			col_txt++;
+			value++;
 		}
-		if (*col_txt)
+		if (*value)
 			return (false);
 	}
 	return (true);

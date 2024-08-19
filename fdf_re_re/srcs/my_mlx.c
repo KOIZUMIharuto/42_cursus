@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:26:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:16:04 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	win_off(t_vars *vars)
 {
 	int	y;
 
-	free_map(&(vars->map), NULL);
+	free_map(&vars->map, NULL);
 	y = -1;
 	if (vars->z_buf)
 	{
