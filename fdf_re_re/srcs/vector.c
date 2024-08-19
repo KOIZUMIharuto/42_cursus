@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:25:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:32:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:17:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,28 @@ void	mult_vector(t_vector *src, double ratio, bool rev)
 	}
 }
 
-void	copy_vector(t_map ***map, bool b_to_f)
+void	copy_vector(t_map map, bool b_to_f)
 {
 	int	x;
 	int	y;
 
 	y = -1;
-	while (map[++y])
+	while (++y < map.y)
 	{
 		x = -1;
-		while (map[y][++x])
+		while (++x < map.x)
 		{
 			if (b_to_f)
 			{
-				map[y][x]->fixed->x = map[y][x]->base->x;
-				map[y][x]->fixed->y = map[y][x]->base->y;
-				map[y][x]->fixed->z = map[y][x]->base->z;
+				map.dots[y][x].fixed.x = map.dots[y][x].base.x;
+				map.dots[y][x].fixed.y = map.dots[y][x].base.y;
+				map.dots[y][x].fixed.z = map.dots[y][x].base.z;
 			}
 			else
 			{
-				map[y][x]->base->x = map[y][x]->fixed->x;
-				map[y][x]->base->y = map[y][x]->fixed->y;
-				map[y][x]->base->z = map[y][x]->fixed->z;
+				map.dots[y][x].base.x = map.dots[y][x].fixed.x;
+				map.dots[y][x].base.y = map.dots[y][x].fixed.y;
+				map.dots[y][x].base.z = map.dots[y][x].fixed.z;
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/31 14:16:28 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:02:04 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 
 # define ZOOM_RATIO 1.1
 
-# define UPPER_HEX_LIST "0123456789ABCDEF"
-# define LOWER_HEX_LIST "0123456789abcdef"
+# define UPPER_HEX "0123456789ABCDEF"
+# define LOWER_HEX "0123456789abcdef"
 
 typedef struct s_vector_long
 {
@@ -85,7 +85,6 @@ typedef struct s_map
 	t_dot	**dots;
 }	t_map;
 
-
 typedef struct s_data
 {
 	void	*img;
@@ -97,7 +96,7 @@ typedef struct s_data
 
 typedef struct s_vars
 {
-	t_map		***map;
+	t_map		map;
 	double		**z_buf;
 	void		*mlx;
 	void		*win;
@@ -110,26 +109,26 @@ typedef struct s_vars
 	int			exit_status;
 }			t_vars;
 
-t_map			***get_map(int fd, double y);
+void			get_map(t_map *map, int fd, int y);
 
 t_vector		*create_vector(double x, double y, double z);
 void			add_vector(t_vector *src, t_vector add, bool sign);
 void			mult_vector(t_vector *src, double ratio, bool rev);
-void			copy_vector(t_map ***map, bool b_to_f);
+void			copy_vector(t_map map, bool b_to_f);
 
 bool			fdf_atoi(const char *str, int *result);
-bool			get_center(t_map ***map, t_vector *center_pos);
+bool			get_center(t_map map, t_vector *center_pos);
 double			rad(double deg);
 
-bool			trans(t_map ***map, t_vector *vector, bool is_free, bool rev);
-bool			scale(t_map ***map, double ratio, bool rev);
-bool			rotate(t_map ***map, t_vector *vector, bool is_free, bool rev);
+bool			trans(t_map map, t_vector *vector, bool is_free, bool rev);
+bool			scale(t_map map, double ratio, bool rev);
+bool			rotate(t_map map, t_vector *vector, bool is_free, bool rev);
 
-void			my_mlx_main(t_map ***map);
+void			my_mlx_main(t_map map);
 int				draw(t_vars *vars);
 void			get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1);
-void			draw_line(t_vars *vars, t_map *p0, t_map *p1);
-unsigned int	culc_color(t_map *p0, t_vect_long tmp, t_map *p1);
+void			draw_line(t_vars *vars, t_dot p0, t_dot p1);
+unsigned int	culc_color(t_dot p0, t_vect_long tmp, t_dot p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);
@@ -138,9 +137,7 @@ int				mouse_move(int x, int y, t_vars *vars);
 int				mouse_down(int key, int x, int y, t_vars *vars);
 int				mouse_up(int key, int x, int y, t_vars *vars);
 
-void			*free_map3(t_map ***map, int free_index, char *error_message);
-void			*free_map2(t_map **map, int free_index, char *error_message);
-void			*free_map(t_map *map, char *error_message);
+void			free_map(t_map *map, char *error_message);
 
 void			*return_error_null(char *error_message);
 void			*return_error_bool(char *error_message);

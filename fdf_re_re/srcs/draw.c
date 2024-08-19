@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/17 13:38:43 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:31:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	draw(t_vars *vars)
 	ft_bzero(vars->img.addr, HEIGHT * vars->img.line_length);
 	init_z_buffer(vars->z_buf);
 	y = -1;
-	while (vars->map[++y])
+	while (++y < vars->map.y)
 	{
 		x = -1;
-		while (vars->map[y][++x])
+		while (++x < vars->map.x)
 		{
-			if (vars->map[y][x + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y][x + 1]->fixed))
-				draw_line(vars, vars->map[y][x], vars->map[y][x + 1]);
-			if (vars->map[y + 1]
-				&& checker(*vars->map[y][x]->fixed,
-				*vars->map[y + 1][x]->fixed))
-				draw_line(vars, vars->map[y][x], vars->map[y + 1][x]);
+			if (x + 1 < vars->map.x
+				&& checker(vars->map.dots[y][x].fixed,
+				vars->map.dots[y][x + 1].fixed))
+				draw_line(vars, vars->map.dots[y][x], vars->map.dots[y][x + 1]);
+			if (y + 1 < vars->map.y
+				&& checker(vars->map.dots[y][x].fixed,
+				vars->map.dots[y + 1][x].fixed))
+				draw_line(vars, vars->map.dots[y][x], vars->map.dots[y + 1][x]);
 		}
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);

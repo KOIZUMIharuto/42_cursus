@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/11 15:32:25 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 11:17:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	rotate_z(t_vector *vector, double angle);
 static void	rotate_y(t_vector *vector, double angle);
 static void	rotate_x(t_vector *vector, double angle);
 
-bool	rotate(t_map ***map, t_vector *vector, bool is_free, bool rev)
+bool	rotate(t_map map, t_vector *vector, bool is_free, bool rev)
 {
 	int	x;
 	int	y;
@@ -26,14 +26,14 @@ bool	rotate(t_map ***map, t_vector *vector, bool is_free, bool rev)
 	if (rev)
 		*vector = (t_vector){-vector->x, -vector->y, -vector->z};
 	y = -1;
-	while (map[++y])
+	while (++y < map.y)
 	{
 		x = -1;
-		while (map[y][++x])
+		while (++x < map.x)
 		{
-			rotate_z(map[y][x]->fixed, vector->z);
-			rotate_y(map[y][x]->fixed, vector->y);
-			rotate_x(map[y][x]->fixed, vector->x);
+			rotate_z(&(map.dots[y][x].fixed), vector->z);
+			rotate_y(&(map.dots[y][x].fixed), vector->y);
+			rotate_x(&(map.dots[y][x].fixed), vector->x);
 		}
 	}
 	if (is_free)
