@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:36:52 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:49:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 void	*return_error_null(char *error_message)
 {

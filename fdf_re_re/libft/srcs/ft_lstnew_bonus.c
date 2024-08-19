@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 21:41:59 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:13:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:42:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 t_list	*ft_lstnew(void *content)
 {

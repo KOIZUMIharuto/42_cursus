@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:55:54 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/05/29 12:49:03 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:42:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 static char	**recursive_split(char *str, char *del, int words_count);
 

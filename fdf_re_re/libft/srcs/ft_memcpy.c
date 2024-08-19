@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:53:20 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/19 16:38:23 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:42:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:39:41 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:26:19 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@
 # define UPPER_HEX "0123456789ABCDEF"
 # define LOWER_HEX "0123456789abcdef"
 
-typedef struct s_vector_long
+typedef struct s_vector_int
 {
 	int		x;
 	int		y;
 	double	z;
-}	t_vect_long;
+}	t_vect_int;
 
 typedef struct s_end_points
 {
-	t_vect_long	p0;
-	t_vect_long	p1;
+	t_vect_int	p0;
+	t_vect_int	p1;
 }	t_end_points;
 
 typedef struct s_vector
@@ -126,9 +126,9 @@ bool			rotate(t_map map, t_vector *vector, bool is_free, bool rev);
 
 void			my_mlx_main(t_map map);
 int				draw(t_vars *vars);
-void			get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1);
+void			get_end_point(t_vect_int *end_p, t_vector p0, t_vector p1);
 void			draw_line(t_vars *vars, t_dot p0, t_dot p1);
-unsigned int	culc_color(t_dot p0, t_vect_long tmp, t_dot p1);
+unsigned int	culc_color(t_dot p0, t_vect_int tmp, t_dot p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);

@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:48:05 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:01:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 bool	trans(t_map map, t_vector *vector, bool is_free, bool rev)
 {

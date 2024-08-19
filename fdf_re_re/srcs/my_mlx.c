@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:16:04 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:01 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static void		init_vars(t_vars *vars, t_map map);
 static double	**malloc_z_buffer(void);

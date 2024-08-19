@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 14:46:08 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:17:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:04 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static void	rotate_z(t_vector *vector, double angle);
 static void	rotate_y(t_vector *vector, double angle);

@@ -6,7 +6,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 BUFFER_SIZE = 42
 
+INC_DIR = includes
 SRC_DIR = srcs
+
 SRCS = ft_isalnum.c ft_isprint.c ft_memcpy.c ft_putendl_fd.c ft_strchr.c ft_strlcat.c ft_strncmp.c ft_substr.c \
 ft_atoi.c ft_isalpha.c ft_itoa.c ft_memmove.c ft_putnbr_fd.c ft_strdup.c ft_strlcpy.c ft_strnstr.c ft_tolower.c \
 ft_bzero.c ft_isascii.c ft_memchr.c ft_memset.c ft_putstr_fd.c ft_striteri.c ft_strlen.c ft_strrchr.c ft_toupper.c \
@@ -33,7 +35,7 @@ $(NAME): $(OBJ) $(BONUS_OBJ)
 	@ranlib $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
 
 clean:
 	@rm -f $(OBJ) $(BONUS_OBJ)

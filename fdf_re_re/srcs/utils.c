@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:39:30 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max);
 

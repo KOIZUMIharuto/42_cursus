@@ -6,15 +6,15 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:33:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:31:58 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:40 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static void	init_z_buffer(double **z_buf);
 static bool	checker(t_vector p0, t_vector p1);
-static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope);
+static void	get_end_point_utils(t_vect_int *end_p, t_vector p0, double slope);
 
 int	draw(t_vars *vars)
 {
@@ -83,19 +83,19 @@ static bool	checker(t_vector p0, t_vector p1)
 	}
 }
 
-void	get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1)
+void	get_end_point(t_vect_int *end_p, t_vector p0, t_vector p1)
 {
 	double	slope;
 
 	if (0 <= p0.x && p0.x < WIDTH && 0 <= p0.y && p0.y < HEIGHT)
-		*end_p = (t_vect_long){(long)round(p0.x), (long)round(p0.y), 0};
+		*end_p = (t_vect_int){(long)round(p0.x), (long)round(p0.y), 0};
 	else
 	{
 		if (p0.x == p1.x)
-			*end_p = (t_vect_long){(long)round(p0.x),
+			*end_p = (t_vect_int){(long)round(p0.x),
 				(p0.y >= HEIGHT) * (HEIGHT - 1) * (p0.y >= 0), 0};
 		else if (p0.y == p1.y)
-			*end_p = (t_vect_long){(p0.x >= WIDTH) * (WIDTH - 1) * (p0.x >= 0),
+			*end_p = (t_vect_int){(p0.x >= WIDTH) * (WIDTH - 1) * (p0.x >= 0),
 				(long)round(p0.y), 0};
 		else
 		{
@@ -106,7 +106,7 @@ void	get_end_point(t_vect_long *end_p, t_vector p0, t_vector p1)
 	end_p->z = (p0.z >= p1.z) * p0.z + (p0.z < p1.z) * p1.z;
 }
 
-static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope)
+static void	get_end_point_utils(t_vect_int *end_p, t_vector p0, double slope)
 {
 	long	y_intcpt;
 	long	width_intcpt;
@@ -115,10 +115,10 @@ static void	get_end_point_utils(t_vect_long *end_p, t_vector p0, double slope)
 	width_intcpt = (long)round(slope * WIDTH + y_intcpt);
 	if ((WIDTH <= p0.x && 0 <= width_intcpt && width_intcpt < HEIGHT)
 		|| (p0.x < 0 && 0 <= y_intcpt && y_intcpt < HEIGHT))
-		*end_p = (t_vect_long){(WIDTH <= p0.x) * (WIDTH - 1) * (p0.x >= 0),
+		*end_p = (t_vect_int){(WIDTH <= p0.x) * (WIDTH - 1) * (p0.x >= 0),
 			(WIDTH <= p0.x) * width_intcpt + (p0.x < 0) * y_intcpt, 0};
 	else
-		*end_p = (t_vect_long){
+		*end_p = (t_vect_int){
 			(HEIGHT <= p0.y) * (long)round((HEIGHT - y_intcpt) / slope)
 			+ (p0.y < 0) * (long)round(-(y_intcpt / slope)),
 			(HEIGHT <= p0.y) * (HEIGHT - 1) * (p0.y >= 0), 0};

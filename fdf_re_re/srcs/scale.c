@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 16:28:45 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:17:43 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 bool	scale(t_map map, double ratio, bool rev)
 {

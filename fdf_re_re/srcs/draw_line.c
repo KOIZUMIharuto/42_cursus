@@ -6,20 +6,20 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:46:38 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:33:53 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
-static void	slope_over_1(t_vect_long *p0, t_vect_long delta, int *e);
-static void	slope_under_1(t_vect_long *p0, t_vect_long delta, int *e);
+static void	slope_over_1(t_vect_int *p0, t_vect_int delta, int *e);
+static void	slope_under_1(t_vect_int *p0, t_vect_int delta, int *e);
 static void	my_mlx_pixel_put(t_data *data, int x, int y, unsigned int color);
 
 void	draw_line(t_vars *vars, t_dot p0, t_dot p1)
 {
 	t_end_points	end_ps;
-	t_vect_long		delta;
+	t_vect_int		delta;
 	int				e;
 
 	get_end_point(&(end_ps.p0), p0.fixed, p1.fixed);
@@ -44,7 +44,7 @@ void	draw_line(t_vars *vars, t_dot p0, t_dot p1)
 	}
 }
 
-static void	slope_over_1(t_vect_long *p0, t_vect_long delta, int *e)
+static void	slope_over_1(t_vect_int *p0, t_vect_int delta, int *e)
 {
 	int	sign_y;
 	int	sign_x;
@@ -60,7 +60,7 @@ static void	slope_over_1(t_vect_long *p0, t_vect_long delta, int *e)
 	}
 }
 
-static void	slope_under_1(t_vect_long *p0, t_vect_long delta, int *e)
+static void	slope_under_1(t_vect_int *p0, t_vect_int delta, int *e)
 {
 	int	sign_y;
 	int	sign_x;

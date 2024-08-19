@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/17 12:59:52 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static int	error_exit(t_vars *vars, char *error_message);
 

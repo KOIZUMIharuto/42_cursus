@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:01:13 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:42:02 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 int	ft_toupper(int c)
 {

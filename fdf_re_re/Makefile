@@ -15,6 +15,7 @@ MLX = $(MLX_DIR)/libmlx.a
 LDFLAGS = -L/usr/lib -L$(MLX_DIR)/obj
 LIBS = -lXext -lX11 -lm
 
+INC_DIR = includes
 SRC_DIR = srcs
 
 SRCS =\
@@ -44,7 +45,7 @@ $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -o $(NAME) $(MLXFLAGS)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
 
 $(LIBFT_DIR)/$(LIBFT_NAME):
 	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)

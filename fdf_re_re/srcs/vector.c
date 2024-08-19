@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:25:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 11:17:30 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:33:15 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 t_vector	*create_vector(double x, double y, double z)
 {

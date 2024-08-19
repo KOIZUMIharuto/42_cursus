@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static t_dot	*get_row(char *row, int y, int *x);
 static bool		set_data(t_dot *dot, char **value, int y, int *x);

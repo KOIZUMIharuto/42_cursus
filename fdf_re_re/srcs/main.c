@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:00:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:39:06 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:54 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include  <fdf.h>
 
 static int	init_isometric_projection(t_map map);
 static bool	init_scale(t_map map);
