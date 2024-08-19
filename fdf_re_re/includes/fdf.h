@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:15:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:39:41 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			mult_vector(t_vector *src, double ratio, bool rev);
 void			copy_vector(t_map map, bool b_to_f);
 
 bool			fdf_atoi(const char *str, int *result);
-bool			get_center(t_map map, t_vector *center_pos);
+void			get_center(t_map map, t_vector *center_pos);
 double			rad(double deg);
 
 bool			trans(t_map map, t_vector *vector, bool is_free, bool rev);

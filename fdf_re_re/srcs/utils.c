@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/19 13:09:25 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:39:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	fdf_atoi(const char *str, int *result)
 	return (true);
 }
 
-bool	get_center(t_map map, t_vector *center)
+void	get_center(t_map map, t_vector *center)
 {
 	int			x_i;
 	int			y_i;
@@ -48,7 +48,7 @@ bool	get_center(t_map map, t_vector *center)
 	t_vector	max;
 
 	if (!center)
-		return (false);
+		return ;
 	min = (t_vector){DBL_MAX, DBL_MAX, DBL_MAX};
 	max = (t_vector){-DBL_MAX, -DBL_MAX, -DBL_MAX};
 	y_i = -1;
@@ -60,7 +60,6 @@ bool	get_center(t_map map, t_vector *center)
 	}
 	*center = (t_vector){(max.x + min.x) / 2, (max.y + min.y) / 2,
 		(max.z + min.z) / 2};
-	return (true);
 }
 
 static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max)
