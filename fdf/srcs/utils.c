@@ -6,39 +6,60 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:23:34 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:13:27 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:28:32 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include <fdf.h>
 
 static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max);
 
-bool	get_center(t_map ***map, t_vector *center)
+bool	fdf_atoi(const char *str, int *result)
 {
-	int			x_tmp;
+	int		sign;
+
+	if (!str)
+		return (false);
+	while (('\t' <= *str && *str <= '\r') || *str == ' ')
+		str++;
+	sign = 1;
+	if (*str == '-' || *str == '+')
+		if (*(str++) == '-')
+			sign = -1;
+	*result = 0;
+	while ('0' <= *str && *str <= '9')
+	{
+		if (*result < (INT_MIN + (*str - '0')) / 10
+			|| (INT_MAX - (*str - '0')) / 10 < *result)
+			return (false);
+		*result *= 10;
+		*result += sign * (*(str++) - '0');
+	}
+	if (*str != ' ' && *str != ',' && *str != '\n' && *str != '\0')
+		return (false);
+	return (true);
+}
+
+void	get_center(t_map map, t_vector *center)
+{
 	int			x_i;
 	int			y_i;
 	t_vector	min;
 	t_vector	max;
 
 	if (!center)
-		return (false);
-	y_i = -1;
+		return ;
 	min = (t_vector){DBL_MAX, DBL_MAX, DBL_MAX};
 	max = (t_vector){-DBL_MAX, -DBL_MAX, -DBL_MAX};
-	while (map[++y_i])
+	y_i = -1;
+	while (++y_i < map.y)
 	{
 		x_i = -1;
-		while (map[y_i][++x_i])
-			update_min_max(map[y_i][x_i]->fixed, &min, &max);
-		if (y_i != 0 && x_i != x_tmp)
-			return (false);
-		x_tmp = x_i;
+		while (++x_i < map.x)
+			update_min_max(&(map.dots[y_i][x_i].fixed), &min, &max);
 	}
 	*center = (t_vector){(max.x + min.x) / 2, (max.y + min.y) / 2,
 		(max.z + min.z) / 2};
-	return (true);
 }
 
 static void	update_min_max(t_vector *vector, t_vector *min, t_vector *max)

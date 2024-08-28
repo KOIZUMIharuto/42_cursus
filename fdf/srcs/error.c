@@ -6,22 +6,31 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:36:52 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 14:49:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:31:51 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include <fdf.h>
 
-void	*return_error_null(char *error_message)
+void	send_msg(char *message, int fd)
 {
-	ft_putstr_fd("Error: ", 2);
-	ft_putendl_fd(error_message, 2);
+	if (fd == 1)
+		ft_putstr_fd("Warning: ", fd);
+	else if (fd == 2)
+		ft_putstr_fd("Error: ", fd);
+	ft_putendl_fd(message, fd);
+}
+
+void	*return_msg_null(char *message, int fd)
+{
+	if (message)
+		send_msg(message, fd);
 	return (NULL);
 }
 
-void	*return_error_bool(char *error_message)
+void	*return_msg_bool(char *message, int fd)
 {
-	ft_putstr_fd("Error: ", 2);
-	ft_putendl_fd(error_message, 2);
+	if (message)
+		send_msg(message, fd);
 	return (false);
 }

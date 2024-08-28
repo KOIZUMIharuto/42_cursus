@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:43:21 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/10 12:37:33 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:25:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include <fdf.h>
 
 int	key_pressed(int key_code, t_vars *vars)
 {
@@ -20,7 +20,7 @@ int	key_pressed(int key_code, t_vars *vars)
 		vars->is_shift = true;
 	else if (key_code == KEY_R)
 	{
-		*(vars->model_center) = (t_vector){WIDTH / 2, HEIGHT / 2, 0};
+		*(vars->model_ctr) = (t_vector){WIDTH / 2, HEIGHT / 2, 0};
 		copy_vector(vars->map, true);
 	}
 	return (0);

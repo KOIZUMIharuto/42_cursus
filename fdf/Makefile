@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SANITIZEFRAG = -fsanitize=address
 
-BUFFER_SIZE = 10000
+BUFFER_SIZE = 1000
 
 LIBFT_NAME = libft.a
 NAME = fdf
@@ -15,8 +15,11 @@ MLX = $(MLX_DIR)/libmlx.a
 LDFLAGS = -L/usr/lib -L$(MLX_DIR)/obj
 LIBS = -lXext -lX11 -lm
 
+INC_DIR = includes
 SRC_DIR = srcs
+OBJ_DIR = objs
 
+INCLUDES = fdf.h
 SRCS =\
 culc_color.c\
 draw_line.c\
@@ -34,26 +37,29 @@ translate.c\
 utils.c\
 vector.c
 
-
+INCLUDE = $(addprefix $(INC_DIR)/, $(INCLUDES))
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) $(MLX)
-	@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -o $(NAME) $(MLXFLAGS)
+	$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT_DIR)/$(LIBFT_NAME) $(LDFLAGS) $(LIBS) -o $(NAME) $(MLXFLAGS)
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 $(LIBFT_DIR)/$(LIBFT_NAME):
-	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
+	make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
 
 $(MLX):
-	@make -j4 -C $(MLX_DIR)
+	make -C $(MLX_DIR)
 
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean 

@@ -10,121 +10,123 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include <fdf.h>
 
-static t_map	**recursive_split(char *row, double y, double x);
-static void		set_data(t_map *map, t_vector *fixed, unsigned int color);
-static bool		atodbl_row(char **row, double *z, unsigned int *color);
-static bool		get_col(char **row, unsigned int *color);
+static t_dot	*get_row(char *row, int y, int *x);
+static bool		set_data(t_dot *dot, char **value, int y, int *x);
+static void		free_value(char **value);
+static bool		get_color(char *value, unsigned int *color);
 
-t_map	***get_map(int fd, double y)
+void	get_map(t_map *map, int fd, int y)
 {
 	char	*row;
-	t_map	***map;
 
 	row = get_next_line(fd);
 	if (!row)
 	{
-		map = (t_map ***)ft_calloc(y + 1, sizeof(t_map **));
-		if (!map)
-			return (return_error_null(strerror(errno)));
-		map[(int)y] = NULL;
-		return (map);
+		if (y == 0)
+			return ((void)return_msg_null(EMPTY_MAP_ERROR, 2));
+		map->dots = (t_dot **)ft_calloc(y, sizeof(t_dot *));
+		if (!map->dots)
+			return (perror("Error"));
+		map->y = y;
+		return ;
 	}
-	map = get_map(fd, y + 1);
-	if (map)
-		map[(int)y] = recursive_split(row, y, 0);
+	get_map(map, fd, y + 1);
+	if (map->dots)
+		map->dots[y] = get_row(row, y, &(map->x));
 	free (row);
-	if (!map || !map[(int)y])
-		return (free_map3(map, (int)y + 1, NULL));
-	return (map);
+	if (!map->dots || !map->dots[y])
+		return (free_map(map));
 }
 
-static t_map	**recursive_split(char *row, double y, double x)
+static t_dot	*get_row(char *row, int y, int *x)
 {
-	t_map			**map;
-	double			z;
-	unsigned int	color;
+	char	**value;
+	int		x_index;
+	t_dot	*dots;
 
-	if (!*row)
+	value = ft_split(row, " \n");
+	if (!value)
+		return (return_msg_null(strerror(errno), 2));
+	x_index = 0;
+	while (value[x_index])
+		x_index++;
+	dots = (t_dot *)ft_calloc(x_index, sizeof(t_dot));
+	if (!dots)
 	{
-		map = (t_map **)ft_calloc(x + 1, sizeof(t_map *));
-		if (!map)
-			return (return_error_null(strerror(errno)));
-		map[(int)x] = NULL;
-		return (map);
+		free_value(value);
+		return (return_msg_null(strerror(errno), 2));
 	}
-	if (!atodbl_row(&row, &z, &color))
-		return (NULL);
-	map = recursive_split(row, y, x + 1);
-	if (map)
-		map[(int)x] = (t_map *)ft_calloc(1, sizeof(t_map));
-	if (!map || !map[(int)x])
-		return (free_map2(map, (int)x + 1, NULL));
-	set_data(map[(int)x], create_vector(x, y, z), color);
-	if (!map[(int)x]->base || !map[(int)x]->fixed)
-		return (free_map2(map, (int)x, NULL));
-	return (map);
-}
-
-static void	set_data(t_map *map, t_vector *pos, unsigned int color)
-{
-	map->base = pos;
-	map->fixed = create_vector(pos->x, pos->y, pos->z);
-	map->color = color;
-}
-
-static bool	atodbl_row(char **row, double *z, unsigned int *color)
-{
-	int	sign;
-
-	sign = 1;
-	while (**row == ' ')
-		(*row)++;
-	sign = 1 - 2 * (**row == '-');
-	if (sign < 0)
-		(*row)++;
-	if ((**row < '0' || '9' < **row))
-		return (return_error_bool(ALTITUDE_ERROR));
-	*z = sign * (*((*row)++) - '0');
-	while ('0' <= **row && **row <= '9')
+	if (!set_data(dots, value, y, x))
 	{
-		if (*z < -DBL_MAX / 10 || DBL_MAX / 10 < *z)
-			return (return_error_bool(ALTITUDE_ERROR));
-		*z *= 10;
-		if (*z < -DBL_MAX + (**row - '0') || DBL_MAX - (**row - '0') < *z)
-			return (return_error_bool(ALTITUDE_ERROR));
-		*z += sign * (*((*row)++) - '0');
+		free (dots);
+		dots = NULL;
 	}
-	if (!get_col(row, color))
-		return (return_error_bool(COLOR_ERROR));
-	while (**row == ' ' || **row == '\n')
-		(*row)++;
-	return (true);
+	free_value(value);
+	return (dots);
 }
 
-static bool	get_col(char **row, unsigned int *color)
+static void	free_value(char **value)
 {
 	int	i;
 
-	if (**row != ',')
+	i = -1;
+	while (value[++i])
+		free (value[i]);
+	free (value);
+}
+
+static bool	set_data(t_dot *dot, char **value, int y, int *x)
+{
+	int				x_index;
+	int				z;
+	unsigned int	color;
+
+	x_index = -1;
+	while (value[++x_index])
+	{
+		if (!fdf_atoi(value[x_index], &z))
+			return (return_msg_bool(ALTITUDE_ERROR, 2));
+		color = 0;
+		if (!get_color(value[x_index], &color))
+			return (return_msg_bool(COLOR_ERROR, 2));
+		dot[x_index].base = (t_vector){(double)x_index, (double)y, (double)z};
+		dot[x_index].fixed = (t_vector){(double)x_index, (double)y, (double)z};
+		dot[x_index].color = color;
+	}
+	if (x_index == 0)
+		return (return_msg_bool(EMPTY_LINE_ERROR, 1));
+	if (*x != -1 && *x != x_index)
+		return (return_msg_bool(COLUMN_ERROR, 2));
+	*x = x_index;
+	return (true);
+}
+
+static bool	get_color(char *value, unsigned int *color)
+{
+	int		i;
+
+	value = ft_strchr(value, ',');
+	if (!value)
 		*color = 0xFFFFFF;
 	else
 	{
-		(*row) += 3;
-		*color = 0;
-		while (**row && (ft_strchr(UPPER_HEX_LIST, **row)
-				|| ft_strchr(LOWER_HEX_LIST, **row)))
+		if (ft_strncmp(value, ",0x", 3))
+			return (false);
+		value += 3;
+		while (*value && (ft_strchr(UPPER_HEX, *value)
+				|| ft_strchr(LOWER_HEX, *value)))
 		{
 			i = 0;
-			while (UPPER_HEX_LIST[i] != **row && LOWER_HEX_LIST[i] != **row)
+			while (UPPER_HEX[i] != *value && LOWER_HEX[i] != *value)
 				i++;
 			if (*color > ((unsigned int)0xFFFFFF - i) / 16)
 				return (false);
 			*color = 16 * *color + i;
-			(*row)++;
+			value++;
 		}
-		if (**row && **row != ' ' && **row != '\n')
+		if (*value)
 			return (false);
 	}
 	return (true);

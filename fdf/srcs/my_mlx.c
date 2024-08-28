@@ -6,22 +6,23 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:56:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/08 13:51:46 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:35:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"
+#include <fdf.h>
 
-static void		init_vars(t_vars *vars, t_map ***map);
+static void		init_vars(t_vars *vars, t_map map);
 static double	**malloc_z_buffer(void);
 
-void	my_mlx_main(t_map ***map)
+void	my_mlx_main(t_map map)
 {
 	t_vars	vars;
 
 	init_vars(&vars, map);
-	if (vars.map && vars.pre_mouse && vars.rotate_angle && vars.model_center
-		&& vars.img.addr && vars.z_buf && vars.mlx && vars.win && vars.img.img)
+	if (vars.map.dots && vars.pre_mouse && vars.rotate_angle
+		&& vars.model_ctr && vars.img.addr && vars.z_buf
+		&& vars.mlx && vars.win && vars.img.img)
 	{
 		mlx_hook(vars.win, MotionNotify, PointerMotionMask, mouse_move, &vars);
 		mlx_hook(vars.win, ButtonPress, ButtonPressMask, mouse_down, &vars);
@@ -37,7 +38,7 @@ void	my_mlx_main(t_map ***map)
 	win_off(&vars);
 }
 
-static void	init_vars(t_vars *vars, t_map ***map)
+static void	init_vars(t_vars *vars, t_map map)
 {
 	vars->map = map;
 	vars->z_buf = malloc_z_buffer();
@@ -50,7 +51,7 @@ static void	init_vars(t_vars *vars, t_map ***map)
 	vars->is_shift = false;
 	vars->pre_mouse = create_vector(WIDTH / 2, HEIGHT / 2, 0);
 	vars->rotate_angle = create_vector(0, 0, 0);
-	vars->model_center = create_vector(WIDTH / 2, HEIGHT / 2, 0);
+	vars->model_ctr = create_vector(WIDTH / 2, HEIGHT / 2, 0);
 	vars->exit_status = 0;
 }
 
@@ -85,7 +86,7 @@ int	win_off(t_vars *vars)
 {
 	int	y;
 
-	free_map3(vars->map, 0, NULL);
+	free_map(&vars->map);
 	y = -1;
 	if (vars->z_buf)
 	{
@@ -95,8 +96,10 @@ int	win_off(t_vars *vars)
 	}
 	free (vars->pre_mouse);
 	free (vars->rotate_angle);
-	free (vars->model_center);
-	mlx_destroy_window(vars->mlx, vars->win);
+	free (vars->model_ctr);
 	mlx_destroy_image(vars->mlx, vars->img.img);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
 	exit(vars->exit_status);
 }
