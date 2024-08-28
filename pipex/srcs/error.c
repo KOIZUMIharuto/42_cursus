@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/28 14:44:54 by hkoizumi         ###   ########.fr       */
+/*   Created: 2024/08/23 23:09:25 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/08/23 23:12:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-void	*free_cmds(char **cmds, int index)
+void	error_exit(t_vars *vars, char *msg)
 {
-	while (cmds[index])
-		free(cmds[index++]);
-	return (NULL);
-}
-
-void	free_vars(t_vars *vars)
-{
-	if (vars->infile_fd != -1)
-		close(vars->infile_fd);
-	if (vars->outfile_fd != -1)
-		close(vars->outfile_fd);
-	if (vars->cmds)
-		free_cmds(vars->cmds, 0);
+	ft_putendl_fd(msg, STDERR_FILENO);
+	if (vars)
+		free_vars(vars);
+	exit(1);
 }

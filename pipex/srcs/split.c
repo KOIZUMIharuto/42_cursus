@@ -6,11 +6,11 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:50:17 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/09 14:57:15 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/23 23:10:09 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include <pipex.h>
 
 static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count);
 static bool	is_split(char c, char *del, t_esc *esc);
@@ -26,7 +26,7 @@ char	**split_cmd(char *cmd)
 	if (!cmds)
 		return (NULL);
 	if (!format_cmds(cmds))
-		return (free_cmds(cmds, 0, NULL));
+		return (free_cmds(cmds, 0));
 	return (cmds);
 }
 
@@ -56,7 +56,7 @@ static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 		if (!cmds[cmd_count])
 		{
 			// エラー出力
-			return (free_cmds(cmds, cmd_count + 1, NULL));
+			return (free_cmds(cmds, cmd_count + 1));
 		}
 	}
 	else
