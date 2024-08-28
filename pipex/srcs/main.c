@@ -6,30 +6,32 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/09 10:49:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:49:19 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include <pipex.h>
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	int	infile_fd;
-	int	outfile_fd;
-	int	pipe_fd[2];
+	t_vars	vars;
 
 	if (argc < 5)
-	{
-		ft_putendl_fd(USAGE_ERROR, 2);
-		return (1);
-	}
-	infile_fd = open(argv[1], O_RDONLY);
-	if (infile_fd == -1)
-	{
-		perror("open");
-		return (1);
-	}
-	close(infile_fd);
+		error_exit(NULL, USAGE_ERROR);
+	vars = (t_vars){-1, -1, -1, NULL, NULL};
+	vars.infile_fd = open(argv[1], O_RDONLY);
+	if (vars.infile_fd == -1)
+		error_exit(NULL, strerror(errno));
+	vars.outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (vars.outfile_fd == -1)
+		error_exit(&vars, strerror(errno));
+	vars.cmds =  &argv[2];
+	if (!vars.cmds)
+		error_exit(&vars, strerror(errno));
+	vars.cmds_count = argc - 3;
+	vars.envp = envp;
+	pipex(&vars);
+	free_vars(&vars);
 	return (0);
 }
 

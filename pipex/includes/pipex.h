@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/09 14:56:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:33:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,22 @@ typedef struct s_esc
 	bool	bacl_s;
 }	t_esc;
 
+typedef struct s_vars
+{
+	int		infile_fd;
+	int		outfile_fd;
+	int		cmds_count;
+	char	**cmds;
+	char	**envp;
+}	t_vars;
+
 char	**split_cmd(char *cmd);
-void	*free_cmds(char **cmds, int index, void *ret);
+
+void	pipex(t_vars *vars);
+int		exec_cmd(char *cmds, char **envp);
+
+void	error_exit(t_vars *vars, char *msg);
+void	*free_cmds(char **cmds, int index);
+void	free_vars(t_vars *vars);
 
 #endif

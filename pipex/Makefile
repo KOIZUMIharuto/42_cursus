@@ -4,14 +4,19 @@ SANITIZEFRAG = -fsanitize=address
 
 BUFFER_SIZE = 5
 
-LIBFT_NAME = libft.a
-MANDATORY_NAME = pipex
+LIBFT = libft.a
+NAME = pipex
 
 LIBFT_DIR = libft
 
+INC_DIR = includes
 SRC_DIR = srcs
+OBJ_DIR = objs
 
+INCS = pipex.h
 SRCS =\
+error.c\
+exec.c\
 free.c\
 main.c\
 pipex.c\
@@ -19,26 +24,31 @@ split.c
 
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
-OBJ = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-all: $(MANDATORY_NAME)
+all: $(NAME)
 
-$(MANDATORY_NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(MANDATORY_NAME) $(SANITIZEFRAG)
+$(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) $(LIBFT_DIR)/$(LIBFT) -o $(NAME) $(SANITIZEFRAG)
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(addprefix $(INC_DIR)/, $(INCS)) $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
 
-$(LIBFT_DIR)/$(LIBFT_NAME):
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(LIBFT_DIR)/$(LIBFT):
 	@make -C $(LIBFT_DIR) BUFFER_SIZE=$(BUFFER_SIZE)
 
+bonus: all
+
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean 
-	@rm -f $(MANDATORY_NAME)
-	@rm -f $(LIBFT_DIR)/$(LIBFT_NAME)
+	@rm -f $(NAME)
+	@rm -f $(LIBFT_DIR)/$(LIBFT)
 
 re: fclean all
 
