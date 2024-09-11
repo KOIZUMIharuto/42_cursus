@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/28 14:49:19 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:39:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char *argv[], char *envp[])
 	vars.cmds_count = argc - 3;
 	vars.envp = envp;
 	pipex(&vars);
-	free_vars(&vars);
+	close_fds(&vars);
 	return (0);
 }
 

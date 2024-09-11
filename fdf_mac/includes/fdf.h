@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:03:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/29 16:41:14 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:04:55 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,20 @@
 # define USAGE "Usage: ./fdf <path_to_map_file>"
 # define ARGUMENT_WARNING "Warning: Only the first argument is valid."
 # define EXTENSION_ERROR "Invalid file extension."
-# define EXTENTION "Required: .fdf file"
+# define EXTENTION_REQUIRED "Required: .fdf file"
 # define FILE_OPEN_ERROR "Failed to open file."
+# define EMPTY_MAP_ERROR "Map file is empty."
+# define EMPTY_LINE_ERROR "Empty line in map."
 # define ALTITUDE_ERROR "Invalid altitude in map."
 # define COLOR_ERROR "Invalid color in map."
 # define COLUMN_ERROR "Inconsistent number of columns in map rows."
 # define SCALE_ERROR "Invalid scale ratio."
 # define ZOOM_ERROR "Zoom operation failed."
-# define ROTATE_ERROR "Rotation operation failed."
-# define TRANSLATE_ERROR "Translation operation failed."
+# define ZOOM_CANCEL "Zoom operation is canceled."
+# define ROTATE_ERROR "Rotate operation failed."
+# define ROTATE_CANCEL "Rotate operation is canceled."
+# define TRANSLATE_ERROR "Translate operation failed."
+# define TRANSLATE_CANCEL "Translate operation is canceled."
 
 // # define WIDTH 1920
 // # define HEIGHT 1080
@@ -62,6 +67,7 @@
 # define ON_KEY_RELEASED 3
 # define ON_DESTROY 17
 
+# define INIT_SCALE_RATIO 0.9
 # define ZOOM_RATIO 1.1
 
 # define UPPER_HEX_LIST "0123456789ABCDEF"
@@ -74,11 +80,11 @@ typedef struct s_vector_int
 	double	z;
 }	t_vect_int;
 
-typedef struct s_end_dots
+typedef struct s_end_points
 {
 	t_vect_int	p0;
 	t_vect_int	p1;
-}	t_end_dots;
+}	t_end_points;
 
 typedef struct s_vector
 {
@@ -94,12 +100,12 @@ typedef struct s_dot
 	unsigned int	color;
 }	t_dot;
 
-typedef struct s_xyc
+typedef struct s_map
 {
-	int		y;
 	int		x;
-	char	*content;
-}	t_xyc;
+	int		y;
+	t_dot	**dots;
+}	t_map;
 
 typedef struct s_data
 {
@@ -112,37 +118,39 @@ typedef struct s_data
 
 typedef struct s_vars
 {
-	t_list		*map;
+	t_map		map;
 	double		**z_buf;
 	void		*mlx;
 	void		*win;
 	t_data		img;
 	bool		on_mouse_down;
 	bool		is_shift;
-	t_vector	pre_mouse;
-	t_vector	rotate_angle;
-	t_vector	model_center;
+	t_vector	*pre_mouse;
+	t_vector	*rotate_angle;
+	t_vector	*model_ctr;
 	int			exit_status;
 }			t_vars;
 
-void			get_map(t_list **map, int fd);
+void			get_map(t_map *map, int fd, int y);
 
+t_vector		*create_vector(double x, double y, double z);
 void			add_vector(t_vector *src, t_vector add, bool sign);
 void			mult_vector(t_vector *src, double ratio, bool rev);
-void			copy_vector(t_list *map, bool b_to_f);
+void			copy_vector(t_map map, bool b_to_f);
 
 bool			fdf_atoi(const char *str, int *result);
-void			get_center(t_list *map, t_vector *center_pos);
+void			get_center(t_map map, t_vector *center_pos);
 double			rad(double deg);
 
-void			trans(t_list *map, t_vector *vector, bool rev);
-bool			scale(t_list *map, double ratio, bool rev);
-void			rotate(t_list *map, t_vector *vector, bool rev);
+bool			trans(t_map map, t_vector *vector, bool rev, char *cancel_msg);
+bool			scale(t_map map, double ratio, bool rev);
+bool			rotate(t_map map, t_vector *vector, bool rev);
 
-void			my_mlx_main(t_list *map);
+void			my_mlx_main(t_map map);
 int				draw(t_vars *vars);
-void			draw_line(t_vars *vars, t_dot *p0, t_dot *p1);
-unsigned int	culc_color(t_dot *p0, t_vect_int tmp, t_dot *p1);
+void			get_end_point(t_vect_int *end_p, t_vector p0, t_vector p1);
+void			draw_line(t_vars *vars, t_dot p0, t_dot p1);
+unsigned int	culc_color(t_dot p0, t_vect_int tmp, t_dot p1);
 int				win_off(t_vars *vars);
 
 int				key_pressed(int key_code, t_vars *vars);
@@ -151,9 +159,10 @@ int				mouse_move(int x, int y, t_vars *vars);
 int				mouse_down(int key, int x, int y, t_vars *vars);
 int				mouse_up(int key, int x, int y, t_vars *vars);
 
-void			free_map(void *content);
+void			free_map(t_map *map);
 
-void			*return_error_null(char *error_message);
-void			*return_error_bool(char *error_message);
+void			send_msg(char *message, int fd);
+void			*return_msg_null(char *message, int fd);
+void			*return_msg_bool(char *message, int fd);
 
 #endif

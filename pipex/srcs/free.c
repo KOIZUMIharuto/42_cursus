@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/28 14:44:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:53:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ void	*free_cmds(char **cmds, int index)
 	return (NULL);
 }
 
-void	free_vars(t_vars *vars)
+void	close_fds(t_vars *vars)
 {
 	if (vars->infile_fd != -1)
 		close(vars->infile_fd);
 	if (vars->outfile_fd != -1)
 		close(vars->outfile_fd);
-	if (vars->cmds)
-		free_cmds(vars->cmds, 0);
 }

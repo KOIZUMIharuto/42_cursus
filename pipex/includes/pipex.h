@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/28 13:33:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:39:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int		exec_cmd(char *cmds, char **envp);
 
 void	error_exit(t_vars *vars, char *msg);
 void	*free_cmds(char **cmds, int index);
-void	free_vars(t_vars *vars);
+void	close_fds(t_vars *vars);
 
 #endif
