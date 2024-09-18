@@ -18,6 +18,7 @@ SRCS =\
 error.c\
 exec.c\
 free.c\
+ft_dprintf.c\
 main.c\
 pipex.c\
 split.c
@@ -29,7 +30,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
-	@$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) $(LIBFT_DIR)/$(LIBFT) -o $(NAME) $(SANITIZEFRAG)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) $(LIBFT_DIR)/$(LIBFT) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(addprefix $(INC_DIR)/, $(INCS)) $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)

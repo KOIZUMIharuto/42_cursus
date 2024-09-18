@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/08/28 14:46:08 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:10:31 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-static char	*get_path(char *cmd, char **envp);
+static bool	get_path(char **path, char *cmd, char **envp);
+static bool	find_path(char **path, char *paths, char *cmd);
 
 int	exec_cmd(char *cmd, char **envp)
 {
@@ -22,47 +23,56 @@ int	exec_cmd(char *cmd, char **envp)
 	cmds = split_cmd(cmd);
 	if (!cmds)
 		return (1);
-	path = get_path(cmds[0], envp);
-	if (!path)
+	if (!get_path(&path, cmds[0], envp))
 		return (1);
 	execve(path, cmds, envp);
-	perror("execve"); // エラー出力 "no such file or directory"
+	ft_dprintf(2, "pipex: %s: %s\n", strerror(errno), path);
 	free(path);
 	return (1);
 }
 
-static char	*get_path(char *cmd, char **envp)
+static bool	get_path(char **path, char *cmd, char **envp)
 {
-	char	*path;
-	char	**paths;
-	int		i;
-
 	if (ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
+	{
+		*path = ft_strdup(cmd);
+		return (*path != NULL);
+	}
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-		{
-			paths = ft_split(*envp + 5, ":");
-			if (!paths)
-				return (NULL);
-			i = -1;
-			while (paths[++i])
-			{
-				path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
-				if (!path)
-					return (NULL); // エラー出力
-				if (access(path, F_OK) == 0)
-				{
-					free_cmds(paths, 0);
-					return (path);
-				}
-				free(path);
-			}
-			free_cmds(paths, 0);
 			break ;
-		}
 		envp++;
 	}
-	return (NULL); // エラー出力 "command not found"
+	if (!*envp)
+		return (error_return_bool("command not found", cmd));
+	return (find_path(path, *envp + 5, cmd));
+}
+
+static bool	find_path(char **path, char *envp, char *cmd)
+{
+	char	*tmp;
+	char	**paths;
+	int		i;
+
+	paths = ft_split(envp, ":");
+	if (!paths)
+		return (error_return_bool(strerror(errno), "malloc"));
+	i = -1;
+	while (paths[++i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		*path = ft_strjoin(tmp, cmd);
+		free (tmp);
+		if (!*path)
+			return (error_return_bool(strerror(errno), "malloc"));
+		if (access(*path, F_OK) == 0)
+		{
+			free_cmds(paths, 0);
+			return (true);
+		}
+		free(*path);
+	}
+	free_cmds(paths, 0);
+	return (error_return_bool("command not found", NULL));
 }

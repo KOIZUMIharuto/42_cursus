@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:50:17 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/11 12:42:15 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:58:03 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count);
 static bool	is_split(char c, char *del, t_esc *esc);
+static bool	cut_str(char **cmds, int cmd_count, char *str, int len);
 static bool	format_cmds(char **cmds);
 
 char	**split_cmd(char *cmd)
@@ -26,10 +27,12 @@ char	**split_cmd(char *cmd)
 	if (!cmds)
 		return (NULL);
 	if (!format_cmds(cmds))
-		return (free_cmds(cmds, 0));
+	{
+		free_cmds(cmds, 0);
+		return (NULL);
+	}
 	return (cmds);
 }
-
 
 static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 {
@@ -44,27 +47,22 @@ static char	**recursive_split(char *str, char *del, t_esc *esc, int cmd_count)
 	if (*str)
 		cmds = recursive_split(str + len, del, esc, cmd_count + 1);
 	else
-		cmds = (char **)ft_calloc((cmd_count + 1),  sizeof(char *));
-	if (!cmds)
-	{
-		// エラー出力
+		cmds = (char **)ft_calloc((cmd_count + 1), sizeof(char *));
+	if (!cmds && !*str)
+		return (error_return_null(strerror(errno), "malloc"));
+	else if (!cmds)
 		return (NULL);
-	}
 	if (*str)
 	{
-		cmds[cmd_count] = ft_substr(str, 0, len);
-		if (!cmds[cmd_count])
-		{
-			// エラー出力
-			return (free_cmds(cmds, cmd_count + 1));
-		}
+		if (!cut_str(cmds, cmd_count, str, len))
+			return (NULL);
 	}
 	else
 		cmds[cmd_count] = NULL;
 	return (cmds);
 }
 
-bool	is_split(char c, char *del, t_esc *esc)
+static bool	is_split(char c, char *del, t_esc *esc)
 {
 	if (ft_strchr(del, c) && !(esc->single_q || esc->double_q || esc->bacl_s))
 		return (true);
@@ -80,6 +78,17 @@ bool	is_split(char c, char *del, t_esc *esc)
 		esc->bacl_s = false;
 	}
 	return (false);
+}
+
+static bool	cut_str(char **cmds, int cmd_count, char *str, int len)
+{
+	cmds[cmd_count] = ft_substr(str, 0, len);
+	if (!cmds[cmd_count])
+	{
+		free_cmds(cmds, cmd_count + 1);
+		return (error_return_bool(strerror(errno), "malloc"));
+	}
+	return (true);
 }
 
 static bool	format_cmds(char **cmds)
@@ -104,10 +113,7 @@ static bool	format_cmds(char **cmds)
 				index++;
 		}
 		if (esc.bacl_s || esc.single_q || esc.double_q)
-		{
-			// エラー出力
-			return (false);
-		}
+			return (error_return_bool("escape sequence error", NULL));
 		cmds++;
 	}
 	return (true);

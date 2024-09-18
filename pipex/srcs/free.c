@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/11 12:53:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:49:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-void	*free_cmds(char **cmds, int index)
+void	free_cmds(char **cmds, int index)
 {
 	while (cmds[index])
 		free(cmds[index++]);
-	return (NULL);
 }
 
 void	close_fds(t_vars *vars)
