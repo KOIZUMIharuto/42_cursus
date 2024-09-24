@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/18 15:45:45 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:13:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 # include "../libft/includes/libft.h"
 
-# define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 file2"
+# define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 ... file2"
 
 typedef struct s_esc
 {
@@ -46,12 +46,12 @@ char	**split_cmd(char *cmd);
 void	pipex(t_vars *vars);
 int		exec_cmd(char *cmds, char **envp);
 
+
+void	print_msgs(char *msg, char *cause);
 void	error_exit(t_vars *vars, char *msg, char *cause);
 bool	error_return_bool(char *msg, char *cause);
 void	*error_return_null(char *msg, char *cause);
 void	free_cmds(char **cmds, int index);
 void	close_fds(t_vars *vars);
-
-int		ft_dprintf(int fd, const char *str, ...);
 
 #endif

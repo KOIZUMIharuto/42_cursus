@@ -18,7 +18,6 @@ SRCS =\
 error.c\
 exec.c\
 free.c\
-ft_dprintf.c\
 main.c\
 pipex.c\
 split.c

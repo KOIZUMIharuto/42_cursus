@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/18 16:10:31 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:50:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	exec_cmd(char *cmd, char **envp)
 	if (!get_path(&path, cmds[0], envp))
 		return (1);
 	execve(path, cmds, envp);
-	ft_dprintf(2, "pipex: %s: %s\n", strerror(errno), path);
+	print_msgs(strerror(errno), path);
 	free(path);
 	return (1);
 }
@@ -74,5 +74,5 @@ static bool	find_path(char **path, char *envp, char *cmd)
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	return (error_return_bool("command not found", NULL));
+	return (error_return_bool("command not found", cmd));
 }

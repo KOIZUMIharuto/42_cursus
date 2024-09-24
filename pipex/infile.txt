@@ -7,3 +7,4 @@ ewrgrhello\tworld
 ewrgrhello\	worlda
 ewrgrhello	world
 sugvebh
+./pipex infile.txt "make re" "touch outfile2.txt" "./pipex infile.txt \"grep a\" \"cat -e\" outfile2.txt" "make fclean" "cat -e" outfile.txt
