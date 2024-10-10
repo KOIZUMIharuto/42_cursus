@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:44:19 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:54:39 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 int	ft_isascii(int c)
 {
 	return (0 <= c && c <= 127);
 }
-
-// #include <ctype.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	if(argc >= 2)
-// 	{
-// 		printf("isascii    : %c -> %d\n", argv[1][0], isascii(argv[1][0]));
-// 		printf("ft_isascii : %c -> %d\n", argv[1][0], ft_isascii(argv[1][0]));
-// 	}
-// 	return (0);
-// }

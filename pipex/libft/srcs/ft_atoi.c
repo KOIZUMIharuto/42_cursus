@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 14:41:10 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:54:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 int	ft_atoi(const char *str)
 {
@@ -29,26 +29,13 @@ int	ft_atoi(const char *str)
 	result = 0;
 	while (str && ('0' <= *str && *str <= '9'))
 	{
-		if (result < LONG_MIN / 10 || LONG_MAX / 10 < result)
+		if (result < INT_MIN / 10 || INT_MAX / 10 < result)
 			return (-(sign + 1) / 2);
 		result *= 10;
-		if (result < LONG_MIN + (*str - '0')
-			|| LONG_MAX - (*str - '0') < result)
+		if (result < INT_MIN + (*str - '0')
+			|| INT_MAX - (*str - '0') < result)
 			return (-(sign + 1) / 2);
 		result += sign * (*(str++) - '0');
 	}
 	return ((int)result);
 }
-
-// #include <stdlib.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc >= 2)
-// 	{
-// 		printf("atoi    : %s -> %d\n", argv[1], atoi(argv[1]));
-// 		printf("ft_atoi : %s -> %d\n", argv[1], ft_atoi(argv[1]));
-// 	}
-// 	return (0);
-// }

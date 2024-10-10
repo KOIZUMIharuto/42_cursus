@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:09:43 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/07/03 15:52:28 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:52:58 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -32,27 +32,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	(void)ft_strlcpy (dst, s, (len_count + 1) * sizeof(char));
 	return (dst);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	char	*dst;
-
-// 	if (argc >= 4)
-// 	{
-// 		dst = ft_substr(NULL, atoi(argv[2]), (size_t)atol(argv[3]));
-// 		if (dst)
-// 		{
-// 			printf("ft_substr(\"%s\", %s, %s) -> ", argv[1], argv[2], argv[3]);
-// 			printf("\"%s\"\n", dst);
-// 			free(dst);
-// 		}
-// 		else
-// 		{
-// 			printf("the allocation fails\n");
-// 		}
-// 	}
-// 	return (0);
-// }

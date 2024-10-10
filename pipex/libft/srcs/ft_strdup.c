@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:36:44 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:53:41 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 char	*ft_strdup(const char *s1)
 {
@@ -25,34 +25,3 @@ char	*ft_strdup(const char *s1)
 		(void)ft_strlcpy(dst, s1, (char_count + 1) * sizeof(char));
 	return (dst);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-
-// typedef char	*(*t_strdup)(const char *);
-
-// void	test(char **argv, t_strdup strdupFn, char *Fn_name)
-// {
-// 	char	*dst;
-
-// 	dst = strdupFn(argv[1]);
-// 	if (dst)
-// 	{
-// 		printf("%s : \"%s\" -> \"%s\"\n", Fn_name, argv[1], dst);
-// 		free(dst);
-// 	}
-// 	else
-// 	{
-// 		printf("the allocation fails\n");
-// 	}
-// }
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc >= 2)
-// 	{
-// 		test(argv, strdup, "strdup   ");
-// 		test(argv, ft_strdup, "ft_strdup");
-// 	}
-// 	return (0);
-// }

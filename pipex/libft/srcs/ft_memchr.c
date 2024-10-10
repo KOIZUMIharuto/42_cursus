@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:35:54 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:54:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
@@ -22,21 +22,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-
-// #include <string.h>
-// #include <stdlib.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc >= 4)
-// 	{
-// 		printf("memchr    \"%s\" \'%c\' ", argv[1], argv[2][0]);
-// 		printf("[%d] -> ", atoi(argv[3]));
-// 		printf("%s\n", memchr(argv[1], argv[2][0], atoi(argv[3])));
-// 		printf("ft_memchr \"%s\" \'%c\' ", argv[1], argv[2][0]);
-// 		printf("[%d] -> ", atoi(argv[3]));
-// 		printf("%s\n", ft_memchr(argv[1], argv[2][0], atoi(argv[3])));
-// 	}
-// 	return (0);
-// }

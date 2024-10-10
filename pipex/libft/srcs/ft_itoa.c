@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:34:58 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:54:31 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 static int	digit_counter(int n);
 static int	ft_abs(int n);
@@ -60,26 +60,3 @@ static int	ft_abs(int n)
 		return (-n);
 	return (n);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	char	*dst;
-
-// 	if (argc >= 2)
-// 	{
-// 		dst = ft_itoa(atoi(argv[1]));
-// 		if (dst)
-// 		{
-// 			printf("ft_itoa : %d -> %s\n", atoi(argv[1]), dst);
-// 			free(dst);
-// 		}
-// 		else
-// 		{
-// 			printf("the allocation fails\n");
-// 		}
-// 	}
-// 	return (0);
-// }

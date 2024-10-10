@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:49:50 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:53:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
@@ -35,33 +35,3 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	}
 	return (NULL);
 }
-
-// #include <string.h>
-// #include <stdlib.h>
-// #include <stdio.h>
-
-// void test(char *str, char *cmp, int i)
-// {
-// 	printf("strnstr    \"%s\" \"%s\" [%d] ", str, cmp, i);
-// 	printf("-> \"%s\"\n", strnstr(str, cmp, i));
-// 	printf("ft_strnstr \"%s\" \"%s\" [%d] ", str, cmp, i);
-// 	printf("-> \"%s\"\n", ft_strnstr(str, cmp, i));
-// }
-// int	main(void)
-// {
-// 	char *str = "libft-test-tokyo";
-// 	int	len = strlen(str);
-// 	for (int i = 0; i < len; i++)
-// 	{
-// 		printf("==========================================================\n");
-// 		test(str, "", i);
-// 		test(str, "libft-test-tokyo", i);
-// 		test(str, "libft", i);
-// 		test(str, "test", i);
-// 		test(str, "tokyo", i);
-// 		test(str, "libft~", i);
-// 		test(str, "z", i);
-// 		printf("\n\n\n");
-// 	}
-// 	return (0);
-// }

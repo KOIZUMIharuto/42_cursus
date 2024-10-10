@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:35:16 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:54:20 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
@@ -23,19 +23,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-// #include <string.h>
-// #include <stdlib.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	if (argc >= 4)
-// 	{
-// 		printf("memcmp    \"%s\" \"%s\" [%d]", argv[1], argv[2], atoi(argv[3]));
-// 		printf(" -> %d\n", memcmp(argv[1], argv[2], (size_t)atoi(argv[3])));
-// 		printf("ft_memcmp \"%s\" \"%s\" [%d]", argv[1], argv[2], atoi(argv[3]));
-// 		printf(" -> %d\n", ft_memcmp(argv[1], argv[2], (size_t)atoi(argv[3])));
-// 	}
-// 	return (0);
-// }

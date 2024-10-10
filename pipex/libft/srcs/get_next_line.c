@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xxxx <xxxx@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:58:30 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/04/05 08:54:24 by xxxx             ###   ########.fr       */
+/*   Updated: 2024/08/19 15:35:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 static t_f_b	*get_fd_buf_set(int fd, t_f_b **f_b_l, t_f_b *f_b_tmp);
 static ssize_t	read_join(t_f_b *f_b, char **line, t_f_b **f_b_l, ssize_t len);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 23:09:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/24 15:00:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:03:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	print_msgs(char *msg, char *cause)
 	ft_putchar_fd('\n', 2);
 }
 
-void	error_exit(t_vars *vars, char *msg, char *cause)
+void	error_exit(t_vars *vars, char *msg, char *cause, int my_errno)
 {
 	if (msg)
 		print_msgs(msg, cause);
 	if (vars)
 		close_fds(vars);
-	exit(1);
+	exit(my_errno);
 }
 
 bool	error_return_bool(char *msg, char *cause)

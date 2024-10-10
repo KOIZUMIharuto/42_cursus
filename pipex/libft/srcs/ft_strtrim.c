@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:05:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/03/31 11:51:01 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 14:53:03 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include <libft.h>
 
 bool	set_checker(char const c, char const *set)
 {
@@ -49,25 +49,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	(void)ft_strlcpy (dst, s1, (len + 1) * sizeof(char));
 	return (dst);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	char	*dst;
-// 	if (argc >= 3)
-// 	{
-// 		dst = ft_strtrim(argv[1], NULL);
-// 		if (dst)
-// 		{
-// 			printf("ft_strtrim(\"%s\", \"%s\") -> ", argv[1], argv[2]);
-// 			printf("\"%s\"\n", dst);
-// 			free(dst);
-// 		}
-// 		else
-// 		{
-// 			printf("the allocation fails\n");
-// 		}
-// 	}
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/24 14:50:58 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:00:40 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	exec_cmd(char *cmd, char **envp)
 	execve(path, cmds, envp);
 	print_msgs(strerror(errno), path);
 	free(path);
-	return (1);
+	return (errno);
 }
 
 static bool	get_path(char **path, char *cmd, char **envp)
