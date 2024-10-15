@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/10 16:00:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:27:35 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	pipex(t_vars *vars)
 	while (index < vars->cmds_count - 1)
 	{
 		if (pipe(pipe_fd) == -1)
-			error_exit(vars, strerror(errno), "pipe", errno);
+			error_exit(vars, strerror(errno), "pipe");
 		pid = fork();
 		if (pid == -1)
-			error_exit(vars, strerror(errno), "fork", errno);
+			error_exit(vars, strerror(errno), "fork");
 		else if (pid == 0)
 			child_process(vars, pipe_fd, index);
 		close(pipe_fd[1]);
@@ -48,14 +48,24 @@ static void	child_process(t_vars *vars, int *pipe_fd, int index)
 	close(vars->infile_fd);
 	dup2(pipe_fd[1], STDOUT_FILENO);
 	close(pipe_fd[1]);
-	error_exit(vars, NULL, NULL, exec_cmd(vars->cmds[index], vars->envp));
+	exec_cmd(vars->cmds[index], vars->envp);
+	error_exit(vars, NULL, NULL);
 }
 
 static void	exec_last_cmd(t_vars *vars, int index)
 {
-	dup2(vars->infile_fd, STDIN_FILENO);
-	close(vars->infile_fd);
-	dup2(vars->outfile_fd, STDOUT_FILENO);
-	close(vars->outfile_fd);
-	error_exit(vars, NULL, NULL, exec_cmd(vars->cmds[index], vars->envp));
+	int pid;
+
+	pid = fork();
+	if (pid == -1)
+		error_exit(vars, strerror(errno), "fork");
+	else if (pid == 0)
+	{
+		dup2(vars->infile_fd, STDIN_FILENO);
+		close(vars->infile_fd);
+		dup2(vars->outfile_fd, STDOUT_FILENO);
+		close(vars->outfile_fd);
+		exec_cmd(vars->cmds[index], vars->envp);
+		error_exit(vars, NULL, NULL);
+	}
 }
