@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/15 13:27:35 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:05:41 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	child_process(t_vars *vars, int *pipe_fd, int index)
 
 static void	exec_last_cmd(t_vars *vars, int index)
 {
-	int pid;
+	int	pid;
 
 	pid = fork();
 	if (pid == -1)
