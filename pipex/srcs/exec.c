@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 14:13:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:49:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 {
 	char	**cmds;
 	char	*path;
-	int		index;
 	int		exit_status;
 
 	cmds = split_cmd(cmd);
@@ -31,7 +30,6 @@ int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 	execve(path, cmds, envp);
 	exit_status = get_status(errno);
 	print_msgs(strerror(errno), path);
-	index = 0;
 	free_cmds(cmds, 0);
 	free(path);
 	return (exit_status);
