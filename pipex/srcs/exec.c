@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 15:22:08 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:49:08 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 	if (ft_strchr(cmd, '/'))
 	{
 		*path = ft_strdup(cmd);
-		if (*path != NULL)
+		if (*path == NULL)
 			error_exit(vars, strerror(errno), "malloc", 1);
 		return ;
 	}
