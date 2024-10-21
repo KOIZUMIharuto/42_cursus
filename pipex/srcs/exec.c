@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 15:49:08 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:21:37 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 		tmp = ft_strjoin(paths[i], "/");
 		*path = ft_strjoin(tmp, cmd);
 		free (tmp);
-		if (!*path)
-			error_exit(vars, strerror(errno), "malloc", 1);
-		if (access(*path, F_OK) == 0)
+		if (!*path || access(*path, F_OK) == 0)
 		{
 			free_cmds(paths, 0);
+			if (!*path)
+				error_exit(vars, strerror(errno), "malloc", 1);
 			return ;
 		}
 		free(*path);
