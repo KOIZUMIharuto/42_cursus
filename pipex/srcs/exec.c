@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 14:49:13 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:22:08 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-static bool	get_path(t_vars *vars, char **path, char *cmd, char **envp);
+static void	get_path(t_vars *vars, char **path, char *cmd, char **envp);
 static void	find_path(t_vars *vars, char **path, char *paths, char *cmd);
 static int	get_status(int my_errno);
 
@@ -25,8 +25,7 @@ int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 	cmds = split_cmd(cmd);
 	if (!cmds)
 		return (1);
-	if (!get_path(vars, &path, cmds[0], envp))
-		return (1);
+	get_path(vars, &path, cmds[0], envp);
 	execve(path, cmds, envp);
 	exit_status = get_status(errno);
 	print_msgs(strerror(errno), path);
@@ -35,12 +34,14 @@ int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 	return (exit_status);
 }
 
-static bool	get_path(t_vars *vars, char **path, char *cmd, char **envp)
+static void	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 {
 	if (ft_strchr(cmd, '/'))
 	{
 		*path = ft_strdup(cmd);
-		return (*path != NULL);
+		if (*path != NULL)
+			error_exit(vars, strerror(errno), "malloc", 1);
+		return ;
 	}
 	while (*envp)
 	{
@@ -49,9 +50,8 @@ static bool	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 		envp++;
 	}
 	if (!*envp)
-		error_exit(vars, "command not found", cmd, 127);
+		error_exit(vars, "No such file or directory", cmd, 127);
 	find_path(vars, path, *envp + 5, cmd);
-	return (true);
 }
 
 static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)

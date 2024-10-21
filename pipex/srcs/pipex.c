@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 14:33:25 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:37:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ static void	wait_children(t_vars *vars, int index, int last_pid)
 {
 	int	status;
 
+	if (waitpid(last_pid, &status, 0) == -1)
+		error_exit(vars, strerror(errno), "waitpid", 1);
 	while (index-- >= 1)
 	{
 		if (wait(NULL) == -1)
 			print_msgs(strerror(errno), "wait");
 	}
-	if (waitpid(last_pid, &status, 0) == -1)
-		error_exit(vars, strerror(errno), "waitpid", 1);
 	close_fds(vars);
 	if (WIFEXITED(status))
 		exit (WEXITSTATUS(status));
