@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 23:09:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/10 16:06:16 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 13:27:07 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 void	print_msgs(char *msg, char *cause)
 {
-	if (msg)
-	{
-		ft_putstr_fd("pipex: ", 2);
-		ft_putstr_fd(msg, 2);
-	}
+	ft_putstr_fd("pipex: ", 2);
 	if (cause)
 	{
-		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(cause, 2);
+		ft_putstr_fd(": ", 2);
 	}
+	if (msg)
+		ft_putstr_fd(msg, 2);
 	ft_putchar_fd('\n', 2);
 }
 
-void	error_exit(t_vars *vars, char *msg, char *cause)
+void	error_exit(t_vars *vars, char *msg, char *cause, int exit_status)
 {
 	if (msg)
 		print_msgs(msg, cause);
 	if (vars)
 		close_fds(vars);
-	exit(1);
+	exit(exit_status);
 }
 
 bool	error_return_bool(char *msg, char *cause)

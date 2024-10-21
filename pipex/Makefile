@@ -31,7 +31,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT_DIR)/$(LIBFT)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJ) $(LIBFT_DIR)/$(LIBFT) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(addprefix $(INC_DIR)/, $(INCS)) $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(addprefix $(INC_DIR)/, $(INCS)) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $< -D BUFFER_SIZE=$(BUFFER_SIZE)
 
 $(OBJ_DIR):

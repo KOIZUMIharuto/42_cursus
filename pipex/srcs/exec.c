@@ -3,35 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/10 15:00:40 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:13:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-static bool	get_path(char **path, char *cmd, char **envp);
-static bool	find_path(char **path, char *paths, char *cmd);
+static bool	get_path(t_vars *vars, char **path, char *cmd, char **envp);
+static void	find_path(t_vars *vars, char **path, char *paths, char *cmd);
+static int	get_status(int my_errno);
 
-int	exec_cmd(char *cmd, char **envp)
+int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 {
 	char	**cmds;
 	char	*path;
+	int		index;
+	int		exit_status;
 
 	cmds = split_cmd(cmd);
 	if (!cmds)
 		return (1);
-	if (!get_path(&path, cmds[0], envp))
+	if (!get_path(vars, &path, cmds[0], envp))
 		return (1);
 	execve(path, cmds, envp);
+	exit_status = get_status(errno);
 	print_msgs(strerror(errno), path);
+	index = 0;
+	free_cmds(cmds, 0);
 	free(path);
-	return (errno);
+	return (exit_status);
 }
 
-static bool	get_path(char **path, char *cmd, char **envp)
+static bool	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 {
 	if (ft_strchr(cmd, '/'))
 	{
@@ -45,11 +51,12 @@ static bool	get_path(char **path, char *cmd, char **envp)
 		envp++;
 	}
 	if (!*envp)
-		return (error_return_bool("command not found", cmd));
-	return (find_path(path, *envp + 5, cmd));
+		error_exit(vars, "command not found", cmd, 127);
+	find_path(vars, path, *envp + 5, cmd);
+	return (true);
 }
 
-static bool	find_path(char **path, char *envp, char *cmd)
+static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 {
 	char	*tmp;
 	char	**paths;
@@ -57,7 +64,7 @@ static bool	find_path(char **path, char *envp, char *cmd)
 
 	paths = ft_split(envp, ":");
 	if (!paths)
-		return (error_return_bool(strerror(errno), "malloc"));
+		error_exit(vars, strerror(errno), "malloc", 1);
 	i = -1;
 	while (paths[++i])
 	{
@@ -65,14 +72,24 @@ static bool	find_path(char **path, char *envp, char *cmd)
 		*path = ft_strjoin(tmp, cmd);
 		free (tmp);
 		if (!*path)
-			return (error_return_bool(strerror(errno), "malloc"));
+			error_exit(vars, strerror(errno), "malloc", 1);
 		if (access(*path, F_OK) == 0)
 		{
 			free_cmds(paths, 0);
-			return (true);
+			return ;
 		}
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	return (error_return_bool("command not found", cmd));
+	error_exit(vars, "command not found", cmd, 127);
+}
+
+static int	get_status(int my_errno)
+{
+	if (my_errno == ENOENT)
+		return (127);
+	else if (my_errno == EACCES)
+		return (126);
+	else
+		return (1);
 }
