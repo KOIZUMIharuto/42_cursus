@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 16:24:30 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:59:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	free_cmds(char **cmds, int index)
 {
 	while (cmds[index])
 		free(cmds[index++]);
+	free (cmds);
 }
 
 void	close_fds(t_vars *vars)

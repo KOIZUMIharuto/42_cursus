@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 14:00:47 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:56:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include "../libft/includes/libft.h"
 
 # define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 ... file2"
+# define NO_SUCH_ERROR "No such file or directory"
+# define NO_CMD_ERROR "command not found"
 
 typedef struct s_esc
 {

@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 16:21:37 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:08:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 		envp++;
 	}
 	if (!*envp)
-		error_exit(vars, "No such file or directory", cmd, 127);
+		error_exit(vars, NO_SUCH_ERROR, cmd, 127);
 	find_path(vars, path, *envp + 5, cmd);
 }
 
@@ -79,7 +79,7 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	error_exit(vars, "command not found", cmd, 127);
+	error_exit(vars, NO_CMD_ERROR, cmd, 127);
 }
 
 static int	get_status(int my_errno)

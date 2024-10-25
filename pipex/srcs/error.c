@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 23:09:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 13:27:07 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:57:55 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	print_msgs(char *msg, char *cause)
 {
-	ft_putstr_fd("pipex: ", 2);
+	if (ft_strncmp(NO_CMD_ERROR, msg, ft_strlen(msg)) != 0)
+		ft_putstr_fd("pipex: ", 2);
 	if (cause)
 	{
 		ft_putstr_fd(cause, 2);
