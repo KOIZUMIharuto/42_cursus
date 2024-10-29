@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 21:51:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/29 23:04:11 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 ... file2"
 # define NO_SUCH_ERROR "No such file or directory"
 # define NO_CMD_ERROR "command not found"
+# define EXIT_NOENT 127
+# define EXIT_EACCES 126
 
 typedef struct s_esc
 {

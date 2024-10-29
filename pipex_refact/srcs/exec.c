@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 15:53:03 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/29 23:05:07 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	get_path(t_vars *vars, char **path, char *cmd, char **envp)
 		envp++;
 	}
 	if (!*envp)
-		error_exit(vars, NO_SUCH_ERROR, cmd, 127);
+		error_exit(vars, NO_SUCH_ERROR, cmd, EXIT_NOENT);
 	find_path(vars, path, *envp + 5, cmd);
 }
 
@@ -79,15 +79,15 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	error_exit(vars, NO_CMD_ERROR, cmd, 127);
+	error_exit(vars, NO_CMD_ERROR, cmd, EXIT_NOENT);
 }
 
 static int	get_status(int my_errno)
 {
 	if (my_errno == ENOENT)
-		return (127);
+		return (EXIT_NOENT);
 	else if (my_errno == EACCES)
-		return (126);
+		return (EXIT_EACCES);
 	else
 		return (EXIT_FAILURE);
 }
