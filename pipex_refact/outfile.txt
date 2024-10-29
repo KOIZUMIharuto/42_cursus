@@ -1,0 +1,8 @@
+Makefile
+includes
+infile.txt
+libft
+objs
+outfile.txt
+pipex
+srcs

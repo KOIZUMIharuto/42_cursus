@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 14:41:41 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:14:12 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ void	free_vars(t_vars *vars)
 	{
 		tmp = process;
 		process = process->prev;
-		if (close_wrapper(&tmp->read_fd) == -1)
-			error_exit(NULL, strerror(errno), "close", EXIT_FAILURE);
-		if (close_wrapper(&tmp->write_fd) == -1)
-			error_exit(NULL, strerror(errno), "close", EXIT_FAILURE);
 		free(tmp);
 	}
 	if (close_wrapper(&vars->infile_fd) == -1)
