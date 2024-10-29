@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 17:13:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/29 21:51:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ typedef struct s_esc
 	bool	bacl_s;
 }	t_esc;
 
-typedef struct s_process
-{
-	pid_t				pid;
-	int					read_fd;
-	int					write_fd;
-	struct s_process	*prev;
-}	t_process;
-
 typedef struct s_vars
 {
 	int			infile_fd;
@@ -50,7 +42,7 @@ typedef struct s_vars
 	char		**cmds;
 	char		**envp;
 	int			pipe_fd[2];
-	t_process	*processes;
+	pid_t		last_pid;
 }	t_vars;
 
 char	**split_cmd(char *cmd);
