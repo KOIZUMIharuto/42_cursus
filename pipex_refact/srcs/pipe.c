@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 15:21:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:53:47 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	pipex(t_vars *vars)
 	exec_last_cmd(vars, index);
 	if (close_wrapper(&vars->infile_fd) == -1)
 		error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
+	if (close_wrapper(&vars->outfile_fd) == -1)
+		error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 	wait_children(vars);
 }
 
@@ -58,7 +60,7 @@ static void	child_process(t_vars *vars, int index)
 			error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 		if (!dup_fds(vars, &vars->pipe_fd[1]))
 			error_exit(vars, NULL, NULL, EXIT_FAILURE);
-		(void)exec_cmd(vars, vars->cmds[index], vars->envp);
+		(void)exec_cmd(vars, vars->cmds[index]);
 		error_exit(vars, NULL, NULL, EXIT_FAILURE);
 	}
 }
@@ -72,10 +74,8 @@ static void	exec_last_cmd(t_vars *vars, int index)
 	{
 		if (!dup_fds(vars, &vars->outfile_fd))
 			error_exit(vars, NULL, NULL, EXIT_FAILURE);
-		exit(exec_cmd(vars, vars->cmds[index], vars->envp));
+		exit(exec_cmd(vars, vars->cmds[index]));
 	}
-	if (close_wrapper(&vars->outfile_fd) == -1)
-		error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 }
 
 static bool	dup_fds(t_vars *vars, int *output_fd)

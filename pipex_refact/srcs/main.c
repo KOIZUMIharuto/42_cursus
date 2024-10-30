@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 21:59:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:36:54 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_putendl_fd(USAGE_ERROR, 2);
 		exit(EXIT_FAILURE);
 	}
-	vars = (t_vars){-1, -1, -1, NULL, NULL, {-1, -1}, -1};
+	vars = (t_vars){-1, -1, -1, NULL, NULL, NULL, {-1, -1}, -1};
 	vars.outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (vars.outfile_fd == -1)
 		print_msgs(strerror(errno), argv[argc - 1]);

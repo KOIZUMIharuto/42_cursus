@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 15:03:36 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:36:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_vars
 	int			cmds_count;
 	char		**cmds;
 	char		**envp;
+	char		**cmd_opt;
 	int			pipe_fd[2];
 	pid_t		last_pid;
 }	t_vars;
@@ -52,7 +53,7 @@ typedef struct s_vars
 char	**split_cmd(char *cmd);
 
 void	pipex(t_vars *vars);
-int		exec_cmd(t_vars *vars, char *cmds, char **envp);
+int		exec_cmd(t_vars *vars, char *cmds);
 
 void	print_msgs(char *msg, char *cause);
 void	error_exit(t_vars *vars, char *msg, char *cause, int exit_status);

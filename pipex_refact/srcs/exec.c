@@ -6,60 +6,64 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 15:05:23 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:48:51 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-static void	get_path(t_vars *vars, char **path, char *cmd, char **envp);
-static void	find_path(t_vars *vars, char **path, char *paths, char *cmd);
+static void	get_path(t_vars *vars, char **path);
+static void	find_path(t_vars *vars, char **path, char *paths);
 static int	get_status(int my_errno);
 
-int	exec_cmd(t_vars *vars, char *cmd, char **envp)
+int	exec_cmd(t_vars *vars, char *cmd)
 {
-	char	**cmds;
+	char	**cmd_opt;
 	char	*path;
 	int		exit_status;
 
-	cmds = split_cmd(cmd);
-	if (!cmds)
+	cmd_opt = split_cmd(cmd);
+	if (!cmd_opt)
 		return (EXIT_FAILURE);
-	if (!cmds[0])
+	if (!cmd_opt[0])
 	{
-		free_cmds(cmds, 0);
-		error_exit(vars, NO_COMMAND_ERROR, cmd, EXIT_FAILURE);
+		free_cmds(cmd_opt, 0);
+		error_exit(vars, NO_COMMAND_ERROR, NULL, EXIT_FAILURE);
 	}
-	get_path(vars, &path, cmds[0], envp);
-	execve(path, cmds, envp);
+	vars->cmd_opt = cmd_opt;
+	get_path(vars, &path);
+	execve(path, cmd_opt, vars->envp);
 	exit_status = get_status(errno);
 	print_msgs(strerror(errno), path);
-	free_cmds(cmds, 0);
+	free_cmds(cmd_opt, 0);
 	free(path);
 	return (exit_status);
 }
 
-static void	get_path(t_vars *vars, char **path, char *cmd, char **envp)
+static void	get_path(t_vars *vars, char **path)
 {
-	if (ft_strchr(cmd, '/'))
+	int	index;
+
+	if (ft_strchr(vars->cmd_opt[0], '/'))
 	{
-		*path = ft_strdup(cmd);
+		*path = ft_strdup(vars->cmd_opt[0]);
 		if (*path == NULL)
 			error_exit(vars, strerror(errno), "malloc", EXIT_FAILURE);
 		return ;
 	}
-	while (*envp)
+	index = 0;
+	while (vars->envp[index])
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		if (ft_strncmp(vars->envp[index], "PATH=", 5) == 0)
 			break ;
-		envp++;
+		index++;
 	}
-	if (!*envp)
-		error_exit(vars, NO_SUCH_ERROR, cmd, EXIT_NOENT);
-	find_path(vars, path, *envp + 5, cmd);
+	if (!vars->envp[index])
+		error_exit(vars, NO_SUCH_ERROR, vars->cmd_opt[0], EXIT_NOENT);
+	find_path(vars, path, vars->envp[index] + 5);
 }
 
-static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
+static void	find_path(t_vars *vars, char **path, char *envp)
 {
 	char	*tmp;
 	char	**paths;
@@ -72,7 +76,7 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 	while (paths[++i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
-		*path = ft_strjoin(tmp, cmd);
+		*path = ft_strjoin(tmp, vars->cmd_opt[0]);
 		free (tmp);
 		if (!*path || access(*path, F_OK) == 0)
 		{
@@ -84,7 +88,7 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	error_exit(vars, NOT_FOUND_ERROR, cmd, EXIT_NOENT);
+	error_exit(vars, NOT_FOUND_ERROR, vars->cmd_opt[0], EXIT_NOENT);
 }
 
 static int	get_status(int my_errno)

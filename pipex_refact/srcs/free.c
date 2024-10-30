@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:34:31 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 22:38:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:39:05 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	free_vars(t_vars *vars)
 		error_exit(NULL, strerror(errno), "close", EXIT_FAILURE);
 	if (close_wrapper(&vars->pipe_fd[1]) == -1)
 		error_exit(NULL, strerror(errno), "close", EXIT_FAILURE);
+	if (vars->cmd_opt)
+		free_cmds(vars->cmd_opt, 0);
+	vars->cmd_opt = NULL;
 }
 
 void	free_cmds(char **cmds, int index)
