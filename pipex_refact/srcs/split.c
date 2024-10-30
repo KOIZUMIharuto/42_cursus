@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:50:17 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/09/24 15:04:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:03:25 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static bool	format_cmds(char **cmds)
 				index++;
 		}
 		if (esc.bacl_s || esc.single_q || esc.double_q)
-			return (error_return_bool("escape sequence error", NULL));
+			return (error_return_bool(SEQUENCE_ERROR, NULL));
 		cmds++;
 	}
 	return (true);

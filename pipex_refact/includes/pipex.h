@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 23:04:11 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:03:36 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@
 # include "../libft/includes/libft.h"
 
 # define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 ... file2"
+# define SEQUENCE_ERROR "escape sequence error"
+# define NO_COMMAND_ERROR "no command entry"
 # define NO_SUCH_ERROR "No such file or directory"
-# define NO_CMD_ERROR "command not found"
+# define NOT_FOUND_ERROR "command not found"
 # define EXIT_NOENT 127
 # define EXIT_EACCES 126
 

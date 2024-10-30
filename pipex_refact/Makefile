@@ -1,6 +1,6 @@
 CC = cc
 SANITIZEFRAG = -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror $(SANITIZEFRAG)
+CFLAGS = -Wall -Wextra -Werror
 
 BUFFER_SIZE = 5
 

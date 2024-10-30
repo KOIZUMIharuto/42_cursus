@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 23:09:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 22:13:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:01:42 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	error_exit(t_vars *vars, char *msg, char *cause, int exit_status)
 
 void	print_msgs(char *msg, char *cause)
 {
-	if (ft_strncmp(NO_CMD_ERROR, msg, ft_strlen(msg)) != 0)
+	if (ft_strncmp(NOT_FOUND_ERROR, msg, ft_strlen(msg)) != 0)
 		ft_putstr_fd("pipex: ", STDERR_FILENO);
 	if (cause)
 	{

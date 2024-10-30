@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 23:05:07 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:05:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ int	exec_cmd(t_vars *vars, char *cmd, char **envp)
 
 	cmds = split_cmd(cmd);
 	if (!cmds)
-		return (1);
+		return (EXIT_FAILURE);
+	if (!cmds[0])
+	{
+		free_cmds(cmds, 0);
+		error_exit(vars, NO_COMMAND_ERROR, cmd, EXIT_FAILURE);
+	}
 	get_path(vars, &path, cmds[0], envp);
 	execve(path, cmds, envp);
 	exit_status = get_status(errno);
@@ -79,7 +84,7 @@ static void	find_path(t_vars *vars, char **path, char *envp, char *cmd)
 		free(*path);
 	}
 	free_cmds(paths, 0);
-	error_exit(vars, NO_CMD_ERROR, cmd, EXIT_NOENT);
+	error_exit(vars, NOT_FOUND_ERROR, cmd, EXIT_NOENT);
 }
 
 static int	get_status(int my_errno)

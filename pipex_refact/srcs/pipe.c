@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/29 22:40:34 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:21:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pipex.h>
 
-static void	fork_child(t_vars *vars, int index);
+static void	child_process(t_vars *vars, int index);
 static bool	dup_fds(t_vars *vars, int *output_fd);
 static void	exec_last_cmd(t_vars *vars, int index);
 static void	wait_children(t_vars *t_vars);
@@ -26,7 +26,9 @@ void	pipex(t_vars *vars)
 	{
 		if (pipe(vars->pipe_fd) == -1)
 			error_exit(vars, strerror(errno), "pipe", 1);
-		fork_child(vars, index++);
+		child_process(vars, index++);
+		if (close_wrapper(&vars->pipe_fd[1]) == -1)
+			error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 		if (close_wrapper(&vars->infile_fd) == -1)
 			error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 		vars->infile_fd = dup(vars->pipe_fd[0]);
@@ -41,7 +43,7 @@ void	pipex(t_vars *vars)
 	wait_children(vars);
 }
 
-static void	fork_child(t_vars *vars, int index)
+static void	child_process(t_vars *vars, int index)
 {
 	pid_t	pid;
 
@@ -50,6 +52,8 @@ static void	fork_child(t_vars *vars, int index)
 		error_exit(vars, strerror(errno), "fork", 1);
 	else if (pid == 0)
 	{
+		if (close_wrapper(&vars->outfile_fd) == -1)
+			error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 		if (close_wrapper(&vars->pipe_fd[0]) == -1)
 			error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 		if (!dup_fds(vars, &vars->pipe_fd[1]))
@@ -57,8 +61,6 @@ static void	fork_child(t_vars *vars, int index)
 		(void)exec_cmd(vars, vars->cmds[index], vars->envp);
 		error_exit(vars, NULL, NULL, EXIT_FAILURE);
 	}
-	if (close_wrapper(&vars->pipe_fd[1]) == -1)
-		error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
 }
 
 static void	exec_last_cmd(t_vars *vars, int index)
@@ -78,8 +80,12 @@ static void	exec_last_cmd(t_vars *vars, int index)
 
 static bool	dup_fds(t_vars *vars, int *output_fd)
 {
+	bool	do_cmd;
+
 	if (vars->infile_fd < 0 || *output_fd < 0)
-		return (false);
+		do_cmd = false;
+	else
+		do_cmd = true;
 	if (vars->infile_fd >= 0 && dup2(vars->infile_fd, STDIN_FILENO) == -1)
 		error_exit(vars, strerror(errno), "dup2", EXIT_FAILURE);
 	if (close_wrapper(&vars->infile_fd) == -1)
@@ -88,7 +94,7 @@ static bool	dup_fds(t_vars *vars, int *output_fd)
 		error_exit(vars, strerror(errno), "dup2", EXIT_FAILURE);
 	if (close_wrapper(output_fd) == -1)
 		error_exit(vars, strerror(errno), "close", EXIT_FAILURE);
-	return (true);
+	return (do_cmd);
 }
 
 static void	wait_children(t_vars *vars)
