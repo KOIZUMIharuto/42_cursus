@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/31 11:07:23 by hkoizumi         ###   ########.fr       */
+=======
+/*   Updated: 2024/11/03 00:10:04 by hkoizumi         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +19,7 @@
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_vars	vars;
+	char	*infile_open_errmsg;
 
 	if (argc < 5)
 	{
@@ -22,12 +27,14 @@ int	main(int argc, char *argv[], char *envp[])
 		exit(EXIT_FAILURE);
 	}
 	vars = (t_vars){-1, -1, -1, NULL, NULL, NULL, {-1, -1}, -1};
+	vars.infile_fd = open(argv[1], O_RDONLY);
+	if (vars.infile_fd == -1)
+		infile_open_errmsg = strerror(errno);
 	vars.outfile_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (vars.outfile_fd == -1)
 		print_msgs(strerror(errno), argv[argc - 1]);
-	vars.infile_fd = open(argv[1], O_RDONLY);
 	if (vars.infile_fd == -1)
-		print_msgs(strerror(errno), argv[1]);
+		print_msgs(infile_open_errmsg, argv[1]);
 	vars.cmds = &argv[2];
 	vars.cmds_count = argc - 3;
 	vars.envp = envp;

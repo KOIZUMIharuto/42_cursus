@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/21 15:37:21 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:06:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	pipex(t_vars *vars)
 			error_exit(vars, strerror(errno), "pipe", 1);
 		pid = fork();
 		if (pid == -1)
+		{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
 			error_exit(vars, strerror(errno), "fork", 1);
+		}
 		else if (pid == 0)
 			child_process(vars, pipe_fd, index);
 		close(pipe_fd[1]);
