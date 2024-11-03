@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/31 11:07:23 by hkoizumi         ###   ########.fr       */
-=======
-/*   Updated: 2024/11/03 00:10:04 by hkoizumi         ###   ########.fr       */
->>>>>>> refs/remotes/origin/master
+/*   Created: 2024/11/03 11:02:41 by hkoizumi          #+#    #+#             */
+/*   Updated: 2024/11/03 11:02:44 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
