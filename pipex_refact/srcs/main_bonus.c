@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 11:02:41 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/03 11:22:20 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/03 11:06:37 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	main(int argc, char *argv[], char *envp[])
 	t_vars	vars;
 	char	*infile_open_errmsg;
 
-	if (argc != 5)
+	if (argc < 5)
 	{
-		ft_putendl_fd(USAGE_ERROR, 2);
+		ft_putendl_fd(USAGE_ERROR_BONUS, 2);
 		exit(EXIT_FAILURE);
 	}
 	vars = (t_vars){-1, -1, -1, NULL, NULL, NULL, {-1, -1}, -1};

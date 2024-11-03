@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:50:25 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 16:36:44 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/03 11:05:57 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 # include "../libft/includes/libft.h"
 
-# define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 ... file2"
+# define USAGE_ERROR "Usage: ./pipex file1 cmd1 cmd2 file2"
+# define USAGE_ERROR_BONUS "Usage: ./pipex file1 cmd1 cmd2 ... cmdn file2"
 # define SEQUENCE_ERROR "escape sequence error"
 # define NO_COMMAND_ERROR "no command entry"
 # define NO_SUCH_ERROR "No such file or directory"
