@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:49:39 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 16:36:54 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:07:23 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,3 @@ int	main(int argc, char *argv[], char *envp[])
 	pipex(&vars);
 	return (0);
 }
-
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q pipex");
-// }

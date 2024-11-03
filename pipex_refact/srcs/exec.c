@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:41:28 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 16:48:51 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:23:24 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,13 @@ int	exec_cmd(t_vars *vars, char *cmd)
 	cmd_opt = split_cmd(cmd);
 	if (!cmd_opt)
 		return (EXIT_FAILURE);
-	if (!cmd_opt[0])
-	{
-		free_cmds(cmd_opt, 0);
-		error_exit(vars, NO_COMMAND_ERROR, NULL, EXIT_FAILURE);
-	}
 	vars->cmd_opt = cmd_opt;
+	if (!cmd_opt[0])
+		error_exit(vars, NO_COMMAND_ERROR, NULL, EXIT_FAILURE);
 	get_path(vars, &path);
 	execve(path, cmd_opt, vars->envp);
 	exit_status = get_status(errno);
 	print_msgs(strerror(errno), path);
-	free_cmds(cmd_opt, 0);
 	free(path);
 	return (exit_status);
 }

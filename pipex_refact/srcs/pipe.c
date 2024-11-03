@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:49:27 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/10/30 16:53:47 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:19:19 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static void	child_process(t_vars *vars, int index)
 
 static void	exec_last_cmd(t_vars *vars, int index)
 {
+	int	exit_status;
+
 	vars->last_pid = fork();
 	if (vars->last_pid == -1)
 		error_exit(vars, strerror(errno), "fork", 1);
@@ -74,7 +76,9 @@ static void	exec_last_cmd(t_vars *vars, int index)
 	{
 		if (!dup_fds(vars, &vars->outfile_fd))
 			error_exit(vars, NULL, NULL, EXIT_FAILURE);
-		exit(exec_cmd(vars, vars->cmds[index]));
+		exit_status = exec_cmd(vars, vars->cmds[index]);
+		free_vars(vars);
+		exit(exit_status);
 	}
 }
 
