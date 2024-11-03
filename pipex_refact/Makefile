@@ -23,18 +23,10 @@ pipe.c\
 split.c
 MANDATORY_MAIN = main.c
 BONUS_MAIN = main_bonus.c
-MAIN = $(MANDATORY_MAIN)
 
-# SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-# MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 MANDATORY_OBJS = $(addprefix $(OBJ_DIR)/, $(MANDATORY_MAIN:.c=.o)) $(OBJS)
 BONUS_OBJS = $(addprefix $(OBJ_DIR)/, $(BONUS_MAIN:.c=.o)) $(OBJS)
-# MAIN_OBJ = $(addprefix $(OBJ_DIR)/, $(MAIN:.c=.o))
-
-# ifeq ($(MAKECMDGOALS), bonus)
-# MAIN = $(BONUS_MAIN)
-# endif
 
 all: $(MANDATORY_NAME)
 
