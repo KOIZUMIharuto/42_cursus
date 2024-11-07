@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   atoi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 13:07:53 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/03 14:15:22 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:49:11 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-int	ft_atoi_philo(const char *str)
+int	my_atoi(const char *str)
 {
 	long	result;
 
 	while (str && (('\t' <= *str && *str <= '\r') || *str == ' '))
 		str++;
-	if (!str || *str == '-')
+	if (!str || !*str || *str == '-')
 		return (-1);
 	if (*str == '+')
 		str++;

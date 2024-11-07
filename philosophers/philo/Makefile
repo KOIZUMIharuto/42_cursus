@@ -1,14 +1,20 @@
 NAME = philo
 
-FSANITIZE = -fsanitize=address
+FSANITIZE = -fsanitize=thread
 CFLAGS = -Wall -Wextra -Werror
+PFRAGS = -pthread
 
 INC = philo.h
 SRCS = \
 atoi.c\
 error.c\
+free.c\
+init.c\
 main.c\
-thread.c
+mutex.c\
+philo.c\
+thread.c\
+utils.c
 
 OBJ_DIR = objs
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
@@ -16,16 +22,16 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -I ./ $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(PFRAGS) -I ./ $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c $(INC) | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I ./ -o $@ -c $<
+	$(CC) $(CFLAGS) $(PFRAGS) -I ./ -o $@ -c $<
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -fdr $(OBJ_DIR)
 
 fclean: clean 
 	rm -f $(NAME)
