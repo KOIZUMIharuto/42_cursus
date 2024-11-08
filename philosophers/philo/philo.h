@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:55:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 00:10:43 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:59:06 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define ETHREAD_DETACH "Error: pthread_detach: Thread detach failed"
 # define EGETTIMEOFDAY "Error: gettimeofday: gettimeofday failed"
 # define ESLEEP "Error: usleep: usleep failed"
+# define EPRINTF "Error: printf: printf failed"
 
 # define FORK "has taken a fork"
 # define EAT "is eating"
@@ -44,6 +45,7 @@
 typedef struct s_my_mutex
 {
 	bool			is_init;
+	bool			is_locked;
 	pthread_mutex_t	mutex;
 }	t_my_mutex;
 
@@ -78,9 +80,8 @@ typedef struct s_data
 	int			ate_philo_count;
 	t_my_mutex	died;
 	bool		fin;
-	pthread_t	watcher;
+	pthread_t	observer;
 }	t_data;
-
 
 int			init_data(t_data *data, int argc, char **argv);
 int			my_atoi(const char *str);
@@ -92,13 +93,15 @@ int			my_mutex_unlock(t_my_mutex *my_mutex);
 
 int			create_thread(t_data *data);
 void		*do_philo(void *arg);
+void		*do_observer(void *arg);
 
-int			set_fin(pthread_mutex_t *died_mutex, bool *fin);
-int			plog(t_philo *philo, long long time, const char *str);
-long long	get_time(void);
+int			set_fin(t_my_mutex *died_mutex, bool *fin, int died_philo);
+int			plog(t_philo *philo, long long *log_time, const char *str);
+int			get_time(long long *time);
 
-int			my_error(char *error_msg);
-int			free_data(t_data *data, char *error_msg, int ret);
+int			my_error(char *errmsg);
+void		free_data(t_data *data, bool do_unlock);
+void		unlock_all(t_data *data);
 
 
 #endif

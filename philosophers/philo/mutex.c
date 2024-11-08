@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:22:35 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/07 22:29:07 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:23:21 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ int	my_mutex_lock(t_my_mutex *my_mutex)
 {
 	if (pthread_mutex_lock(&my_mutex->mutex))
 		return (my_error(EMUTEX_LOCK));
+	my_mutex->is_locked = true;
 	return (0);
 }
 
 int	my_mutex_unlock(t_my_mutex *my_mutex)
 {
+	my_mutex->is_locked = false;
 	if (pthread_mutex_unlock(&my_mutex->mutex))
+	{
+		my_mutex->is_locked = true;
 		return (my_error(EMUTEX_UNLOCK));
+	}
 	return (0);
 }

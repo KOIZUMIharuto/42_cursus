@@ -6,16 +6,18 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:09:35 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/07 16:20:12 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:35:49 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-int	free_data(t_data *data, char *error_msg, int ret)
+void	free_data(t_data *data, bool do_unlock)
 {
 	int	i;
 
+	if (do_unlock)
+		unlock_all(data);
 	if (data->philos)
 		free(data->philos);
 	data->philos = NULL;
@@ -29,7 +31,20 @@ int	free_data(t_data *data, char *error_msg, int ret)
 	}
 	my_mutex_destroy(&data->ate);
 	my_mutex_destroy(&data->died);
-	if (error_msg)
-		return (my_error(error_msg));
-	return (ret);
+}
+
+void	unlock_all(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		if (data->forks[i].is_locked)
+			my_mutex_unlock(&data->forks[i]);
+	}
+	if (data->ate.is_locked)
+		my_mutex_unlock(&data->ate);
+	if (data->died.is_locked)
+		my_mutex_unlock(&data->died);
 }

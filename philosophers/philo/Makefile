@@ -12,6 +12,7 @@ free.c\
 init.c\
 main.c\
 mutex.c\
+observer.c\
 philo.c\
 thread.c\
 utils.c
@@ -22,7 +23,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(PFRAGS) -I ./ $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(PFRAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c $(INC) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(PFRAGS) -I ./ -o $@ -c $<

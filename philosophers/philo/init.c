@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:55:53 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 00:02:38 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:43:29 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->philos = NULL;
 	data->forks = NULL;
 	data->ate.is_init = false;
+	data->ate.is_locked = false;
 	data->ate_philo_count = 0;
 	data->died.is_init = false;
+	data->died.is_locked = false;
 	data->fin = false;
 	if (argc != 5 && argc != 6)
 		return (my_error(USAGE));
@@ -91,6 +93,7 @@ static int	init_forks(t_data *data)
 	while (++i < data->num_of_philo)
 	{
 		data->forks[i].is_init = false;
+		data->forks[i].is_locked = false;
 		data->philos[i].forks[0] = &data->forks[i];
 		data->philos[i].forks[1] = &data->forks[(i + 1) % data->num_of_philo];
 	}
