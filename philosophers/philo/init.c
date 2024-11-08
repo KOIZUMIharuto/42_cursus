@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:55:53 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 16:43:29 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:54:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
 static int	check_args(int argc, t_data *data);
-static int 	init_philos(t_data *data);
+static int	init_philos(t_data *data);
 static int	init_forks(t_data *data);
 
 int	init_data(t_data *data, int argc, char **argv)
@@ -53,7 +53,7 @@ static int	check_args(int argc, t_data *data)
 	return (0);
 }
 
-static int init_philos(t_data *data)
+static int	init_philos(t_data *data)
 {
 	t_philo	philo;
 	int		i;

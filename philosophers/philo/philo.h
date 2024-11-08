@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:55:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 15:59:06 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 17:04:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int			create_thread(t_data *data);
 void		*do_philo(void *arg);
 void		*do_observer(void *arg);
 
+int			philo_wait(t_philo *philo, long long start, long long time);
 int			set_fin(t_my_mutex *died_mutex, bool *fin, int died_philo);
 int			plog(t_philo *philo, long long *log_time, const char *str);
 int			get_time(long long *time);
@@ -102,6 +103,5 @@ int			get_time(long long *time);
 int			my_error(char *errmsg);
 void		free_data(t_data *data, bool do_unlock);
 void		unlock_all(t_data *data);
-
 
 #endif

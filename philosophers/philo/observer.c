@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:26:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 16:46:59 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 17:47:48 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*do_observer(void *arg)
 	if (!is_success)
 		return (NULL);
 	*is_success = false;
-	while(!data->fin)
+	while (!data->fin)
 	{
 		if (check_philos(data))
 			return (is_success);

@@ -3,18 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:14:12 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 16:49:55 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 18:08:46 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <philo.h>
+#include <philo.h>
 
 static int	philo_eat(t_philo *philo);
 static int	take_fork(t_philo *philo);
-static int	philo_wait(t_philo *philo, long long start, long long time);
+
+int	philo_wait(t_philo *philo, long long start, long long time)
+{
+	long long	current;
+
+	if (start < 0 && get_time(&start))
+		return (1);
+	while (1)
+	{
+		if (get_time(&current))
+			return (1);
+		if (start + time < current || *philo->fin)
+			break ;
+		if (philo->last_eat + philo->time_to_die < current)
+		{
+			if (set_fin(philo->died, philo->fin, philo->id))
+				return (1);
+			return (0);
+		}
+		usleep(100);
+	}
+	return (0);
+}
 
 void	*do_philo(void *arg)
 {
@@ -57,7 +79,7 @@ static int	philo_eat(t_philo *philo)
 			if (my_mutex_lock(philo->ate))
 				return (1);
 			if ((++(*philo->ate_philo_count) == philo->num_of_philo
-				&& set_fin(philo->died, philo->fin, -1))
+					&& set_fin(philo->died, philo->fin, -1))
 				|| my_mutex_unlock(philo->ate))
 				return (1);
 		}
@@ -69,18 +91,18 @@ static int	philo_eat(t_philo *philo)
 
 static int	take_fork(t_philo *philo)
 {
-	if (philo->id % 2)
+	if (philo->id % 2 == 1)
 	{
 		if (my_mutex_lock(philo->forks[0]) || plog(philo, NULL, FORK))
 			return (1);
-		if (usleep(400))
+		if (usleep(200))
 			return (my_error(ESLEEP));
 		if (my_mutex_lock(philo->forks[1]) || plog(philo, NULL, FORK))
 			return (1);
 	}
 	else
 	{
-		if (usleep(400))
+		if (usleep(200))
 			return (my_error(ESLEEP));
 		if (my_mutex_lock(philo->forks[1]) || plog(philo, NULL, FORK))
 			return (1);
@@ -89,27 +111,3 @@ static int	take_fork(t_philo *philo)
 	}
 	return (0);
 }
-
-static int	philo_wait(t_philo *philo, long long start, long long time)
-{
-	long long	current;
-
-	if (start < 0 && get_time(&start))
-			return (1);
-	while (1)
-	{
-		if (get_time(&current))
-			return (1);
-		if (start + time < current || *philo->fin)
-			break ;
-		if (philo->last_eat + philo->time_to_die < current)
-		{
-			if (set_fin(philo->died, philo->fin, philo->id))
-				return (1);
-			return (0);
-		}
-		usleep(100);
-	}
-	return (0);
-}
-

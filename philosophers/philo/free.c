@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:09:35 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 14:35:49 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:58:26 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	unlock_all(t_data *data)
 {
 	int	i;
 
+	if (!data->forks)
+		return ;
 	i = -1;
 	while (++i < data->num_of_philo)
 	{

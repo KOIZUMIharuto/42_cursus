@@ -1,13 +1,11 @@
 NAME = philo
 
-FSANITIZE = -fsanitize=thread
+FSANITIZE = -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror
 PFRAGS = -pthread
 
 INC = philo.h
 SRCS = \
-atoi.c\
-error.c\
 free.c\
 init.c\
 main.c\
