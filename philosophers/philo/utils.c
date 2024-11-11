@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:26:52 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 17:53:46 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:10:43 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,6 @@ int	my_error(char *errmsg)
 	if (errmsg)
 		printf("%s\n", errmsg);
 	return (1);
-}
-
-int	set_fin(t_my_mutex *died_mutex, bool *fin, int died_philo)
-{
-	long long	current;
-
-	if (died_mutex && my_mutex_lock(died_mutex))
-		return (my_error(EMUTEX_LOCK));
-	if (died_philo != -1 && !*fin)
-	{
-		*fin = true;
-		if (get_time(&current))
-			return (1);
-		if (printf("%lld %d %s\n", current, died_philo, DIED) < 0)
-			return (my_error(EPRINTF));
-	}
-	*fin = true;
-	if (died_mutex && my_mutex_unlock(died_mutex))
-		return (my_error(EMUTEX_UNLOCK));
-	return (0);
 }
 
 int	plog(t_philo *philo, long long *log_time, const char *str)

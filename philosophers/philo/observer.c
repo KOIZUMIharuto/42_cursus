@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:26:24 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 17:47:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:05:46 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,19 @@ void	*do_observer(void *arg)
 {
 	t_data		*data;
 	bool		*is_success;
+	bool		is_fin;
 
 	data = (t_data *)arg;
 	is_success = (bool *)malloc(sizeof(bool));
 	if (!is_success)
 		return (NULL);
 	*is_success = false;
-	while (!data->fin)
+	while (1)
 	{
+		if (check_fin(&data->died, &data->fin, &is_fin))
+			return (is_success);
+		if (is_fin)
+			break ;
 		if (check_philos(data))
 			return (is_success);
 		usleep(50);

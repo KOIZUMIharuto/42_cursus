@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:14:12 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 13:49:26 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:07:14 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	take_fork(t_philo *philo);
 int	philo_wait(t_philo *philo, long long start, long long time)
 {
 	long long	current;
+	bool		is_fin;
 
 	if (start < 0 && get_time(&start))
 		return (1);
@@ -25,7 +26,9 @@ int	philo_wait(t_philo *philo, long long start, long long time)
 	{
 		if (get_time(&current))
 			return (1);
-		if (start + time < current || *philo->fin)
+		if (check_fin(philo->died, philo->fin, &is_fin))
+			return (1);
+		if (start + time < current || is_fin)
 			break ;
 		if (philo->last_eat + philo->time_to_die < current)
 		{
@@ -43,6 +46,7 @@ void	*do_philo(void *arg)
 	t_philo		*philo;
 	long long	sleep_start;
 	bool		*is_success;
+	bool		is_fin;
 
 	philo = (t_philo *)arg;
 	is_success = (bool *)malloc(sizeof(bool));
@@ -51,8 +55,12 @@ void	*do_philo(void *arg)
 	*is_success = false;
 	if (get_time(&philo->last_eat) || plog(philo, NULL, THINK))
 		return (is_success);
-	while (!*philo->fin)
+	while (1)
 	{
+		if (check_fin(philo->died, philo->fin, &is_fin))
+			return (is_success);
+		if (is_fin)
+			break ;
 		if (philo_eat(philo))
 			return (is_success);
 		if (plog(philo, &sleep_start, SLEEP)
