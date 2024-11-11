@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:55:53 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 16:54:48 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:48:56 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->died.is_init = false;
 	data->died.is_locked = false;
 	data->fin = false;
+	data->observer.is_done = true;
 	if (argc != 5 && argc != 6)
 		return (my_error(USAGE));
 	data->num_of_philo = my_atoi(argv[1]);
@@ -33,7 +34,12 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->time_to_eat = my_atoi(argv[3]);
 	data->time_to_sleep = my_atoi(argv[4]);
 	data->num_of_must_eat = my_atoi(argv[5]);
-	if (check_args(argc, data) || init_philos(data) || init_forks(data))
+	if (check_args(argc, data))
+		return (1);
+	data->philos = (t_philo *)malloc(data->num_of_philo * sizeof(t_philo));
+	if (!data->philos)
+		return (my_error(EMALLOC));
+	if (init_philos(data) || init_forks(data))
 		return (1);
 	return (0);
 }
@@ -58,9 +64,6 @@ static int	init_philos(t_data *data)
 	t_philo	philo;
 	int		i;
 
-	data->philos = (t_philo *)malloc(data->num_of_philo * sizeof(t_philo));
-	if (!data->philos)
-		return (my_error(EMALLOC));
 	philo.num_of_philo = data->num_of_philo;
 	philo.time_to_die = data->time_to_die;
 	philo.time_to_eat = data->time_to_eat;
@@ -73,6 +76,7 @@ static int	init_philos(t_data *data)
 	philo.ate_philo_count = &data->ate_philo_count;
 	philo.died = &data->died;
 	philo.fin = &data->fin;
+	philo.thread.is_done = true;
 	i = -1;
 	while (++i < data->num_of_philo)
 	{
