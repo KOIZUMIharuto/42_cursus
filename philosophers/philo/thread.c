@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 14:34:48 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 12:28:18 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:21:52 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static int	fail_create_thread(t_data *data, int i)
 		if (pthread_detach(data->philos[i].thread.thread))
 			return (my_error(ETHREAD_DETACH));
 	}
-	if (!data->observer.is_done && pthread_detach(data->observer.thread))
+	data->observer.is_done = true;
+	if (pthread_detach(data->observer.thread))
 		return (my_error(ETHREAD_DETACH));
 	if (set_fin(&data->died, &data->fin, -1))
 		return (1);

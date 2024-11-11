@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:55:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 13:13:46 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:19:13 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdbool.h>
 
 # define USAGE "Usage: ./philo [philo] [die] [eat] [sleep] ([must_eat])"
-# define EARG "Invalid arg"
+# define EARG "Error: Invalid arg"
 # define EMALLOC "Error: malloc: Memory allocation failed"
 # define EMUTEX_INIT "Error: pthread_mutex_init: Mutex initialization failed"
 # define EMUTEX_LOCK "Error: pthread_mutex_lock: Mutex lock failed"
