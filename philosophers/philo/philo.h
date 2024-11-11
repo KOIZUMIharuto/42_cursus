@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:55:00 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 17:04:52 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:09:30 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ typedef struct s_my_mutex
 	pthread_mutex_t	mutex;
 }	t_my_mutex;
 
+typedef struct s_my_thread
+{
+	bool		is_done;
+	pthread_t	thread;
+}	t_my_thread;
+
 typedef struct s_philo
 {
 	int			id;
@@ -57,7 +63,7 @@ typedef struct s_philo
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			num_of_must_eat;
-	pthread_t	thread;
+	t_my_thread	thread;
 	t_my_mutex	*forks[2];
 	long long	last_eat;
 	int			eat_count;
@@ -80,7 +86,7 @@ typedef struct s_data
 	int			ate_philo_count;
 	t_my_mutex	died;
 	bool		fin;
-	pthread_t	observer;
+	t_my_thread	observer;
 }	t_data;
 
 int			init_data(t_data *data, int argc, char **argv);

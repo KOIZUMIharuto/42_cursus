@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
+/*   By: hkoizumi <hkoizumi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:53:23 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/08 17:18:24 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:12:38 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	lonely_philo(t_data *data);
 static int	wait_philos(t_data *data);
-static int	wait_thread(t_data *data, pthread_t target);
+static int	wait_thread(t_data *data, t_my_thread *target);
 
 int	main(int argc, char **argv)
 {
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	if (data.num_of_philo == 1)
 		return (lonely_philo(&data));
 	if (create_thread(&data) || wait_philos(&data)
-		|| wait_thread(&data, data.observer))
+		|| wait_thread(&data, &data.observer))
 	{
 		free_data(&data, true);
 		return (1);
@@ -57,17 +57,20 @@ static int	wait_philos(t_data *data)
 
 	i = -1;
 	while (++i < data->num_of_philo)
-		if (wait_thread(data, data->philos[i].thread))
+		if (wait_thread(data, &data->philos[i].thread))
 			return (1);
 	return (0);
 }
 
-static int	wait_thread(t_data *data, pthread_t target)
+static int	wait_thread(t_data *data, t_my_thread *target)
 {
 	bool	*is_success;
 	bool	tmp;
 
-	if (pthread_join(target, (void **)&is_success))
+	if (target->is_done)
+		return (0);
+	target->is_done = true;
+	if (pthread_join(target->thread, (void **)&is_success))
 		return (my_error(ETHREAD_JOIN));
 	if (!is_success)
 		return (my_error(EMALLOC));
