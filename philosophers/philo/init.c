@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:55:53 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 12:48:56 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:27:24 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ static int	init_forks(t_data *data)
 	i = -1;
 	while (++i < data->num_of_philo)
 		if (my_mutex_init(&(data->forks[i])))
-			return (my_error(EMUTEX_INIT));
+			return (1);
 	if (my_mutex_init(&data->ate) || my_mutex_init(&data->died))
-		return (my_error(EMUTEX_INIT));
+		return (1);
 	return (0);
 }
