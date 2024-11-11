@@ -6,6 +6,7 @@ PFRAGS = -pthread
 
 INC = philo.h
 SRCS = \
+fin.c\
 free.c\
 init.c\
 main.c\
