@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:14:12 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 15:23:08 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:55:26 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	*do_philo(void *arg)
 	philo = (t_philo *)arg;
 	is_success = (bool *)malloc(sizeof(bool));
 	if (!is_success)
+	{
+		set_fin(philo->died, philo->fin, -1);
 		return (NULL);
+	}
 	*is_success = false;
 	if (get_time(&philo->last_eat) || plog(philo, NULL, THINK))
 		return (is_success);
@@ -111,14 +114,14 @@ static int	take_fork(t_philo *philo)
 	{
 		if (my_mutex_lock(philo->forks[0]) || plog(philo, NULL, FORK))
 			return (1);
-		if (usleep(200))
+		if (usleep(300))
 			return (my_error(ESLEEP));
 		if (my_mutex_lock(philo->forks[1]) || plog(philo, NULL, FORK))
 			return (1);
 	}
 	else
 	{
-		if (usleep(200))
+		if (usleep(300))
 			return (my_error(ESLEEP));
 		if (my_mutex_lock(philo->forks[1]) || plog(philo, NULL, FORK))
 			return (1);

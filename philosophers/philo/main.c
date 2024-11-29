@@ -6,7 +6,7 @@
 /*   By: hkoizumi <hkoizumi@student.42.jp>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:53:23 by hkoizumi          #+#    #+#             */
-/*   Updated: 2024/11/11 13:13:46 by hkoizumi         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:54:50 by hkoizumi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static int	wait_thread(t_data *data, t_my_thread *target)
 	if (pthread_join(target->thread, (void **)&is_success))
 		return (my_error(ETHREAD_JOIN));
 	if (!is_success)
-		return (my_error(EMALLOC));
+	{
+		my_error(EMALLOC);
+		return (0);
+	}
 	tmp = *is_success;
 	free(is_success);
 	if (!tmp)
